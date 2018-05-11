@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Divider" parent="DividerBase">
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:layout_marginStart">8dp</item>
+    </style>
+
+    <style name="DatePickerBtnStyle" parent="DatePickerBtnBaseStyle">
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:layout_marginRight">8dp</item>
+    </style>
+
+    <style name="InputDateStyle" parent="InputDateBaseStyle">
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:layout_marginStart">8dp</item>
+    </style>
+
+    <style name="SectionLabelStyle" parent="SectionLabelBaseStyle">
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:layout_marginStart">8dp</item>
+    </style>
+
+    <style name="RegularLabelStyle" parent="RegularLabelBaseStyle">
+        <item name="android:layout_marginStart">16dp</item>
+    </style>
+
+    <style name="TextInputRegularStyle" parent="TextInputRegularBaseStyle">
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:layout_marginStart">8dp</item>
+    </style>
+
+</resources>
