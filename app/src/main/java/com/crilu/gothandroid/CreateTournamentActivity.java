@@ -2,13 +2,15 @@ package com.crilu.gothandroid;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.DatePicker;
-import android.widget.EditText;
+
+import com.crilu.gothandroid.databinding.ActivityCreateTournamentBinding;
+import com.crilu.opengotha.model.GothaModel;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -16,21 +18,30 @@ import java.util.GregorianCalendar;
 
 public class CreateTournamentActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
-    private EditText mBeginDate;
-    private EditText mEndDate;
     private int mCurrentDatePickerFieldId;
+
+    private ActivityCreateTournamentBinding mBinding;
+    private final static int DEFAULT_NUMBER_OF_ROUNDS_SPINNER_INDEX = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_tournament);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_create_tournament);
 
-        mBeginDate = findViewById(R.id.tournament_begin_date);
-        mEndDate = findViewById(R.id.tournament_end_date);
+        //setContentView(R.layout.activity_create_tournament);
+        //Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mBinding.toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        initComponents();
+
+        GothaModel gothaModel = new GothaModel();
+        //gothaModel.startTournament();
+    }
+
+    private void initComponents() {
+        mBinding.form.numberOfRoundsSpinner.setSelection(DEFAULT_NUMBER_OF_ROUNDS_SPINNER_INDEX);
     }
 
     @Override
@@ -39,9 +50,9 @@ public class CreateTournamentActivity extends AppCompatActivity implements DateP
         final DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM);
         String dateStr = dateFormat.format(cal.getTime());
         if (mCurrentDatePickerFieldId == R.id.begin_date_picker_btn) {
-            mBeginDate.setText(dateStr);
+            mBinding.form.tournamentBeginDate.setText(dateStr);
         } else if (mCurrentDatePickerFieldId == R.id.end_date_picker_btn) {
-            mEndDate.setText(dateStr);
+            mBinding.form.tournamentEndDate.setText(dateStr);
         }
 
     }

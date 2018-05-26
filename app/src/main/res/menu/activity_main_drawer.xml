@@ -13,13 +13,13 @@
             android:icon="@drawable/ic_menu_open"
             android:title="@string/menu_drawer_open" />
         <item
-            android:id="@+id/nav_import"
-            android:icon="@drawable/ic_menu_import"
-            android:title="@string/menu_drawer_import" />
+            android:id="@+id/nav_my_tournaments"
+            android:icon="@drawable/ic_menu_list"
+            android:title="@string/menu_drawer_my_tournaments" />
         <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="@string/menu_drawer_tools" />
+            android:id="@+id/nav_my_account"
+            android:icon="@drawable/ic_menu_account"
+            android:title="@string/menu_drawer_my_account" />
     </group>
 
     <item android:title="@string/menu_drawer_communicate">

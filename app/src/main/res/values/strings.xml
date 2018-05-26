@@ -22,4 +22,11 @@
     <string name="tournament_end_date">End Date</string>
     <string name="tournament_details">Tournament Details</string>
     <string name="tournament_system">System</string>
+    <string name="menu_drawer_my_tournaments">My Tournaments</string>
+    <string name="menu_drawer_my_account">My Account</string>
+    <string name="mc_mahon_label">McMahon</string>
+    <string name="swiss_label">Swiss</string>
+    <string name="swiss_with_categories_label">Swiss with categories</string>
+    <string name="tournament_number_of_rounds">Number of rounds</string>
+    <string name="ok_label">OK</string>
 </resources>

@@ -82,10 +82,10 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_new) {
             createNewTournament();
         } else if (id == R.id.nav_open) {
+            managePlayers();
+        } else if (id == R.id.nav_my_tournaments) {
 
-        } else if (id == R.id.nav_import) {
-
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_my_account) {
 
         } else if (id == R.id.nav_share) {
 
@@ -96,6 +96,11 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void managePlayers() {
+        Intent intent = new Intent(this, PlayersManagerActivity.class);
+        startActivity(intent);
     }
 
     private void createNewTournament() {

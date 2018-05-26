@@ -28,6 +28,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.crilu.gothandroid.MainActivity" />
         </activity>
+        <activity android:name=".PlayersManagerActivity"></activity>
     </application>
 
 </manifest>
