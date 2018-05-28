@@ -5,6 +5,7 @@
 <android.support.design.widget.CoordinatorLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context="com.crilu.gothandroid.CreateTournamentActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -21,7 +22,8 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include android:id="@+id/form" layout="@layout/content_create_tournament" />
+    <include android:id="@+id/form" layout="@layout/content_create_tournament"
+        />
 
 </android.support.design.widget.CoordinatorLayout>
 </layout>

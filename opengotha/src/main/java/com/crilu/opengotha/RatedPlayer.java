@@ -181,4 +181,9 @@ public class RatedPlayer {
     public String getStrGrade() {
         return strGrade;
     }
+
+    @Override
+    public String toString() {
+        return name + " " + firstName + " " + country + " " + club + " " + getStrRawRating();
+    }
 }

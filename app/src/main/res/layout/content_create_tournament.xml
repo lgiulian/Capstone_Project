@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools">
 <android.support.v4.widget.NestedScrollView
     android:id="@+id/create_tournament_scroll_view"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:showIn="@layout/activity_create_tournament">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context="com.crilu.gothandroid.CreateTournamentActivity"
-        tools:showIn="@layout/activity_create_tournament">
+        tools:context="com.crilu.gothandroid.CreateTournamentActivity">
 
         <TextView
             android:id="@+id/tournament_details_tv"

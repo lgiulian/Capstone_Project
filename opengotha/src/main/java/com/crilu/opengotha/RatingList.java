@@ -10,7 +10,9 @@ package com.crilu.opengotha;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -52,22 +54,52 @@ public class RatingList {
         }
     }
 
-    private void parseFile(File f){
+    public RatingList(int ratingListType, InputStream is) {
+        this.ratingListType = ratingListType;
+        try {
+            parseFile(new BufferedReader(new InputStreamReader(is, "ISO-8859-15")));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        // Build HashMap based on egfPin
+        hmPinRatedPlayers = new HashMap<String, RatedPlayer>();
+        for (RatedPlayer rp : alRatedPlayers){
+            hmPinRatedPlayers.put(rp.getEgfPin(), rp);
+        }
+
+        // Build HashMap based on Name and firstName
+        hmNaFiRatedPlayers = new HashMap<String, RatedPlayer>();
+        for (RatedPlayer rp : alRatedPlayers){
+            String strNaFi = (rp.getName() + rp.getFirstName()).replaceAll(" ", "").toUpperCase();
+            hmNaFiRatedPlayers.put(strNaFi, rp);
+        }
+    }
+
+    private void parseFile(File f) {
+        try {
+            FileInputStream fis = new FileInputStream(f);
+            BufferedReader d = new BufferedReader(new InputStreamReader(fis, java.nio.charset.Charset.forName("ISO-8859-15")));
+            parseFile(d);
+            fis.close();
+        } catch (Exception ex){
+            Logger.getLogger(RatingList.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void parseFile(BufferedReader br){
         // Transfer file content to a ArrayList<String>
         ArrayList<String> vLines = new ArrayList<String>();
         try{
-            FileInputStream fis = new FileInputStream(f);
-            BufferedReader d = new BufferedReader(new InputStreamReader(fis, java.nio.charset.Charset.forName("ISO-8859-15")));
 
             String s;
             do{
-                 s = d.readLine();
+                 s = br.readLine();
                 if (s != null){
                     vLines.add(s);
                 }
             } while (s !=null);
-            d.close();
-            fis.close();
+            br.close();
         } catch (Exception ex){
             Logger.getLogger(RatingList.class.getName()).log(Level.SEVERE, null, ex);
         }

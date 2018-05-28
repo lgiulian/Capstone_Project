@@ -29,4 +29,15 @@
     <string name="swiss_with_categories_label">Swiss with categories</string>
     <string name="tournament_number_of_rounds">Number of rounds</string>
     <string name="ok_label">OK</string>
+    <string name="title_activity_players_manager">Player Registration</string>
+    <string name="players_manager_player_label">Player</string>
+    <string name="players_manager_register_new">Register New</string>
+    <string name="players_manager_players_table_label">Players</string>
+    <string name="players_manager_header_last_name">Last Name</string>
+    <string name="players_manager_header_first_name">First Name</string>
+    <string name="players_manager_header_country">Co</string>
+    <string name="players_manager_header_club">Club</string>
+    <string name="players_manager_header_rank">Rk</string>
+    <string name="players_manager_header_rating">Rating</string>
+    <string name="players_manager_header_grade">Gr</string>
 </resources>

@@ -3,6 +3,7 @@
     package="com.crilu.gothandroid">
 
     <application
+        android:name=".GothandroidApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -28,7 +29,17 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.crilu.gothandroid.MainActivity" />
         </activity>
-        <activity android:name=".PlayersManagerActivity"></activity>
+        <activity android:name=".PlayersManagerActivity"
+            android:label="@string/title_activity_players_manager"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.crilu.gothandroid.MainActivity" />
+        </activity>
+
+        <service android:name=".utils.ParsePlayersIntentService"
+            android:exported="false" />
     </application>
 
 </manifest>

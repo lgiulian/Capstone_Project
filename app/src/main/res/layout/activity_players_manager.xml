@@ -1,9 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".PlayersManagerActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-</android.support.constraint.ConstraintLayout>
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.crilu.gothandroid.PlayersManagerActivity">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+        </android.support.design.widget.AppBarLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout android:id="@+id/player_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+                <TextView
+                    android:id="@+id/player_label"
+                    android:text="@string/players_manager_player_label"
+                    android:layout_gravity="center_vertical"
+                    style="@style/RegularLabelStyle"/>
+
+                <AutoCompleteTextView
+                    android:id="@+id/player_name"
+                    android:layout_width="match_parent"
+                    style="@style/TextInputRegularStyle"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/register_new_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/player_layout"
+                android:layout_marginTop="8dp"
+                android:layout_centerHorizontal="true"
+                android:text="@string/players_manager_register_new"
+                 />
+
+            <TextView
+                android:id="@+id/players_table_label"
+                style="@style/RegularLabelStyle"
+                android:text="@string/players_manager_players_table_label"
+                android:layout_below="@id/register_new_btn"/>
+
+            <de.codecrafters.tableview.TableView
+                android:id="@+id/players_table"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tableView_columnCount="7"
+                app:tableView_headerElevation="10"
+                app:tableView_headerColor="@color/colorPrimary"
+                android:layout_below="@id/players_table_label"/>
+        </RelativeLayout>
+
+    </android.support.design.widget.CoordinatorLayout>
+
+</layout>
