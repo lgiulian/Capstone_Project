@@ -12,8 +12,8 @@ public class Tournament implements TournamentInterface, java.io.Serializable {
     private static final long serialVersionUID = Gotha.GOTHA_DATA_VERSION;
     
 	public interface OnTournamentChangeListener {
-		void onChange();
-		void onErrorMessage(String message);
+		void onTournamentChange();
+		void onTournamentErrorMessage(String message);
 	}
 
     /**

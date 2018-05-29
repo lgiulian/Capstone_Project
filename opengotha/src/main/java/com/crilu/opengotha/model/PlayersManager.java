@@ -70,16 +70,16 @@ public class PlayersManager {
     private OnPlayerRegistrationListener playerRegistrationListener;
     private DownloadProgressListener progressListener;
 
-	interface OnUpdateRatingListListener {
+	public interface OnUpdateRatingListListener {
 		void updateMessage(String message);
 		void onError(String message);
 	}
     
-	interface OnPlayerRegistrationListener {
-		void onError(String message);
+	public interface OnPlayerRegistrationListener {
+		void onRegistrationError(String message);
 	}
     
-    PlayersManager(TournamentInterface tournament)  {
+    public PlayersManager(TournamentInterface tournament)  {
 //      LogElements.incrementElement("players.manager", "");
       this.tournament = tournament;
 
@@ -355,7 +355,7 @@ public class PlayersManager {
         }
     }
 
-    private void register(String name, String firstName, String country, String club, String egfPin, String ffgLicence,
+    public void register(String name, String firstName, String country, String club, String egfPin, String ffgLicence,
     		String ffgLicenceStatus, String agaId, String agaExpirationDate, String grade,
     		String strRegistration, String rankStr, String ratingStr, String smmsCorrectionStr, boolean tabCkbParticipation[]) {
         manageRankGradeAndRatingValues(rankStr, grade, ratingStr); // Before anything else, fill unfilled grade/rank/rating fields
@@ -371,7 +371,7 @@ public class PlayersManager {
 
         String strOrigin = "INI";
         try{
-            rating = new Integer(ratingStr).intValue();
+            rating = Integer.valueOf(ratingStr);
         }catch(Exception e){
             rating = Player.ratingFromRank(rank);
         }
@@ -571,19 +571,19 @@ public class PlayersManager {
     private void tournamentChanged() {
         tournament.setLastTournamentModificationTime(tournament.getCurrentTournamentTime());
         if (tournamentChangeListener != null) {
-        	tournamentChangeListener.onChange();
+        	tournamentChangeListener.onTournamentChange();
         }
     }
 
     private void tournamentSendErrorMessage(String message) {
         if (tournamentChangeListener != null) {
-        	tournamentChangeListener.onErrorMessage(message);
+        	tournamentChangeListener.onTournamentErrorMessage(message);
         }
     }
 
     private void playerRegistrationError(String message) {
     	if (playerRegistrationListener != null) {
-    		playerRegistrationListener.onError(message);
+    		playerRegistrationListener.onRegistrationError(message);
     	}
     }
     

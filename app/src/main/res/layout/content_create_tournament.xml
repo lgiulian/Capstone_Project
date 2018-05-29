@@ -159,23 +159,26 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tournament_system">
 
-            <RadioButton
+            <RadioButton android:id="@+id/radio_mcmahon"
                 style="@style/RegularLabelStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/mc_mahon_label" />
+                android:text="@string/mc_mahon_label"
+                android:onClick="onSystemButtonClicked"/>
 
-            <RadioButton
+            <RadioButton android:id="@+id/radio_swiss"
                 style="@style/RegularLabelStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/swiss_label" />
+                android:text="@string/swiss_label"
+                android:onClick="onSystemButtonClicked" />
 
-            <RadioButton
+            <RadioButton android:id="@+id/radio_swiss_categories"
                 style="@style/RegularLabelStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/swiss_with_categories_label" />
+                android:text="@string/swiss_with_categories_label"
+                android:onClick="onSystemButtonClicked" />
         </RadioGroup>
 
         <TextView
@@ -209,6 +212,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/ok_label"
+            android:onClick="createTournament"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

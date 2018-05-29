@@ -440,4 +440,8 @@ public class GothaModel {
     public boolean removeGothaListener(GothaListener listener) {
     	return mCallbacks.remove(listener);
     }
+
+    public TournamentInterface getTournament() {
+        return tournament;
+    }
 }

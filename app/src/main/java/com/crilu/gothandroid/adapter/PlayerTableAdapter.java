@@ -16,7 +16,7 @@ import java.util.List;
 import de.codecrafters.tableview.TableDataAdapter;
 import de.codecrafters.tableview.model.TableColumnModel;
 
-public class PlayerTableAdapter<R> extends TableDataAdapter<RatedPlayer> {
+public class PlayerTableAdapter<R> extends TableDataAdapter<Player> {
     private static final String TAG = PlayerTableAdapter.class.getSimpleName();
 
     private int paddingLeft = 20;
@@ -27,25 +27,25 @@ public class PlayerTableAdapter<R> extends TableDataAdapter<RatedPlayer> {
     private int typeface = Typeface.NORMAL;
     private int textColor = 0x99000000;
 
-    public PlayerTableAdapter(Context context, RatedPlayer[] data) {
+    public PlayerTableAdapter(Context context, Player[] data) {
         super(context, data);
     }
 
-    public PlayerTableAdapter(Context context, List<RatedPlayer> data) {
+    public PlayerTableAdapter(Context context, List<Player> data) {
         super(context, data);
     }
 
-    protected PlayerTableAdapter(Context context, int columnCount, List<RatedPlayer> data) {
+    protected PlayerTableAdapter(Context context, int columnCount, List<Player> data) {
         super(context, columnCount, data);
     }
 
-    protected PlayerTableAdapter(Context context, TableColumnModel columnModel, List<RatedPlayer> data) {
+    protected PlayerTableAdapter(Context context, TableColumnModel columnModel, List<Player> data) {
         super(context, columnModel, data);
     }
 
     @Override
     public View getCellView(int rowIndex, int columnIndex, ViewGroup parentView) {
-        RatedPlayer player = getRowData(rowIndex);
+        Player player = getRowData(rowIndex);
         View renderedView = null;
 
         switch (columnIndex) {

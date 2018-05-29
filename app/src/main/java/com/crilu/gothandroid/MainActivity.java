@@ -82,6 +82,8 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_new) {
             createNewTournament();
         } else if (id == R.id.nav_open) {
+
+        } if (id == R.id.nav_players_manager) {
             managePlayers();
         } else if (id == R.id.nav_my_tournaments) {
 
