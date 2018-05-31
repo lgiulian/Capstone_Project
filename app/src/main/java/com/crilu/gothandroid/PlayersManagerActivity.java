@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import com.crilu.gothandroid.adapter.PlayerAdapter;
 import com.crilu.gothandroid.databinding.ActivityPlayersManagerBinding;
 import com.crilu.gothandroid.model.PlayersManagerViewModel;
+import com.crilu.opengotha.Gotha;
 import com.crilu.opengotha.Player;
 import com.crilu.opengotha.RatedPlayer;
 import com.crilu.opengotha.RatingList;
@@ -113,8 +114,8 @@ public class PlayersManagerActivity extends AppCompatActivity implements Adapter
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Log.d(TAG, "position " + position + " selected");
         RatedPlayer selectedPlayer = mAdapter.getItem(position);
-        int nbRounds = mPlayersManagerViewModel.getNumberOfRounds();
-        boolean[] participations = new boolean[nbRounds];
+        //int nbRounds = mPlayersManagerViewModel.getNumberOfRounds();
+        boolean[] participations = new boolean[Gotha.MAX_NUMBER_OF_ROUNDS];
         Arrays.fill(participations, Boolean.TRUE);
         mPlayersManager.register(selectedPlayer.getName(),
                 selectedPlayer.getFirstName(),
