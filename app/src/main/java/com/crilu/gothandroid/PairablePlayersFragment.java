@@ -1,12 +1,14 @@
 package com.crilu.gothandroid;
 
-import android.support.v4.app.Fragment;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.crilu.gothandroid.adapter.PairablePlayerAdapter;
+import com.crilu.gothandroid.model.PairViewModel;
 
 import java.util.List;
 import java.util.Vector;
@@ -17,6 +19,7 @@ import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 
 public class PairablePlayersFragment extends Fragment {
 
+    private PairViewModel mPairViewModel;
     private List<Vector<String>> mPairablePlayers;
     private TableView<Vector<String>> mPlayersTable;
     private PairablePlayerAdapter<Vector<String>> mPairablePlayersAdapter;
@@ -28,6 +31,9 @@ public class PairablePlayersFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_pairable_players, container, false);
+
+        mPairViewModel = ViewModelProviders.of(getActivity()).get(PairViewModel.class);
+        mPairablePlayers = mPairViewModel.getPairablePlayers();
 
         String[] tableHeaders = { getString(R.string.pairable_players_header_name),
                 getString(R.string.pairable_players_header_rank),
@@ -49,10 +55,9 @@ public class PairablePlayersFragment extends Fragment {
 
     public void setPairablePlayers(List<Vector<String>> pairablePlayers) {
         this.mPairablePlayers = pairablePlayers;
-        if (mPlayersTable != null && mPairablePlayersAdapter != null) {
-            mPairablePlayersAdapter = new PairablePlayerAdapter<>(getContext(), mPairablePlayers);
-            mPlayersTable.setDataAdapter(mPairablePlayersAdapter);
-            mPairablePlayersAdapter.notifyDataSetChanged();
-        }
+    }
+
+    public void updatePairablePlayers() {
+        mPairablePlayersAdapter.notifyDataSetChanged();
     }
 }

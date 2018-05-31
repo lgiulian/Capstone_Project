@@ -1,5 +1,6 @@
 package com.crilu.gothandroid;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.crilu.gothandroid.adapter.TableAdapter;
+import com.crilu.gothandroid.model.PairViewModel;
 
 import java.util.List;
 import java.util.Vector;
@@ -17,6 +19,7 @@ import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 
 public class TablesFragment extends Fragment {
 
+    private PairViewModel mPairViewModel;
     private List<Vector<String>> mTables;
     private TableView<Vector<String>> mTablesTable;
     private TableAdapter<Vector<String>> mTablesAdapter;
@@ -28,6 +31,9 @@ public class TablesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_tables, container, false);
+
+        mPairViewModel = ViewModelProviders.of(getActivity()).get(PairViewModel.class);
+        mTables = mPairViewModel.getTables();
 
         String[] tableHeaders = { getString(R.string.tables_header_table),
                 getString(R.string.tables_header_white),
@@ -49,11 +55,9 @@ public class TablesFragment extends Fragment {
 
     public void setTables(List<Vector<String>> tables) {
         this.mTables = tables;
-        if (mTablesTable != null && mTablesAdapter != null) {
-            mTablesAdapter = new TableAdapter<>(getContext(), mTables);
-            mTablesTable.setDataAdapter(mTablesAdapter);
-            mTablesAdapter.notifyDataSetChanged();
-        }
     }
 
+    public void updateTables() {
+        mTablesAdapter.notifyDataSetChanged();
+    }
 }

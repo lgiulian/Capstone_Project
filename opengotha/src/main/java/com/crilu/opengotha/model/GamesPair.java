@@ -57,9 +57,9 @@ public class GamesPair {
 	private int spnRoundNumber;
 	private String previousGamesLabel;
 
-    private PairListener pairListener;
+    private OnPairListener pairListener;
 	
-	public interface PairListener {
+	public interface OnPairListener {
 		void onMessage(String message);
 		void onTableGamesUpdated();
 		void onSearchResult(int row);
@@ -83,9 +83,9 @@ public class GamesPair {
     }
 
     private void updateComponents() {
-    	tblPairablePlayers = new ArrayList<>();
-    	tblNotPairablePlayers = new ArrayList<>();
-    	tblGames = new ArrayList<>();
+    	tblPairablePlayers.clear();;
+    	tblNotPairablePlayers.clear();
+    	tblGames.clear();
     	
         this.roundNumber = this.processedRoundNumber + 1;
 
@@ -180,7 +180,7 @@ public class GamesPair {
     }
 
     private void updatePnlPreviousGames(ArrayList<Player> selectedPlayers) {
-        tblPreviousGames = new ArrayList<>();
+        tblPreviousGames.clear();
 
         ArrayList<Player> alPlayers = selectedPlayers;
         if (alPlayers.size() != 1) {
@@ -369,7 +369,12 @@ public class GamesPair {
         return alSelectedGames;
     }
 
-    private void initComponents() {}
+    private void initComponents() {
+        tblPairablePlayers = new ArrayList<>();
+        tblNotPairablePlayers = new ArrayList<>();
+        tblPreviousGames = new ArrayList<>();
+        tblGames = new ArrayList<>();
+    }
 
     private void btnPrintActionPerformed() {
         TournamentPrinting.printGamesList(tournament, processedRoundNumber);
@@ -810,7 +815,7 @@ public class GamesPair {
     	}
     }
 
-    public void setPairListener(PairListener pairListener) {
+    public void setPairListener(OnPairListener pairListener) {
         this.pairListener = pairListener;
     }
 

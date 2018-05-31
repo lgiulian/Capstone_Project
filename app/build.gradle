@@ -27,6 +27,11 @@ dependencies {
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
 
+    implementation "android.arch.lifecycle:common:1.1.1"
+    implementation "android.arch.lifecycle:runtime:1.1.1"
+    implementation "android.arch.lifecycle:extensions:1.1.1"
+    annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
+
     implementation 'de.codecrafters.tableview:tableview:2.8.0'
     implementation 'com.jakewharton.timber:timber:4.7.0'
 

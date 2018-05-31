@@ -1,5 +1,6 @@
 package com.crilu.gothandroid;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -11,16 +12,14 @@ import android.widget.ArrayAdapter;
 
 import com.crilu.gothandroid.adapter.PlayerAdapter;
 import com.crilu.gothandroid.databinding.ActivityPlayersManagerBinding;
+import com.crilu.gothandroid.model.PlayersManagerViewModel;
 import com.crilu.opengotha.Player;
 import com.crilu.opengotha.RatedPlayer;
 import com.crilu.opengotha.RatingList;
 import com.crilu.opengotha.Tournament;
-import com.crilu.opengotha.model.GothaModel;
 import com.crilu.opengotha.model.PlayersManager;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import de.codecrafters.tableview.model.TableColumnWeightModel;
 import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
@@ -31,8 +30,8 @@ public class PlayersManagerActivity extends AppCompatActivity implements Adapter
     private static final String TAG = PlayersManagerActivity.class.getSimpleName();
 
     private ActivityPlayersManagerBinding mBinding;
+    private PlayersManagerViewModel mPlayersManagerViewModel;
 
-    private GothaModel mGothaModel;
     private PlayersManager mPlayersManager;
     private ArrayAdapter<RatedPlayer> mAdapter;
     private PlayerAdapter<Player> mRegisteredPlayersAdapter;
@@ -67,8 +66,8 @@ public class PlayersManagerActivity extends AppCompatActivity implements Adapter
     }
 
     private void init() {
-        mGothaModel = GothandroidApplication.getGothaModelInstance();
-        mPlayersManager = GothandroidApplication.getPlayersManagerInstance();
+        mPlayersManagerViewModel = ViewModelProviders.of(this).get(PlayersManagerViewModel.class);
+        mPlayersManager = mPlayersManagerViewModel.getPlayersManager();
     }
 
     private void initComponents() {
@@ -86,7 +85,7 @@ public class PlayersManagerActivity extends AppCompatActivity implements Adapter
                 getString(R.string.players_manager_header_rating),
                 getString(R.string.players_manager_header_grade)};
         mBinding.playersTable.setHeaderAdapter(new SimpleTableHeaderAdapter(this, tableHeaders));
-        mRegisteredPlayersAdapter = new PlayerAdapter<>(this, mGothaModel.getTournament().playersList());
+        mRegisteredPlayersAdapter = new PlayerAdapter<>(this, mPlayersManagerViewModel.getPlayersList());
 
         TableColumnWeightModel columnModel = new TableColumnWeightModel(7);
         columnModel.setColumnWeight(0, 2);
@@ -114,10 +113,9 @@ public class PlayersManagerActivity extends AppCompatActivity implements Adapter
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Log.d(TAG, "position " + position + " selected");
         RatedPlayer selectedPlayer = mAdapter.getItem(position);
-        int nbRounds = mGothaModel.getTournament().getTournamentParameterSet().getGeneralParameterSet().getNumberOfRounds();
+        int nbRounds = mPlayersManagerViewModel.getNumberOfRounds();
         boolean[] participations = new boolean[nbRounds];
         Arrays.fill(participations, Boolean.TRUE);
-        mPlayersManager = GothandroidApplication.getPlayersManagerInstance();
         mPlayersManager.register(selectedPlayer.getName(),
                 selectedPlayer.getFirstName(),
                 selectedPlayer.getCountry(),
@@ -139,7 +137,7 @@ public class PlayersManagerActivity extends AppCompatActivity implements Adapter
 
     @Override
     public void onTournamentChange() {
-        mRegisteredPlayersAdapter = new PlayerAdapter<>(this, mGothaModel.getTournament().playersList());
+        mRegisteredPlayersAdapter = new PlayerAdapter<>(this, mPlayersManagerViewModel.getPlayersList());
         mBinding.playersTable.setDataAdapter(mRegisteredPlayersAdapter);
         mBinding.playersTable.getDataAdapter().notifyDataSetChanged();
     }

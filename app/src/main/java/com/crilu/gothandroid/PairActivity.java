@@ -1,5 +1,6 @@
 package com.crilu.gothandroid;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -7,16 +8,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.crilu.gothandroid.databinding.ActivityPairBinding;
-import com.crilu.opengotha.Tournament;
+import com.crilu.gothandroid.model.PairViewModel;
 import com.crilu.opengotha.model.GamesPair;
 
-import java.util.List;
-import java.util.Vector;
-
-public class PairActivity extends AppCompatActivity implements GamesPair.PairListener {
+public class PairActivity extends AppCompatActivity implements GamesPair.OnPairListener {
 
     private ActivityPairBinding mBinding;
-    private GamesPair mGamesPairing;
+    private PairViewModel mPairViewModel;
+    private GamesPair mGamesPair;
     private PairablePlayersFragment mPairablePlayersFragment;
     private TablesFragment mTablesFragment;
 
@@ -40,23 +39,22 @@ public class PairActivity extends AppCompatActivity implements GamesPair.PairLis
     @Override
     protected void onResume() {
         super.onResume();
-        mGamesPairing.setPairListener(this);
+        mGamesPair.setPairListener(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        mGamesPairing.setPairListener(null);
+        mGamesPair.setPairListener(null);
     }
 
     private void init() {
-        mGamesPairing = GothandroidApplication.getGamesPairInstance();
+        mPairViewModel = ViewModelProviders.of(this).get(PairViewModel.class);
+        mGamesPair = mPairViewModel.getGamesPair();
     }
 
     private void setupFragments() {
-        List<Vector<String>> pairablePlayers = mGamesPairing.getTblPairablePlayers();
         mPairablePlayersFragment = new PairablePlayersFragment();
-        mPairablePlayersFragment.setPairablePlayers(pairablePlayers);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -64,9 +62,7 @@ public class PairActivity extends AppCompatActivity implements GamesPair.PairLis
                 .add(R.id.pairable_players_container, mPairablePlayersFragment)
                 .commit();
 
-        List<Vector<String>> tables = mGamesPairing.getTblGames();
         mTablesFragment = new TablesFragment();
-        mTablesFragment.setTables(tables);
 
         fragmentManager.beginTransaction()
                 .add(R.id.tables_container, mTablesFragment)
@@ -78,7 +74,7 @@ public class PairActivity extends AppCompatActivity implements GamesPair.PairLis
     }
 
     public void onClickPair(View view) {
-        mGamesPairing.pair(false, true);
+        mGamesPair.pair(false, true);
     }
 
     @Override
@@ -88,10 +84,8 @@ public class PairActivity extends AppCompatActivity implements GamesPair.PairLis
 
     @Override
     public void onTableGamesUpdated() {
-        List<Vector<String>> pairablePlayers = mGamesPairing.getTblPairablePlayers();
-        mPairablePlayersFragment.setPairablePlayers(pairablePlayers);
-        List<Vector<String>> tables = mGamesPairing.getTblGames();
-        mTablesFragment.setTables(tables);
+        mPairablePlayersFragment.updatePairablePlayers();
+        mTablesFragment.updateTables();
     }
 
     @Override
