@@ -13,6 +13,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.crilu.opengotha.ExternalDocument;
+
+import java.io.File;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -94,7 +98,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_publish) {
-
+            String filename = "turneu_salvat.xml";
+            File file = new File(getFilesDir(), filename);
+            ExternalDocument.generateXMLFile(GothandroidApplication.getGothaModelInstance().getTournament(), file);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
