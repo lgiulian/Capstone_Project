@@ -9,16 +9,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.crilu.opengotha.Player;
-import com.crilu.opengotha.RatedPlayer;
 
 import java.util.List;
 
 import de.codecrafters.tableview.TableDataAdapter;
 import de.codecrafters.tableview.model.TableColumnModel;
+import timber.log.Timber;
 
-public class PlayerTableAdapter<R> extends TableDataAdapter<Player> {
-    private static final String TAG = PlayerTableAdapter.class.getSimpleName();
-
+public class PlayerAdapter<R> extends TableDataAdapter<Player> {
     private int paddingLeft = 20;
     private int paddingTop = 15;
     private int paddingRight = 20;
@@ -27,19 +25,19 @@ public class PlayerTableAdapter<R> extends TableDataAdapter<Player> {
     private int typeface = Typeface.NORMAL;
     private int textColor = 0x99000000;
 
-    public PlayerTableAdapter(Context context, Player[] data) {
+    public PlayerAdapter(Context context, Player[] data) {
         super(context, data);
     }
 
-    public PlayerTableAdapter(Context context, List<Player> data) {
+    public PlayerAdapter(Context context, List<Player> data) {
         super(context, data);
     }
 
-    protected PlayerTableAdapter(Context context, int columnCount, List<Player> data) {
+    protected PlayerAdapter(Context context, int columnCount, List<Player> data) {
         super(context, columnCount, data);
     }
 
-    protected PlayerTableAdapter(Context context, TableColumnModel columnModel, List<Player> data) {
+    protected PlayerAdapter(Context context, TableColumnModel columnModel, List<Player> data) {
         super(context, columnModel, data);
     }
 
@@ -76,7 +74,7 @@ public class PlayerTableAdapter<R> extends TableDataAdapter<Player> {
     }
 
     private View renderCell(String textToShow) {
-        Log.d(TAG, "textToShow = " + textToShow);
+        //Timber.d("textToShow = %s", textToShow);
         final TextView textView = new TextView(getContext());
         textView.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
         textView.setTypeface(textView.getTypeface(), typeface);

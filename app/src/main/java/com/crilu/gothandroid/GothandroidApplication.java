@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.crilu.gothandroid.utils.ParsePlayersIntentService;
 import com.crilu.opengotha.RatingList;
+import com.crilu.opengotha.model.GamesPair;
 import com.crilu.opengotha.model.GothaModel;
 import com.crilu.opengotha.model.PlayersManager;
 
@@ -15,6 +16,7 @@ import timber.log.Timber;
 public class GothandroidApplication extends Application {
     private static RatingList sRatingList;
     private static GothaModel sGothaModel;
+    private static GamesPair sGamesPair;
     private static PlayersManager sPlayersManager;
 
     @Override
@@ -51,6 +53,13 @@ public class GothandroidApplication extends Application {
             sPlayersManager = new PlayersManager(sGothaModel.getTournament());
         }
         return sPlayersManager;
+    }
+
+    public static GamesPair getGamesPairInstance() {
+        if (sGamesPair == null && sGothaModel.getTournament() != null) {
+            sGamesPair = new GamesPair(sGothaModel.getTournament());
+        }
+        return sGamesPair;
     }
 
     /** A tree which logs important information for crash reporting. */

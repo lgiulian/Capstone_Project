@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Gothandroid</string>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Tournament Manager</string>
@@ -13,6 +14,11 @@
     <string name="menu_drawer_communicate">Communicate</string>
     <string name="menu_drawer_share">Share</string>
     <string name="menu_drawer_publish">Publish</string>
+    <string name="menu_drawer_my_tournaments">My Tournaments</string>
+    <string name="menu_drawer_my_account">My Account</string>
+    <string name="menu_drawer_players_manager">Player Registration</string>
+    <string name="menu_drawer_pair">Pair</string>
+
     <string name="title_activity_create_tournament">Create Tournament</string>
     <string name="tournament_name_label">Name</string>
     <string name="tournament_short_name_label">Short name</string>
@@ -22,13 +28,12 @@
     <string name="tournament_end_date">End Date</string>
     <string name="tournament_details">Tournament Details</string>
     <string name="tournament_system">System</string>
-    <string name="menu_drawer_my_tournaments">My Tournaments</string>
-    <string name="menu_drawer_my_account">My Account</string>
     <string name="mc_mahon_label">McMahon</string>
     <string name="swiss_label">Swiss</string>
     <string name="swiss_with_categories_label">Swiss with categories</string>
     <string name="tournament_number_of_rounds">Number of rounds</string>
     <string name="ok_label">OK</string>
+
     <string name="title_activity_players_manager">Player Registration</string>
     <string name="players_manager_player_label">Player</string>
     <string name="players_manager_register_new">Register New</string>
@@ -40,5 +45,22 @@
     <string name="players_manager_header_rank">Rk</string>
     <string name="players_manager_header_rating">Rating</string>
     <string name="players_manager_header_grade">Gr</string>
-    <string name="menu_drawer_players_manager">Player Registration</string>
+
+    <string name="title_activity_pair">Pair</string>
+    <string name="pair_round_no">Round</string>
+    <string name="pair_ok_label">OK</string>
+    <string name="pair_pairable_players_label">Pairable players</string>
+    <string name="pair_label">Pair</string>
+    <string name="pair_tables_label">Tables</string>
+
+    <string name="pairable_players_header_name">Name</string>
+    <string name="pairable_players_header_rank">Rank</string>
+    <string name="pairable_players_header_sco">Sco</string>
+    <string name="pairable_players_header_co">Co</string>
+    <string name="pairable_players_header_club">Club</string>
+
+    <string name="tables_header_table">Table</string>
+    <string name="tables_header_white">White</string>
+    <string name="tables_header_black">Black</string>
+    <string name="tables_header_hd">Hd</string>
 </resources>

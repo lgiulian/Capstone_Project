@@ -17,6 +17,10 @@
             android:icon="@drawable/ic_menu_players_manager"
             android:title="@string/menu_drawer_players_manager" />
         <item
+            android:id="@+id/nav_pair"
+            android:icon="@drawable/ic_menu_pair"
+            android:title="@string/menu_drawer_pair" />
+        <item
             android:id="@+id/nav_my_tournaments"
             android:icon="@drawable/ic_menu_list"
             android:title="@string/menu_drawer_my_tournaments" />

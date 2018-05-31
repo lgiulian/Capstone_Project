@@ -29,7 +29,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.crilu.gothandroid.MainActivity" />
         </activity>
-        <activity android:name=".PlayersManagerActivity"
+        <activity
+            android:name=".PlayersManagerActivity"
             android:label="@string/title_activity_players_manager"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -38,8 +39,19 @@
                 android:value="com.crilu.gothandroid.MainActivity" />
         </activity>
 
-        <service android:name=".utils.ParsePlayersIntentService"
+        <service
+            android:name=".utils.ParsePlayersIntentService"
             android:exported="false" />
+
+        <activity
+            android:name=".PairActivity"
+            android:label="@string/title_activity_pair"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.crilu.gothandroid.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

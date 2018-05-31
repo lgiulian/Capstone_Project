@@ -25,16 +25,16 @@
         <item name="android:layout_marginTop">8dp</item>
         <item name="android:background">?android:attr/listDivider</item>
     </style>
-    <style name="Divider" parent="DividerBase">
-    </style>
+
+    <style name="Divider" parent="DividerBase"></style>
 
     <style name="DatePickerBtnBaseStyle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginRight">8dp</item>
     </style>
-    <style name="DatePickerBtnStyle" parent="DatePickerBtnBaseStyle">
-    </style>
+
+    <style name="DatePickerBtnStyle" parent="DatePickerBtnBaseStyle"></style>
 
     <style name="InputDateBaseStyle">
         <item name="android:layout_width">0dp</item>
@@ -45,8 +45,8 @@
         <item name="android:ems">10</item>
         <item name="android:inputType">date</item>
     </style>
-    <style name="InputDateStyle" parent="InputDateBaseStyle">
-    </style>
+
+    <style name="InputDateStyle" parent="InputDateBaseStyle"></style>
 
     <style name="SectionLabelBaseStyle">
         <item name="android:layout_width">wrap_content</item>
@@ -56,8 +56,8 @@
         <item name="android:layout_marginTop">16dp</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Display1</item>
     </style>
-    <style name="SectionLabelStyle" parent="SectionLabelBaseStyle">
-    </style>
+
+    <style name="SectionLabelStyle" parent="SectionLabelBaseStyle"></style>
 
     <style name="RegularLabelBaseStyle">
         <item name="android:layout_width">wrap_content</item>
@@ -65,8 +65,8 @@
         <item name="android:layout_marginLeft">16dp</item>
         <item name="android:textAppearance">@android:style/TextAppearance.Widget.TextView</item>
     </style>
-    <style name="RegularLabelStyle" parent="RegularLabelBaseStyle">
-    </style>
+
+    <style name="RegularLabelStyle" parent="RegularLabelBaseStyle"></style>
 
     <style name="TextInputRegularBaseStyle">
         <item name="android:layout_width">0dp</item>
@@ -78,8 +78,7 @@
         <item name="android:inputType">text</item>
     </style>
 
-    <style name="TextInputRegularStyle" parent="TextInputRegularBaseStyle">
-    </style>
+    <style name="TextInputRegularStyle" parent="TextInputRegularBaseStyle"></style>
 
     <style name="TableBaseStyle">
         <item name="android:layout_width">0dp</item>
@@ -90,7 +89,6 @@
         <item name="android:layout_marginTop">8dp</item>
     </style>
 
-    <style name="TableStyle" parent="TableBaseStyle">
-    </style>
+    <style name="TableStyle" parent="TableBaseStyle"></style>
 
 </resources>

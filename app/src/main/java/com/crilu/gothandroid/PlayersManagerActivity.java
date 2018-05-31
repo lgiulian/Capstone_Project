@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
-import com.crilu.gothandroid.adapter.PlayerTableAdapter;
+import com.crilu.gothandroid.adapter.PlayerAdapter;
 import com.crilu.gothandroid.databinding.ActivityPlayersManagerBinding;
 import com.crilu.opengotha.Player;
 import com.crilu.opengotha.RatedPlayer;
@@ -35,8 +35,7 @@ public class PlayersManagerActivity extends AppCompatActivity implements Adapter
     private GothaModel mGothaModel;
     private PlayersManager mPlayersManager;
     private ArrayAdapter<RatedPlayer> mAdapter;
-    private PlayerTableAdapter<Player> mRegisteredPlayersAdapter;
-    private List<Player> mRegisteredPlayers;
+    private PlayerAdapter<Player> mRegisteredPlayersAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +59,13 @@ public class PlayersManagerActivity extends AppCompatActivity implements Adapter
         mPlayersManager.setPlayerRegistrationListener(this);
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mPlayersManager.setTournamentChangeListener(null);
+        mPlayersManager.setPlayerRegistrationListener(null);
+    }
+
     private void init() {
         mGothaModel = GothandroidApplication.getGothaModelInstance();
         mPlayersManager = GothandroidApplication.getPlayersManagerInstance();
@@ -80,8 +86,7 @@ public class PlayersManagerActivity extends AppCompatActivity implements Adapter
                 getString(R.string.players_manager_header_rating),
                 getString(R.string.players_manager_header_grade)};
         mBinding.playersTable.setHeaderAdapter(new SimpleTableHeaderAdapter(this, tableHeaders));
-        mRegisteredPlayers = new ArrayList<>();
-        mRegisteredPlayersAdapter = new PlayerTableAdapter<Player>(this, mRegisteredPlayers);
+        mRegisteredPlayersAdapter = new PlayerAdapter<>(this, mGothaModel.getTournament().playersList());
 
         TableColumnWeightModel columnModel = new TableColumnWeightModel(7);
         columnModel.setColumnWeight(0, 2);
@@ -129,15 +134,14 @@ public class PlayersManagerActivity extends AppCompatActivity implements Adapter
                 "0",
                 participations);
 
-        // TODO: this adapter update must be done through PlayersManager model and his callback
-        mBinding.playersTable.getDataAdapter().getData().add(selectedPlayer);
-        mBinding.playersTable.getDataAdapter().notifyDataSetChanged();
         mBinding.playerName.setText("");
     }
 
     @Override
     public void onTournamentChange() {
-        mGothaModel.getTournament().playersList();
+        mRegisteredPlayersAdapter = new PlayerAdapter<>(this, mGothaModel.getTournament().playersList());
+        mBinding.playersTable.setDataAdapter(mRegisteredPlayersAdapter);
+        mBinding.playersTable.getDataAdapter().notifyDataSetChanged();
     }
 
     @Override

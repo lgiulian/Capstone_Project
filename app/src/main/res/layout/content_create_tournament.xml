@@ -196,7 +196,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:dropDownWidth="50dp"
+            android:dropDownWidth="@dimen/default_dropdown_width"
             android:entries="@array/round_number_array"
             app:layout_constraintStart_toEndOf="@+id/tournament_number_of_rounds_tv"
             app:layout_constraintTop_toBottomOf="@+id/tournament_system_radio_group" />

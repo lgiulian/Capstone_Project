@@ -45,6 +45,7 @@ public class GamesPair {
 
     private List<Vector<String>> tblGames;
     private List<Vector<String>> tblNotPairablePlayers;
+
     private List<Vector<String>> tblPairablePlayers;
     private List<Vector<String>> tblPreviousGames;
     private int roundNumber;
@@ -56,7 +57,7 @@ public class GamesPair {
 	private int spnRoundNumber;
 	private String previousGamesLabel;
 
-	private PairListener pairListener;
+    private PairListener pairListener;
 	
 	public interface PairListener {
 		void onMessage(String message);
@@ -153,6 +154,7 @@ public class GamesPair {
             byePlayerBtnText = "<<<";
 
         }
+        updateTableGames();
     }
     /**
      * From a non sorted alP array, returns a score sorted array
@@ -280,7 +282,6 @@ public class GamesPair {
     }
 
     private void fillGamesTable(ArrayList<Game> alG, List<Vector<String>> table) {
-        table = new ArrayList<>();
         ArrayList<Game> alDisplayedGames = new ArrayList<Game>(alG);
 
         GameComparator gameComparator = new GameComparator(gamesSortType);
@@ -305,7 +306,6 @@ public class GamesPair {
     }
 
     private void fillPlayersTable(ArrayList<Player> alP, List<Vector<String>> table) {
-    	table = new ArrayList<>();
         ArrayList<Player> alDisplayedPlayers = new ArrayList<Player>(alP);
         ArrayList<ScoredPlayer> alOrderedScoredPlayers = null;
         TournamentParameterSet tps = null;
@@ -336,6 +336,22 @@ public class GamesPair {
             row.add(p.getClub());
             table.add(row);
         }
+    }
+
+    /**
+     * Produces a list of selected players in tblPairablePlayers
+     * If no player is selected, returns the full list
+     */
+    private ArrayList<Player> selectedPlayersList() {
+        ArrayList<Player> alSelectedPlayers = new ArrayList<Player>();
+
+        for (int iRow = 0; iRow < tblPairablePlayers.size(); iRow++) {
+            String name = tblPairablePlayers.get(iRow).get(NAME_COL);
+            Player p;
+            p = tournament.getPlayerByKeyString(name);
+            alSelectedPlayers.add(p);
+        }
+        return alSelectedPlayers;
     }
 
     /**
@@ -410,8 +426,8 @@ public class GamesPair {
 
     }
 
-    private void pair(ArrayList<Player> selectedPlayers, boolean chooseByePlayer, boolean keepPairingNevertheless) {
-        ArrayList<Player> alPlayersToPair = selectedPlayers;
+    public void pair(boolean chooseByePlayer, boolean keepPairingNevertheless) {
+        ArrayList<Player> alPlayersToPair = selectedPlayersList();
 
         // Issue an error message if a player is in "PRE" status
         for (Player p : alPlayersToPair) {
@@ -744,7 +760,6 @@ public class GamesPair {
 
         shouldDisplayPanelInternal();
         updateComponents();
-
     }
 
     private void demandedDisplayedRoundNumberHasChanged() {
@@ -762,7 +777,15 @@ public class GamesPair {
         processedRoundNumber = demandedRN;
         updateAllViews();
     }
-    
+
+    public List<Vector<String>> getTblGames() {
+        return tblGames;
+    }
+
+    public List<Vector<String>> getTblPairablePlayers() {
+        return tblPairablePlayers;
+    }
+
     private void informMessage(String message) {
     	if (pairListener != null) {
     		pairListener.onMessage(message);
@@ -786,4 +809,9 @@ public class GamesPair {
     		pairListener.onShouldDisplayPanelInternal();
     	}
     }
+
+    public void setPairListener(PairListener pairListener) {
+        this.pairListener = pairListener;
+    }
+
 }
