@@ -4,7 +4,6 @@ import android.arch.lifecycle.ViewModel;
 
 import com.crilu.gothandroid.GothandroidApplication;
 import com.crilu.opengotha.Player;
-import com.crilu.opengotha.model.GamesPair;
 import com.crilu.opengotha.model.PlayersManager;
 
 import java.util.List;
@@ -13,7 +12,7 @@ public class PlayersManagerViewModel extends ViewModel {
     private PlayersManager mPlayersManager;
 
     public PlayersManagerViewModel() {
-        mPlayersManager = new PlayersManager(GothandroidApplication.getGothaModelInstance().getTournament());
+        mPlayersManager = GothandroidApplication.getPlayersManagerInstance();
     }
 
     public PlayersManager getPlayersManager() {

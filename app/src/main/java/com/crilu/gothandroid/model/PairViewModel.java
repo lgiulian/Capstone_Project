@@ -16,7 +16,7 @@ public class PairViewModel extends AndroidViewModel {
 
     public PairViewModel(@NonNull Application application) {
         super(application);
-        this.mGamesPair = new GamesPair(GothandroidApplication.getGothaModelInstance().getTournament());
+        this.mGamesPair = GothandroidApplication.getGamesPairInstance();
     }
 
     public GamesPair getGamesPair() {
