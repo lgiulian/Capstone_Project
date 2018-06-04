@@ -11,13 +11,21 @@ import com.crilu.opengotha.model.GamesPair;
 import com.crilu.opengotha.model.GothaModel;
 import com.crilu.opengotha.model.PlayersManager;
 
+import java.text.DateFormat;
+
 import timber.log.Timber;
 
 public class GothandroidApplication extends Application {
+
+    public static final String TOURNAMENT_DOC_REF_PATH = "tournament";
+
+    public static final DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM);
+
     private static RatingList sRatingList;
     private static GothaModel sGothaModel;
     private static GamesPair sGamesPair;
     private static PlayersManager sPlayersManager;
+    private static String sCurrentUser;
 
     @Override
     public void onCreate() {
@@ -68,6 +76,14 @@ public class GothandroidApplication extends Application {
     //    }
     //    return sGamesPair;
     //}
+
+    public static String getCurrentUser() {
+        return sCurrentUser;
+    }
+
+    public static void setCurrentUser(String currentUser) {
+        GothandroidApplication.sCurrentUser = currentUser;
+    }
 
     /** A tree which logs important information for crash reporting. */
     private static class CrashReportingTree extends Timber.Tree {
