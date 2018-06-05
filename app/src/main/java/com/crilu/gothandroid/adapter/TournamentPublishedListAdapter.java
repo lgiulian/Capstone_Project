@@ -37,7 +37,7 @@ public class TournamentPublishedListAdapter extends RecyclerView.Adapter<Tournam
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View rootView = inflater.inflate(R.layout.tournament_published_item_layout, parent, false);
+        View rootView = inflater.inflate(R.layout.item_tournament_published_list, parent, false);
         return new ViewHolder(rootView);
     }
 

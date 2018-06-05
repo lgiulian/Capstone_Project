@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/default_top_bottom_padding"
+    android:paddingEnd="@dimen/default_left_right_padding"
+    android:paddingLeft="@dimen/default_left_right_padding"
+    android:paddingRight="@dimen/default_left_right_padding"
+    android:paddingStart="@dimen/default_left_right_padding"
+    android:paddingTop="@dimen/default_top_bottom_padding">
+
+    <TextView
+        android:id="@+id/full_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="14sp"
+        tools:text="Full name"/>
+
+    <TextView
+        android:id="@+id/begin_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/full_name"
+        android:textStyle="italic"
+        tools:text="2018 May 5"/>
+
+    <TextView
+        android:id="@+id/location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:layout_below="@+id/full_name"
+        android:layout_toRightOf="@+id/begin_date"
+        android:layout_toEndOf="@+id/begin_date"
+        tools:text="Location"
+        android:textStyle="italic"/>
+
+
+</RelativeLayout>
