@@ -70,4 +70,7 @@
     <string name="tables_header_white">White</string>
     <string name="tables_header_black">Black</string>
     <string name="tables_header_hd">Hd</string>
+
+    <!-- Message and Notification Strings -->
+    <string name="notification_message">"New update for %1$s"</string>
 </resources>
