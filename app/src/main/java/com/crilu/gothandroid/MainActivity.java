@@ -34,7 +34,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.File;
 import java.io.IOException;
@@ -58,6 +57,7 @@ public class MainActivity extends AppCompatActivity
     public static final String BEGIN_DATE = "beginDate";
     public static final String LOCATION = "location";
     public static final String DIRECTOR = "director";
+    public static final String RESULT_CONTENT = "content";
     private FirebaseAuth mAuth;
 
     private List<Tournament> mPublishedTournament = new ArrayList<>();
@@ -175,6 +175,7 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_publish) {
             createLocalFileAndPublishOnFirestore();
+        } else if (id == R.id.nav_publish_results) {
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -215,6 +216,23 @@ public class MainActivity extends AppCompatActivity
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void publishResultsOnFirestore(String tournamentId) {
+        Timber.d("prepare to save results for tournament %s", tournamentId);
+        Map<String, Object> resultToSave = new HashMap<>();
+        resultToSave.put(RESULT_CONTENT, "R1 R2 R3 R4 R5");
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection(TOURNAMENT_DOC_REF_PATH + "/" + tournamentId + "/result").add(resultToSave).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentReference> task) {
+                if (task.isSuccessful()) {
+                    Timber.d("Result %s was saved", task.getResult().getId());
+                } else {
+                    Timber.d(task.getException());
+                }
+            }
+        });
     }
 
     @Override
@@ -306,6 +324,7 @@ public class MainActivity extends AppCompatActivity
         Tournament selectedTournament = mPublishedTournament.get(position);
         String tournamentId = selectedTournament.getId();
         Timber.d("selectedTournament: %s", tournamentId);
-        FirebaseMessaging.getInstance().subscribeToTopic(tournamentId);
+        //FirebaseMessaging.getInstance().subscribeToTopic(tournamentId);
+        publishResultsOnFirestore(tournamentId);
     }
 }

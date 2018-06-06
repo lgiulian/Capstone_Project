@@ -73,4 +73,5 @@
 
     <!-- Message and Notification Strings -->
     <string name="notification_message">"New update for %1$s"</string>
+    <string name="menu_drawer_publish_results">Publish Results</string>
 </resources>
