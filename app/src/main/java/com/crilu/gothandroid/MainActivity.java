@@ -193,11 +193,12 @@ public class MainActivity extends AppCompatActivity
                 tournamentToSave.put(LOCATION, tournament.getTournamentParameterSet().getGeneralParameterSet().getLocation());
                 tournamentToSave.put(DIRECTOR, tournament.getTournamentParameterSet().getGeneralParameterSet().getDirector());
                 tournamentToSave.put(CONTENT, tournamentContent);
-                DocumentReference docRef = FirebaseFirestore.getInstance().document(TOURNAMENT_DOC_REF_PATH
-                        + "/" + currUser + "-#-" + tournament.getFullName());
-                docRef.set(tournamentToSave).addOnCompleteListener(new OnCompleteListener<Void>() {
+                //DocumentReference docRef = FirebaseFirestore.getInstance().document(TOURNAMENT_DOC_REF_PATH
+                //        + "/" + currUser + "-#-" + tournament.getFullName());
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.collection(TOURNAMENT_DOC_REF_PATH).add(tournamentToSave).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                     @Override
-                    public void onComplete(@NonNull Task<Void> task) {
+                    public void onComplete(@NonNull Task<DocumentReference> task) {
                         if (task.isSuccessful()) {
                             Timber.d("Tournament %s was saved", tournament.getFullName());
                         } else {
