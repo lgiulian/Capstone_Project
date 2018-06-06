@@ -65,6 +65,7 @@ public class TournamentPublishedListAdapter extends RecyclerView.Adapter<Tournam
             beginDate = itemView.findViewById(R.id.begin_date);
             fullName = itemView.findViewById(R.id.full_name);
             location = itemView.findViewById(R.id.location);
+            itemView.setOnClickListener(this);
         }
 
         @Override

@@ -33,6 +33,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.File;
 import java.io.IOException;
@@ -89,6 +91,9 @@ public class MainActivity extends AppCompatActivity
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new TournamentPublishedListAdapter(this, mPublishedTournament);
         recyclerView.setAdapter(mAdapter);
+
+        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+        Timber.d("token: %s", refreshedToken);
 
         fetchTournaments();
 
@@ -251,7 +256,9 @@ public class MainActivity extends AppCompatActivity
                     mPublishedTournament.clear();
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Timber.d(document.getId() + " => " + document.getData());
-                        mPublishedTournament.add(document.toObject(Tournament.class));
+                        Tournament tournament = document.toObject(Tournament.class);
+                        tournament.setId(document.getId());
+                        mPublishedTournament.add(tournament);
                     }
                     mAdapter.notifyDataSetChanged();
                 } else {
@@ -296,6 +303,9 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onTournamentSelected(int position) {
-
+        Tournament selectedTournament = mPublishedTournament.get(position);
+        String tournamentId = selectedTournament.getId();
+        Timber.d("selectedTournament: %s", tournamentId);
+        FirebaseMessaging.getInstance().subscribeToTopic(tournamentId);
     }
 }
