@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.crilu.gothandroid">
 
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="18" />
+
     <application
         android:name=".GothandroidApplication"
         android:allowBackup="true"
@@ -39,23 +42,6 @@
                 android:value="com.crilu.gothandroid.MainActivity" />
         </activity>
 
-        <service
-            android:name=".utils.ParsePlayersIntentService"
-            android:exported="false" />
-
-        <service
-            android:name=".fcm.GothaFirebaseInstanceIdService">
-            <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
-            </intent-filter>
-        </service>
-
-        <service android:name=".fcm.GothaFirebaseMessageService">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
-
         <activity
             android:name=".PairActivity"
             android:label="@string/title_activity_pair"
@@ -65,6 +51,40 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.crilu.gothandroid.MainActivity" />
         </activity>
+
+        <activity android:name=".MyAccount"
+            android:label="@string/title_activity_myAccount"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.crilu.gothandroid.MainActivity" />
+        </activity>
+
+        <service
+            android:name=".utils.ParsePlayersIntentService"
+            android:exported="false" />
+        <service android:name=".fcm.GothaFirebaseInstanceIdService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".fcm.GothaFirebaseMessageService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.example.android.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"></meta-data>
+        </provider>
+
     </application>
 
 </manifest>

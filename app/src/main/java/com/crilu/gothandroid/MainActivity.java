@@ -23,8 +23,6 @@ import com.crilu.gothandroid.model.firestore.Tournament;
 import com.crilu.gothandroid.utils.FileUtils;
 import com.crilu.opengotha.ExternalDocument;
 import com.crilu.opengotha.TournamentInterface;
-import com.firebase.ui.auth.AuthUI;
-import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,7 +36,6 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,7 +47,6 @@ import static com.crilu.gothandroid.GothandroidApplication.TOURNAMENT_DOC_REF_PA
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, TournamentPublishedListAdapter.OnTournamentClickListener {
 
-    private static final int RC_SIGN_IN = 4212;
     public static final String FULL_NAME = "fullName";
     public static final String SHORT_NAME = "shortName";
     public static final String CONTENT = "content";
@@ -158,19 +154,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_my_tournaments) {
 
         } else if (id == R.id.nav_my_account) {
-            // Choose authentication providers
-            List<AuthUI.IdpConfig> providers = Arrays.asList(
-                    new AuthUI.IdpConfig.EmailBuilder().build(),
-                    new AuthUI.IdpConfig.GoogleBuilder().build(),
-                    new AuthUI.IdpConfig.FacebookBuilder().build());
-
-// Create and launch sign-in intent
-            startActivityForResult(
-                    AuthUI.getInstance()
-                            .createSignInIntentBuilder()
-                            .setAvailableProviders(providers)
-                            .build(),
-                    RC_SIGN_IN);
+            myAccount();
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_publish) {
@@ -181,6 +165,11 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void myAccount() {
+        Intent intent = new Intent(this, MyAccount.class);
+        startActivity(intent);
     }
 
     private void createLocalFileAndPublishOnFirestore() {
@@ -233,36 +222,6 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == RC_SIGN_IN) {
-            IdpResponse response = IdpResponse.fromResultIntent(data);
-
-            if (resultCode == RESULT_OK) {
-                // Successfully signed in
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                Timber.d("user=%s, uid=%s", user, user.getUid());
-                GothandroidApplication.setCurrentUser(user.getUid());
-
-//                AuthUI.getInstance()
-//                        .signOut(this)
-//                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                            public void onComplete(@NonNull Task<Void> task) {
-//                                Timber.d("signed out");
-//                            }
-//                        });
-                // ...
-            } else {
-                // Sign in failed. If response is null the user canceled the
-                // sign-in flow using the back button. Otherwise check
-                // response.getError().getErrorCode() and handle the error.
-                // ...
-            }
-        }
     }
 
     private void fetchTournaments() {

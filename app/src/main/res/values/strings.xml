@@ -74,4 +74,20 @@
     <!-- Message and Notification Strings -->
     <string name="notification_message">"New update for %1$s"</string>
     <string name="menu_drawer_publish_results">Publish Results</string>
+
+    <string name="title_activity_myAccount">My Account</string>
+    <string name="ffg_lic_hint">FFG LIC</string>
+    <string name="egf_pin_label">EGF PIN *</string>
+    <string name="first_name_label">First Name</string>
+    <string name="last_name_label">Last Name</string>
+    <string name="ffg_lic_label">FFG LIC *</string>
+    <string name="aga_id_label">AGA ID *</string>
+    <string name="required_in_order_to_join_tournaments">* Required in order to join tournaments</string>
+    <string name="profile_photo">Profile Photo</string>
+    <string name="send_to_egd">Upload profile photo</string>
+    <string name="login_to_gotha">Login to Gotha</string>
+    <string name="you_are_logged_in_now">You are logged in now</string>
+    <string name="error_logging_in">Error loggin in. Please try again later.</string>
+    <string name="logout_from_gotha">Logout from Gotha</string>
+    <string name="you_are_logged_out_now">Logged out successfully</string>
 </resources>
