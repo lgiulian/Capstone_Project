@@ -196,6 +196,7 @@ public class MainActivity extends AppCompatActivity
                     public void onComplete(@NonNull Task<DocumentReference> task) {
                         if (task.isSuccessful()) {
                             Timber.d("Tournament %s was saved", tournament.getFullName());
+                            String givenId = task.getResult().getId();
                         } else {
                             Timber.d(task.getException());
                         }
