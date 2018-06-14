@@ -10,6 +10,7 @@ import com.crilu.opengotha.RatingList;
 import com.crilu.opengotha.model.GamesPair;
 import com.crilu.opengotha.model.GothaModel;
 import com.crilu.opengotha.model.PlayersManager;
+import com.google.firebase.FirebaseApp;
 
 import java.text.DateFormat;
 
@@ -36,6 +37,8 @@ public class GothandroidApplication extends Application {
         } else {
             Timber.plant(new CrashReportingTree());
         }
+
+        FirebaseApp.initializeApp(this);
 
         Intent parsePlayersIntent = new Intent(this, ParsePlayersIntentService.class);
         startService(parsePlayersIntent);

@@ -44,6 +44,7 @@ public class MyAccount extends AppCompatActivity implements AdapterView.OnItemCl
     private ArrayAdapter<RatedPlayer> mAdapter;
     private RatedPlayer mEgdPlayer;
     private String mCurrentPhotoPath;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,23 @@ public class MyAccount extends AppCompatActivity implements AdapterView.OnItemCl
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         initComponents();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        updateUI();
+    }
+
+    private void updateUI() {
+        mAuth = FirebaseAuth.getInstance();
+        if (mAuth != null && mAuth.getCurrentUser() != null) {
+            mBinding.loginBtn.setEnabled(false);
+            mBinding.logoutBtn.setEnabled(true);
+        } else {
+            mBinding.loginBtn.setEnabled(true);
+            mBinding.logoutBtn.setEnabled(false);
+        }
     }
 
     private void initComponents() {
@@ -90,6 +108,7 @@ public class MyAccount extends AppCompatActivity implements AdapterView.OnItemCl
                         Timber.d("signed out");
                         GothandroidApplication.setCurrentUser(null);
                         Snackbar.make(mBinding.coordinatorLayout, getString(R.string.you_are_logged_out_now), Snackbar.LENGTH_LONG).show();
+                        updateUI();
                     }
                 });
     }
@@ -154,6 +173,7 @@ public class MyAccount extends AppCompatActivity implements AdapterView.OnItemCl
                 Timber.d("user=%s, uid=%s", user, user.getUid());
                 GothandroidApplication.setCurrentUser(user.getUid());
                 Snackbar.make(mBinding.coordinatorLayout, getString(R.string.you_are_logged_in_now), Snackbar.LENGTH_LONG).show();
+                updateUI();
             } else {
                 // Sign in failed. If response is null the user canceled the
                 // sign-in flow using the back button. Otherwise check

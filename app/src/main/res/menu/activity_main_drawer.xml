@@ -9,9 +9,13 @@
             android:icon="@drawable/ic_menu_add"
             android:title="@string/menu_drawer_new" />
         <item
-            android:id="@+id/nav_open"
+            android:id="@+id/nav_save_locally"
+            android:icon="@drawable/ic_menu_save"
+            android:title="@string/menu_drawer_save_locally" />
+        <item
+            android:id="@+id/nav_open_unpublished"
             android:icon="@drawable/ic_menu_open"
-            android:title="@string/menu_drawer_open" />
+            android:title="@string/menu_drawer_open_unpublished" />
         <item
             android:id="@+id/nav_players_manager"
             android:icon="@drawable/ic_menu_players_manager"
@@ -21,9 +25,13 @@
             android:icon="@drawable/ic_menu_pair"
             android:title="@string/menu_drawer_pair" />
         <item
-            android:id="@+id/nav_my_tournaments"
-            android:icon="@drawable/ic_menu_list"
-            android:title="@string/menu_drawer_my_tournaments" />
+            android:id="@+id/nav_tournament_options"
+            android:icon="@drawable/ic_menu_settings"
+            android:title="@string/menu_drawer_tournament_options" />
+        <item
+            android:id="@+id/nav_game_options"
+            android:icon="@drawable/ic_menu_game_settings"
+            android:title="@string/menu_drawer_game_options" />
         <item
             android:id="@+id/nav_my_account"
             android:icon="@drawable/ic_menu_account"

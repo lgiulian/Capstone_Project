@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,6 +20,8 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.crilu.gothandroid.adapter.TournamentPublishedListAdapter;
 import com.crilu.gothandroid.model.firestore.Tournament;
@@ -56,6 +61,9 @@ public class MainActivity extends AppCompatActivity
     public static final String RESULT_CONTENT = "content";
     private FirebaseAuth mAuth;
 
+    private CoordinatorLayout mCoordinatorLayout;
+    private TextView mTournamentName;
+    private ImageView mProfilePhoto;
     private List<Tournament> mPublishedTournament = new ArrayList<>();
     private TournamentPublishedListAdapter mAdapter;
 
@@ -83,6 +91,9 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        mCoordinatorLayout = findViewById(R.id.coordinator_layout);
+        mTournamentName = navigationView.getHeaderView(0).findViewById(R.id.tournament_name);
+        mProfilePhoto = navigationView.getHeaderView(0).findViewById(R.id.imageView);
         RecyclerView recyclerView = findViewById(R.id.tournaments_list_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new TournamentPublishedListAdapter(this, mPublishedTournament);
@@ -92,17 +103,12 @@ public class MainActivity extends AppCompatActivity
         Timber.d("token: %s", refreshedToken);
 
         fetchTournaments();
-
-        //FirebaseApp.initializeApp(this);
-        //mAuth = FirebaseAuth.getInstance();
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        //FirebaseUser currentUser = mAuth.getCurrentUser();
-        //updateUI(currentUser);
+        updateUI();
     }
 
     @Override
@@ -145,14 +151,16 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_new) {
             createNewTournament();
-        }  else if (id == R.id.nav_open) {
+        } else if (id == R.id.nav_open_unpublished) {
+
+        } else if (id == R.id.nav_save_locally) {
 
         } else if (id == R.id.nav_players_manager) {
             managePlayers();
         } else if (id == R.id.nav_pair) {
             pair();
-        } else if (id == R.id.nav_my_tournaments) {
-
+        } else if (id == R.id.nav_tournament_options) {
+        } else if (id == R.id.nav_game_options) {
         } else if (id == R.id.nav_my_account) {
             myAccount();
         } else if (id == R.id.nav_share) {
@@ -173,7 +181,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void createLocalFileAndPublishOnFirestore() {
-        final TournamentInterface tournament = GothandroidApplication.getGothaModelInstance().getTournament();
+        final TournamentInterface tournament = checkTournamentOpened();
+        if (tournament == null) return;
+
         String filename = tournament.getFullName() + ".xml";
         File file = new File(getFilesDir(), filename);
         ExternalDocument.generateXMLFile(tournament, file);
@@ -206,6 +216,16 @@ public class MainActivity extends AppCompatActivity
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Nullable
+    private TournamentInterface checkTournamentOpened() {
+        final TournamentInterface tournament = GothandroidApplication.getGothaModelInstance().getTournament();
+        if (tournament == null) {
+            Snackbar.make(mCoordinatorLayout, getString(R.string.no_currently_opened_tournament), Snackbar.LENGTH_LONG).show();
+            return null;
+        }
+        return tournament;
     }
 
     private void publishResultsOnFirestore(String tournamentId) {
@@ -246,7 +266,9 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-    private void updateUI(FirebaseUser currentUser) {
+    private void updateUI() {
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
             // Name, email address, and profile photo Url
             String name = currentUser.getDisplayName();
@@ -262,9 +284,16 @@ public class MainActivity extends AppCompatActivity
             String uid = currentUser.getUid();
             Timber.d("Name -%s , email -%s , address -%s , profile photo -%s, uid -%s", name, email, photoUrl, emailVerified, uid);
         }
+        TournamentInterface currentTournament = GothandroidApplication.getGothaModelInstance().getTournament();
+        if (currentTournament != null) {
+            mTournamentName.setText(currentTournament.getFullName());
+        }
     }
 
     private void managePlayers() {
+        final TournamentInterface tournament = checkTournamentOpened();
+        if (tournament == null) return;
+
         Intent intent = new Intent(this, PlayersManagerActivity.class);
         startActivity(intent);
     }
@@ -275,6 +304,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void pair() {
+        final TournamentInterface tournament = checkTournamentOpened();
+        if (tournament == null) return;
+
         Intent intent = new Intent(this, PairActivity.class);
         startActivity(intent);
     }
