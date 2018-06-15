@@ -5,8 +5,8 @@ import java.util.Date;
 
 public class Tournament {
 
-    private Integer _id;
-    private String id;
+    private Integer id;
+    private String identity;
     private String fullName;
     private String shortName;
     private Date beginDate;
@@ -15,20 +15,20 @@ public class Tournament {
     private String content;
     private String creator;
 
-    public Integer get_id() {
-        return _id;
-    }
-
-    public void set_id(Integer _id) {
-        this._id = _id;
-    }
-
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getIdentity() {
+        return identity;
+    }
+
+    public void setIdentity(String identity) {
+        this.identity = identity;
     }
 
     public String getFullName() {

@@ -76,6 +76,11 @@
         </service>
 
         <provider
+            android:name=".data.GothaContentProvider"
+            android:authorities="com.crilu.gothandroid"
+            android:exported="false"/>
+
+        <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.example.android.fileprovider"
             android:exported="false"

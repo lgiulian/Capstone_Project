@@ -26,8 +26,8 @@ public class TournamentDao {
                 GothaContract.TournamentEntry.COLUMN_BEGIN_DATE);
         while (cursor.moveToNext()) {
             Tournament tournament = new Tournament();
-            tournament.set_id(cursor.getInt(cursor.getColumnIndex(GothaContract.TournamentEntry._ID)));
-            tournament.setId(cursor.getString(cursor.getColumnIndex(GothaContract.TournamentEntry.COLUMN_ID)));
+            tournament.setId(cursor.getInt(cursor.getColumnIndex(GothaContract.TournamentEntry._ID)));
+            tournament.setIdentity(cursor.getString(cursor.getColumnIndex(GothaContract.TournamentEntry.COLUMN_IDENTITY)));
             tournament.setBeginDate(cursor.getInt(cursor.getColumnIndex(GothaContract.TournamentEntry.COLUMN_BEGIN_DATE)));
             tournament.setContent(cursor.getString(cursor.getColumnIndex(GothaContract.TournamentEntry.COLUMN_CONTENT)));
             tournament.setCreator(cursor.getString(cursor.getColumnIndex(GothaContract.TournamentEntry.COLUMN_CREATOR)));

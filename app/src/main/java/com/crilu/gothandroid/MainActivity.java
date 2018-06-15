@@ -257,7 +257,7 @@ public class MainActivity extends AppCompatActivity
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Timber.d(document.getId() + " => " + document.getData());
                         Tournament tournament = document.toObject(Tournament.class);
-                        tournament.setId(document.getId());
+                        tournament.setIdentity(document.getId());
                         mPublishedTournament.add(tournament);
                     }
                     mAdapter.notifyDataSetChanged();
@@ -316,7 +316,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onTournamentSelected(int position) {
         Tournament selectedTournament = mPublishedTournament.get(position);
-        String tournamentId = selectedTournament.getId();
+        String tournamentId = selectedTournament.getIdentity();
         Timber.d("selectedTournament: %s", tournamentId);
         //FirebaseMessaging.getInstance().subscribeToTopic(tournamentId);
         publishResultsOnFirestore(tournamentId);

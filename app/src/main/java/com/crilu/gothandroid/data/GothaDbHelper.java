@@ -20,7 +20,7 @@ public class GothaDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         final String SQL_CREATE_TOURNAMENT_TABLE = "CREATE TABLE " + TournamentEntry.TABLE_NAME + " (" +
                 TournamentEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                TournamentEntry.COLUMN_ID + " INTEGER, " +
+                TournamentEntry.COLUMN_IDENTITY + " INTEGER, " +
                 TournamentEntry.COLUMN_FULL_NAME + " TEXT, " +
                 TournamentEntry.COLUMN_SHORT_NAME + " TEXT, " +
                 TournamentEntry.COLUMN_LOCATION + " TEXT, " +
