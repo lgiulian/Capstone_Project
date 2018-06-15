@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity
     public static final String LOCATION = "location";
     public static final String DIRECTOR = "director";
     public static final String RESULT_CONTENT = "content";
+    public static final String CREATOR = "creator";
     private FirebaseAuth mAuth;
 
     private CoordinatorLayout mCoordinatorLayout;
@@ -198,6 +199,7 @@ public class MainActivity extends AppCompatActivity
                 tournamentToSave.put(LOCATION, tournament.getTournamentParameterSet().getGeneralParameterSet().getLocation());
                 tournamentToSave.put(DIRECTOR, tournament.getTournamentParameterSet().getGeneralParameterSet().getDirector());
                 tournamentToSave.put(CONTENT, tournamentContent);
+                tournamentToSave.put(CREATOR, GothandroidApplication.getCurrentUser());
                 //DocumentReference docRef = FirebaseFirestore.getInstance().document(TOURNAMENT_DOC_REF_PATH
                 //        + "/" + currUser + "-#-" + tournament.getFullName());
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
