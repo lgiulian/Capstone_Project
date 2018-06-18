@@ -16,6 +16,7 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
+            android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,6 +28,7 @@
             android:name=".CreateTournamentActivity"
             android:label="@string/title_activity_create_tournament"
             android:parentActivityName=".MainActivity"
+            android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -36,6 +38,7 @@
             android:name=".PlayersManagerActivity"
             android:label="@string/title_activity_players_manager"
             android:parentActivityName=".MainActivity"
+            android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -46,6 +49,7 @@
             android:name=".PairActivity"
             android:label="@string/title_activity_pair"
             android:parentActivityName=".MainActivity"
+            android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -55,6 +59,7 @@
         <activity android:name=".MyAccount"
             android:label="@string/title_activity_myAccount"
             android:parentActivityName=".MainActivity"
+            android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
