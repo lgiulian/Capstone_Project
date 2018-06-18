@@ -15,11 +15,7 @@ public class TournamentDao {
     public static List<Tournament> getAllTournaments(Context context) {
         List<Tournament> tournaments = new ArrayList<>();
 
-        SQLiteOpenHelper dbHelper = new GothaDbHelper(context);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.query(GothaContract.TournamentEntry.TABLE_NAME,
-                null,
-                null,
+        Cursor cursor = context.getContentResolver().query(GothaContract.TournamentEntry.CONTENT_URI,
                 null,
                 null,
                 null,

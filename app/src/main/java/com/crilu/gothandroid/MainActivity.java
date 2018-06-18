@@ -1,5 +1,7 @@
 package com.crilu.gothandroid;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.crilu.gothandroid.adapter.TournamentPublishedListAdapter;
+import com.crilu.gothandroid.model.TournamentsViewModel;
 import com.crilu.gothandroid.model.firestore.Tournament;
 import com.crilu.gothandroid.utils.FileUtils;
 import com.crilu.opengotha.ExternalDocument;
@@ -62,6 +65,8 @@ public class MainActivity extends AppCompatActivity
     public static final String CREATOR = "creator";
     private FirebaseAuth mAuth;
 
+    private TournamentsViewModel mModel;
+
     private CoordinatorLayout mCoordinatorLayout;
     private TextView mTournamentName;
     private ImageView mProfilePhoto;
@@ -92,6 +97,8 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        setupViewModel();
+
         mCoordinatorLayout = findViewById(R.id.coordinator_layout);
         mTournamentName = navigationView.getHeaderView(0).findViewById(R.id.tournament_name);
         mProfilePhoto = navigationView.getHeaderView(0).findViewById(R.id.imageView);
@@ -103,7 +110,21 @@ public class MainActivity extends AppCompatActivity
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         Timber.d("token: %s", refreshedToken);
 
-        fetchTournaments();
+        //fetchTournaments();
+    }
+
+    private void setupViewModel() {
+        mModel = ViewModelProviders.of(this).get(TournamentsViewModel.class);
+        final Observer<List<Tournament>> listObserver = new Observer<List<Tournament>>() {
+            @Override
+            public void onChanged(@Nullable final List<Tournament> newList) {
+                // Update the UI
+                mAdapter.setData(newList);
+                mAdapter.notifyDataSetChanged();
+            }
+        };
+
+        mModel.getTournaments().observe(this, listObserver);
     }
 
     @Override
