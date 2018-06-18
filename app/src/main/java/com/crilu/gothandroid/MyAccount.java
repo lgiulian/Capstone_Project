@@ -3,6 +3,7 @@ package com.crilu.gothandroid;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -77,10 +78,12 @@ public class MyAccount extends AppCompatActivity implements AdapterView.OnItemCl
 
     private void initComponents() {
         RatingList ratingList = GothandroidApplication.getRatingList();
-        mAdapter = new ArrayAdapter<RatedPlayer>(this,
-                android.R.layout.simple_dropdown_item_1line, ratingList.getALRatedPlayers());
-        mBinding.egfPlayer.setAdapter(mAdapter);
-        mBinding.egfPlayer.setOnItemClickListener(this);
+        if (ratingList != null) {
+            mAdapter = new ArrayAdapter<RatedPlayer>(this,
+                    android.R.layout.simple_dropdown_item_1line, ratingList.getALRatedPlayers());
+            mBinding.egfPlayer.setAdapter(mAdapter);
+            mBinding.egfPlayer.setOnItemClickListener(this);
+        }
     }
 
     public void onClickLogin(View view) {
@@ -181,10 +184,32 @@ public class MyAccount extends AppCompatActivity implements AdapterView.OnItemCl
                 // ...
                 Snackbar.make(mBinding.coordinatorLayout, getString(R.string.error_logging_in), Snackbar.LENGTH_LONG).show();
             }
-        } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            mBinding.profileBtn.setImageBitmap(imageBitmap);
+        } else if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
+            setPic();
         }
+    }
+
+    private void setPic() {
+        // Get the dimensions of the View
+        int targetW = mBinding.profileBtn.getWidth();
+        int targetH = mBinding.profileBtn.getHeight();
+
+        // Get the dimensions of the bitmap
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+        int photoW = bmOptions.outWidth;
+        int photoH = bmOptions.outHeight;
+
+        // Determine how much to scale down the image
+        int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+
+        // Decode the image file into a Bitmap sized to fill the View
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = scaleFactor;
+        bmOptions.inPurgeable = true;
+
+        Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+        mBinding.profileBtn.setImageBitmap(bitmap);
     }
 }
