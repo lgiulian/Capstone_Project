@@ -54,7 +54,7 @@ public class GothaContentProvider extends ContentProvider {
 
         switch (match) {
             case TOURNAMENTS:
-                Timber.d("query tournaments table");
+                //Timber.d("query tournaments table");
                 retCursor = db.query(GothaContract.TournamentEntry.TABLE_NAME,
                         projection,
                         selection,

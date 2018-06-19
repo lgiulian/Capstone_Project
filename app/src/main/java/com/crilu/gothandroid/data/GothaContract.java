@@ -26,6 +26,13 @@ public class GothaContract {
         public static final String COLUMN_DIRECTOR = "director";
         public static final String COLUMN_CONTENT = "content";
         public static final String COLUMN_CREATOR = "creator";
+        public static final String COLUMN_CREATION_DATE = "creation_date";
+
+        public static Uri buildTournamentUriWithDate(long date) {
+            return CONTENT_URI.buildUpon()
+                    .appendPath(Long.toString(date))
+                    .build();
+        }
     }
 
     public static final class SubscriptionEntry implements BaseColumns {

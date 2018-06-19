@@ -28,6 +28,7 @@ import android.widget.TextView;
 import com.crilu.gothandroid.adapter.TournamentPublishedListAdapter;
 import com.crilu.gothandroid.model.TournamentsViewModel;
 import com.crilu.gothandroid.model.firestore.Tournament;
+import com.crilu.gothandroid.sync.GothaSyncUtils;
 import com.crilu.gothandroid.utils.FileUtils;
 import com.crilu.opengotha.ExternalDocument;
 import com.crilu.opengotha.TournamentInterface;
@@ -37,13 +38,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,14 +55,6 @@ import static com.crilu.gothandroid.GothandroidApplication.TOURNAMENT_DOC_REF_PA
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, TournamentPublishedListAdapter.OnTournamentClickListener {
 
-    public static final String FULL_NAME = "fullName";
-    public static final String SHORT_NAME = "shortName";
-    public static final String CONTENT = "content";
-    public static final String BEGIN_DATE = "beginDate";
-    public static final String LOCATION = "location";
-    public static final String DIRECTOR = "director";
-    public static final String RESULT_CONTENT = "content";
-    public static final String CREATOR = "creator";
     private FirebaseAuth mAuth;
 
     private TournamentsViewModel mModel;
@@ -98,6 +90,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         setupViewModel();
+        GothaSyncUtils.initialize(this);
 
         mCoordinatorLayout = findViewById(R.id.coordinator_layout);
         mTournamentName = navigationView.getHeaderView(0).findViewById(R.id.tournament_name);
@@ -119,6 +112,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onChanged(@Nullable final List<Tournament> newList) {
                 // Update the UI
+                Timber.d("in MainActivity, in onChange of the observer set on viewModel");
                 mAdapter.setData(newList);
                 mAdapter.notifyDataSetChanged();
             }
@@ -214,13 +208,14 @@ public class MainActivity extends AppCompatActivity
             String tournamentContent = FileUtils.getFileContents(file);
             if (!TextUtils.isEmpty(currUser) && !TextUtils.isEmpty(tournamentContent)) {
                 Map<String, Object> tournamentToSave = new HashMap<>();
-                tournamentToSave.put(FULL_NAME, tournament.getFullName());
-                tournamentToSave.put(SHORT_NAME, tournament.getShortName());
-                tournamentToSave.put(BEGIN_DATE, tournament.getTournamentParameterSet().getGeneralParameterSet().getBeginDate());
-                tournamentToSave.put(LOCATION, tournament.getTournamentParameterSet().getGeneralParameterSet().getLocation());
-                tournamentToSave.put(DIRECTOR, tournament.getTournamentParameterSet().getGeneralParameterSet().getDirector());
-                tournamentToSave.put(CONTENT, tournamentContent);
-                tournamentToSave.put(CREATOR, GothandroidApplication.getCurrentUser());
+                tournamentToSave.put(Tournament.FULL_NAME, tournament.getFullName());
+                tournamentToSave.put(Tournament.SHORT_NAME, tournament.getShortName());
+                tournamentToSave.put(Tournament.BEGIN_DATE, tournament.getTournamentParameterSet().getGeneralParameterSet().getBeginDate());
+                tournamentToSave.put(Tournament.LOCATION, tournament.getTournamentParameterSet().getGeneralParameterSet().getLocation());
+                tournamentToSave.put(Tournament.DIRECTOR, tournament.getTournamentParameterSet().getGeneralParameterSet().getDirector());
+                tournamentToSave.put(Tournament.CONTENT, tournamentContent);
+                tournamentToSave.put(Tournament.CREATOR, GothandroidApplication.getCurrentUser());
+                tournamentToSave.put(Tournament.CREATION_DATE, new Date(System.currentTimeMillis()));
                 //DocumentReference docRef = FirebaseFirestore.getInstance().document(TOURNAMENT_DOC_REF_PATH
                 //        + "/" + currUser + "-#-" + tournament.getFullName());
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -254,34 +249,13 @@ public class MainActivity extends AppCompatActivity
     private void publishResultsOnFirestore(String tournamentId) {
         Timber.d("prepare to save results for tournament %s", tournamentId);
         Map<String, Object> resultToSave = new HashMap<>();
-        resultToSave.put(RESULT_CONTENT, "R1 R2 R3 R4 R5");
+        resultToSave.put(Tournament.RESULT_CONTENT, "R1 R2 R3 R4 R5");
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection(TOURNAMENT_DOC_REF_PATH + "/" + tournamentId + "/result").add(resultToSave).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
             @Override
             public void onComplete(@NonNull Task<DocumentReference> task) {
                 if (task.isSuccessful()) {
                     Timber.d("Result %s was saved", task.getResult().getId());
-                } else {
-                    Timber.d(task.getException());
-                }
-            }
-        });
-    }
-
-    private void fetchTournaments() {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection(TOURNAMENT_DOC_REF_PATH).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    mPublishedTournament.clear();
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        Timber.d(document.getId() + " => " + document.getData());
-                        Tournament tournament = document.toObject(Tournament.class);
-                        tournament.setIdentity(document.getId());
-                        mPublishedTournament.add(tournament);
-                    }
-                    mAdapter.notifyDataSetChanged();
                 } else {
                     Timber.d(task.getException());
                 }

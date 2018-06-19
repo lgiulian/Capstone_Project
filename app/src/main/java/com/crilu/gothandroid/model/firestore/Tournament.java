@@ -5,6 +5,16 @@ import java.util.Date;
 
 public class Tournament {
 
+    public static final String FULL_NAME = "fullName";
+    public static final String SHORT_NAME = "shortName";
+    public static final String CONTENT = "content";
+    public static final String BEGIN_DATE = "beginDate";
+    public static final String LOCATION = "location";
+    public static final String DIRECTOR = "director";
+    public static final String RESULT_CONTENT = "content";
+    public static final String CREATOR = "creator";
+    public static final String CREATION_DATE = "creationDate";
+
     private Integer id;
     private String identity;
     private String fullName;
@@ -14,6 +24,7 @@ public class Tournament {
     private String director;
     private String content;
     private String creator;
+    private Date creationDate;
 
     public Integer getId() {
         return id;
@@ -55,11 +66,6 @@ public class Tournament {
         this.beginDate = beginDate;
     }
 
-    public void setBeginDate(Integer beginDate) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(beginDate);
-        this.beginDate = cal.getTime();
-    }
     public String getLocation() {
         return location;
     }
@@ -90,5 +96,13 @@ public class Tournament {
 
     public void setCreator(String creator) {
         this.creator = creator;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
 }
