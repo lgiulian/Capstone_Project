@@ -14,6 +14,7 @@ import com.crilu.opengotha.RatingList;
 import com.crilu.opengotha.model.GamesPair;
 import com.crilu.opengotha.model.GothaModel;
 import com.crilu.opengotha.model.PlayersManager;
+import com.facebook.stetho.Stetho;
 import com.google.firebase.FirebaseApp;
 
 import java.text.DateFormat;
@@ -41,6 +42,8 @@ public class GothandroidApplication extends Application {
         } else {
             Timber.plant(new CrashReportingTree());
         }
+
+        Stetho.initializeWithDefaults(this);
 
         createNotificationChannel();
 
