@@ -287,7 +287,7 @@ public class GothaContentProvider extends ContentProvider {
             getContext().getContentResolver().notifyChange(uri, null);
         }
 
-        // Return the number of tasks deleted
+        // Return the number of rows deleted
         return rowsDeleted;
     }
 
@@ -299,17 +299,17 @@ public class GothaContentProvider extends ContentProvider {
 
         switch (match) {
             case TOURNAMENT_WITH_ID:
-                //update a single task by getting the id
+                //update a single row by getting the id
                 String id = uri.getPathSegments().get(1);
                 rowsUpdated = mDbHelper.getWritableDatabase().update(GothaContract.TournamentEntry.TABLE_NAME, values, "_id=?", new String[]{id});
                 break;
             case USER_WITH_ID:
-                //update a single task by getting the id
+                //update a single row by getting the id
                 id = uri.getPathSegments().get(1);
                 rowsUpdated = mDbHelper.getWritableDatabase().update(GothaContract.UserEntry.TABLE_NAME, values, "_id=?", new String[]{id});
                 break;
             case SUBSCRIPTION_WITH_ID:
-                //update a single task by getting the id
+                //update a single row by getting the id
                 id = uri.getPathSegments().get(1);
                 rowsUpdated = mDbHelper.getWritableDatabase().update(GothaContract.SubscriptionEntry.TABLE_NAME, values, "_id=?", new String[]{id});
                 break;
