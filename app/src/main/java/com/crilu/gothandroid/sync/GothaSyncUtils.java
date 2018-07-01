@@ -7,9 +7,12 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 
+import com.crilu.gothandroid.GothandroidApplication;
 import com.crilu.gothandroid.data.GothaContract;
+import com.crilu.gothandroid.model.firestore.Subscription;
 import com.crilu.gothandroid.model.firestore.Tournament;
 import com.crilu.gothandroid.utils.AppExecutors;
+import com.crilu.opengotha.TournamentInterface;
 import com.firebase.jobdispatcher.Constraint;
 import com.firebase.jobdispatcher.Driver;
 import com.firebase.jobdispatcher.FirebaseJobDispatcher;
@@ -115,16 +118,72 @@ public class GothaSyncUtils {
         ContentValues[] contentValues = new ContentValues[publishedTournament.size()];
         int counter = 0;
         for (Tournament tournament: publishedTournament) {
+            ContentValues values = getSingleTournamentContentValues(tournament);
+            contentValues[counter] = values;
+            counter++;
+        }
+
+        return contentValues;
+    }
+
+    @NonNull
+    public static ContentValues getSingleTournamentContentValues(Tournament tournament) {
+        ContentValues values = new ContentValues();
+        values.put(GothaContract.TournamentEntry.COLUMN_BEGIN_DATE, tournament.getBeginDate().getTime());
+        values.put(GothaContract.TournamentEntry.COLUMN_CREATION_DATE, tournament.getCreationDate().getTime());
+        values.put(GothaContract.TournamentEntry.COLUMN_CONTENT, tournament.getContent());
+        values.put(GothaContract.TournamentEntry.COLUMN_CREATOR, tournament.getCreator());
+        values.put(GothaContract.TournamentEntry.COLUMN_DIRECTOR, tournament.getDirector());
+        values.put(GothaContract.TournamentEntry.COLUMN_FULL_NAME, tournament.getFullName());
+        values.put(GothaContract.TournamentEntry.COLUMN_SHORT_NAME, tournament.getShortName());
+        values.put(GothaContract.TournamentEntry.COLUMN_LOCATION, tournament.getLocation());
+        values.put(GothaContract.TournamentEntry.COLUMN_IDENTITY, tournament.getIdentity());
+        return values;
+    }
+
+    @NonNull
+    public static ContentValues getSingleSubscriptionContentValues(Subscription subscription) {
+        ContentValues values = new ContentValues();
+        values.put(GothaContract.SubscriptionEntry.COLUMN_SUBSCRIPTION_DATE, subscription.getSubscriptionDate().getTime());
+        values.put(GothaContract.SubscriptionEntry.COLUMN_IDENTITY, subscription.getIdentity());
+        values.put(GothaContract.SubscriptionEntry.COLUMN_TOURNAMENT_ID, subscription.getTournamentId());
+        values.put(GothaContract.SubscriptionEntry.COLUMN_TOKEN, subscription.getToken());
+        values.put(GothaContract.SubscriptionEntry.COLUMN_STATE, subscription.getState());
+        values.put(GothaContract.SubscriptionEntry.COLUMN_INTENT, subscription.getState());
+        values.put(GothaContract.SubscriptionEntry.COLUMN_FFG_LIC, subscription.getFfgLic());
+        values.put(GothaContract.SubscriptionEntry.COLUMN_EGF_PIN, subscription.getEgfPin());
+        values.put(GothaContract.SubscriptionEntry.COLUMN_AGA_ID, subscription.getAgaId());
+        return values;
+    }
+
+    @NonNull
+    public static ContentValues getGothaTournamentContentValues(TournamentInterface tournament, String tournamentContent) {
+        ContentValues values = new ContentValues();
+        values.put(GothaContract.TournamentEntry.COLUMN_BEGIN_DATE, tournament.getTournamentParameterSet().getGeneralParameterSet().getBeginDate().getTime());
+        values.put(GothaContract.TournamentEntry.COLUMN_CREATION_DATE, System.currentTimeMillis());
+        values.put(GothaContract.TournamentEntry.COLUMN_CONTENT, tournamentContent);
+        values.put(GothaContract.TournamentEntry.COLUMN_CREATOR, GothandroidApplication.getCurrentUser());
+        values.put(GothaContract.TournamentEntry.COLUMN_DIRECTOR, tournament.getTournamentParameterSet().getGeneralParameterSet().getDirector());
+        values.put(GothaContract.TournamentEntry.COLUMN_FULL_NAME, tournament.getFullName());
+        values.put(GothaContract.TournamentEntry.COLUMN_SHORT_NAME, tournament.getShortName());
+        values.put(GothaContract.TournamentEntry.COLUMN_LOCATION, tournament.getTournamentParameterSet().getGeneralParameterSet().getLocation());
+        return values;
+    }
+
+    public static ContentValues[] getSubscriptionValues(@NonNull List<Subscription> tournamentSubscriptions) {
+        ContentValues[] contentValues = new ContentValues[tournamentSubscriptions.size()];
+        int counter = 0;
+        for (Subscription subscription: tournamentSubscriptions) {
             ContentValues values = new ContentValues();
-            values.put(GothaContract.TournamentEntry.COLUMN_BEGIN_DATE, tournament.getBeginDate().getTime());
-            values.put(GothaContract.TournamentEntry.COLUMN_CREATION_DATE, tournament.getCreationDate().getTime());
-            values.put(GothaContract.TournamentEntry.COLUMN_CONTENT, tournament.getContent());
-            values.put(GothaContract.TournamentEntry.COLUMN_CREATOR, tournament.getCreator());
-            values.put(GothaContract.TournamentEntry.COLUMN_DIRECTOR, tournament.getDirector());
-            values.put(GothaContract.TournamentEntry.COLUMN_FULL_NAME, tournament.getFullName());
-            values.put(GothaContract.TournamentEntry.COLUMN_SHORT_NAME, tournament.getShortName());
-            values.put(GothaContract.TournamentEntry.COLUMN_LOCATION, tournament.getLocation());
-            values.put(GothaContract.TournamentEntry.COLUMN_IDENTITY, tournament.getIdentity());
+            values.put(GothaContract.SubscriptionEntry.COLUMN_SUBSCRIPTION_DATE, subscription.getSubscriptionDate().getTime());
+            values.put(GothaContract.SubscriptionEntry.COLUMN_AGA_ID, subscription.getAgaId());
+            values.put(GothaContract.SubscriptionEntry.COLUMN_EGF_PIN, subscription.getEgfPin());
+            values.put(GothaContract.SubscriptionEntry.COLUMN_FFG_LIC, subscription.getFfgLic());
+            values.put(GothaContract.SubscriptionEntry.COLUMN_INTENT, subscription.getIntent());
+            values.put(GothaContract.SubscriptionEntry.COLUMN_STATE, subscription.getState());
+            values.put(GothaContract.SubscriptionEntry.COLUMN_TOKEN, subscription.getToken());
+            values.put(GothaContract.SubscriptionEntry.COLUMN_IDENTITY, subscription.getIdentity());
+            values.put(GothaContract.SubscriptionEntry.COLUMN_TOURNAMENT_ID, subscription.getTournamentIdentity());
             contentValues[counter] = values;
             counter++;
         }

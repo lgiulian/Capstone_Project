@@ -3,11 +3,13 @@ package com.crilu.gothandroid.sync;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 
 import com.crilu.gothandroid.data.GothaContract;
 import com.crilu.gothandroid.data.GothaPreferences;
 import com.crilu.gothandroid.data.TournamentDao;
+import com.crilu.gothandroid.model.firestore.Subscription;
 import com.crilu.gothandroid.model.firestore.Tournament;
 import com.crilu.gothandroid.utils.NotificationUtils;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -35,36 +37,47 @@ public class GothaSyncTask {
         final long latestKnownPublishedTournament = GothaPreferences.getLatestKnownPublishedTournament(context);
         final long startingTimestamp = latestKnownPublishedTournament > 0? latestKnownPublishedTournament: System
                 .currentTimeMillis();
-        final List<Tournament> publishedTournament = new ArrayList<>();
+        final List<Subscription> tournamentSubscriptions = new ArrayList<>();
+        final long fetchTournamentsStartTime = System.currentTimeMillis();
         TournamentDao.fetchTournaments(startingTimestamp, new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
+                    ContentResolver gothaContentResolver = context.getContentResolver();
+                    /* Delete old tournament data */
+                    gothaContentResolver.delete(
+                            GothaContract.TournamentEntry.CONTENT_URI,
+                            GothaContract.TournamentEntry.COLUMN_CREATION_DATE + ">=?",
+                            new String[] {Long.toString(startingTimestamp)});
+
                     long latestPublishedTournamentTime = 0;
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Timber.d(document.getId() + " => " + document.getData());
                         Tournament tournament = document.toObject(Tournament.class);
-                        tournament.setIdentity(document.getId());
+                        String tournamentIdentity = document.getId();
+                        tournament.setIdentity(tournamentIdentity);
                         if (latestPublishedTournamentTime < tournament.getCreationDate().getTime()) {
                             latestPublishedTournamentTime = tournament.getCreationDate().getTime();
                         }
-                        publishedTournament.add(tournament);
-                    }
-                    ContentValues[] tournamentValues = GothaSyncUtils.getTournamentValues(publishedTournament);
-
-                    if (tournamentValues != null && tournamentValues.length != 0) {
-                        ContentResolver gothaContentResolver = context.getContentResolver();
-
-                        /* Delete old tournament data */
-                        gothaContentResolver.delete(
-                                GothaContract.TournamentEntry.CONTENT_URI,
-                                GothaContract.TournamentEntry.COLUMN_CREATION_DATE + ">=?",
-                                new String[] {Long.toString(startingTimestamp)});
-
+                        ContentValues cv = GothaSyncUtils.getSingleTournamentContentValues(tournament);
                         /* Insert our new tournament data into Gotha's ContentProvider */
-                        gothaContentResolver.bulkInsert(
+                        Uri uri = gothaContentResolver.insert(
                                 GothaContract.TournamentEntry.CONTENT_URI,
-                                tournamentValues);
+                                cv);
+                        String id = uri.getPathSegments().get(1);
+                        fetchSubscriptions(context, Long.valueOf(id), tournamentIdentity, tournamentSubscriptions);
+                    }
+                    if (task.getResult().size() > 0) {
+                        ContentValues[] subscriptionValues = GothaSyncUtils.getSubscriptionValues(tournamentSubscriptions);
+
+                        if (subscriptionValues != null && subscriptionValues.length != 0) {
+                            /* Insert our new subscriptions data into Gotha's ContentProvider */
+                            gothaContentResolver.bulkInsert(
+                                    GothaContract.SubscriptionEntry.CONTENT_URI,
+                                    subscriptionValues);
+
+                            Timber.d("Tournament's subscriptions downloaded with success");
+                        }
 
                         /*
                          * Finally, after we insert data into the ContentProvider, determine whether or not
@@ -80,6 +93,27 @@ public class GothaSyncTask {
                             NotificationUtils.notifyUserOfNewTournament(context, latestPublishedTournamentTime);
                         }
                         Timber.d("Tournaments sync with success");
+                        Timber.d("fetchTournaments took %s", (System.currentTimeMillis() - fetchTournamentsStartTime)/1000);
+                    }
+                } else {
+                    Timber.d(task.getException());
+                }
+            }
+        });
+    }
+
+    private static void fetchSubscriptions(final Context context, final Long tournamentId, final String tournamentIdentity, final List<Subscription> tournamentSubscriptions) {
+        TournamentDao.fetchSubscriptions(tournamentIdentity, new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Timber.d(document.getId() + " => " + document.getData());
+                        Subscription subscription = document.toObject(Subscription.class);
+                        subscription.setIdentity(document.getId());
+                        subscription.setTournamentId(tournamentId);
+                        subscription.setTournamentIdentity(tournamentIdentity);
+                        tournamentSubscriptions.add(subscription);
                     }
                 } else {
                     Timber.d(task.getException());

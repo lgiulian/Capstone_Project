@@ -2,6 +2,7 @@ package com.crilu.gothandroid.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,8 @@ public class TournamentPublishedListAdapter extends RecyclerView.Adapter<Tournam
 
     private List<Tournament> mData;
 
+    private int mSelectedItemForContextMenu;
+
     public interface OnTournamentClickListener {
         void onTournamentSelected(int position);
     }
@@ -31,6 +34,10 @@ public class TournamentPublishedListAdapter extends RecyclerView.Adapter<Tournam
     public void setData(List<Tournament> data) {
         this.mData = data;
         notifyDataSetChanged();
+    }
+
+    public int getSelectedItemForContextMenu() {
+        return mSelectedItemForContextMenu;
     }
 
     @NonNull
@@ -54,7 +61,7 @@ public class TournamentPublishedListAdapter extends RecyclerView.Adapter<Tournam
         return mData != null? mData.size(): 0;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener {
         TextView beginDate;
         TextView fullName;
         TextView location;
@@ -66,12 +73,26 @@ public class TournamentPublishedListAdapter extends RecyclerView.Adapter<Tournam
             fullName = itemView.findViewById(R.id.full_name);
             location = itemView.findViewById(R.id.location);
             itemView.setOnClickListener(this);
+            itemView.setOnCreateContextMenuListener(this);
         }
 
         @Override
         public void onClick(View v) {
             int pos = getAdapterPosition();
             mClickHandler.onTournamentSelected(pos);
+        }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+            menu.setHeaderTitle(R.string.select_the_action);
+            menu.add(0, R.id.open, 0, v.getContext().getString(R.string.open));
+            menu.add(0, R.id.edit, 0, v.getContext().getString(R.string.edit));
+            menu.add(0, R.id.delete, 0, v.getContext().getString(R.string.delete));
+            menu.add(0, R.id.publish_tournament, 0, v.getContext().getString(R.string.publish_tournament));
+            menu.add(0, R.id.publish_results, 0, v.getContext().getString(R.string.publish_results));
+            menu.add(0, R.id.register, 0, v.getContext().getString(R.string.register));
+            menu.add(0, R.id.subscribe, 0, v.getContext().getString(R.string.subscribe));
+            mSelectedItemForContextMenu = getAdapterPosition();
         }
     }
 }

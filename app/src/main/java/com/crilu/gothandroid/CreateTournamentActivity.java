@@ -2,6 +2,8 @@ package com.crilu.gothandroid;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -9,11 +11,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.DatePicker;
 
+import com.crilu.gothandroid.data.GothaContract;
 import com.crilu.gothandroid.databinding.ActivityCreateTournamentBinding;
+import com.crilu.gothandroid.sync.GothaSyncUtils;
+import com.crilu.gothandroid.utils.FileUtils;
+import com.crilu.opengotha.ExternalDocument;
+import com.crilu.opengotha.TournamentInterface;
 import com.crilu.opengotha.TournamentParameterSet;
 import com.crilu.opengotha.model.GothaModel;
 
-import java.text.DateFormat;
+import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
@@ -89,7 +97,26 @@ public class CreateTournamentActivity extends AppCompatActivity implements DateP
                 noRounds,
                 1,
                 mSystem);
+
+        TournamentInterface tournament = GothandroidApplication.getGothaModelInstance().getTournament();
+        saveTournament(tournament);
         finish();
+    }
+
+    private void saveTournament(TournamentInterface tournament) {
+        String filename = tournament.getFullName() + ".xml";
+        File file = new File(getFilesDir(), filename);
+        ExternalDocument.generateXMLFile(tournament, file);
+        try {
+            String tournamentContent = FileUtils.getFileContents(file);
+            ContentValues cv = GothaSyncUtils.getGothaTournamentContentValues(tournament, tournamentContent);
+            ContentResolver gothaContentResolver = getContentResolver();
+            gothaContentResolver.insert(
+                    GothaContract.TournamentEntry.CONTENT_URI,
+                    cv);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void onSystemButtonClicked(View view) {

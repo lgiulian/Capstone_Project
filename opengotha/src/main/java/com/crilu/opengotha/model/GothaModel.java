@@ -1,16 +1,5 @@
 package com.crilu.opengotha.model;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.prefs.Preferences;
-
 import com.crilu.opengotha.DPParameterSet;
 import com.crilu.opengotha.Game;
 import com.crilu.opengotha.GeneralParameterSet;
@@ -25,9 +14,22 @@ import com.crilu.opengotha.Tournament;
 import com.crilu.opengotha.TournamentInterface;
 import com.crilu.opengotha.TournamentParameterSet;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.prefs.Preferences;
+
 public class GothaModel {
 
-	interface GothaListener {
+    interface GothaListener {
 		void updateTitle();
 		void warnPreliminaryRegisteringStatus(String message);
 		void controlPannelModelUpdated();
@@ -133,6 +135,11 @@ public class GothaModel {
         this.tournamentChanged();
     }
 
+    public void openTournamentFromFile(File f) throws IOException, ClassNotFoundException {
+        tournament = Gotha.getTournamentFromFile(f);
+        this.tournamentChanged();
+    }
+
     private void tournamentChanged() {
         updateTitle();
         if (tournament == null) {
@@ -151,7 +158,10 @@ public class GothaModel {
     }
 
     private void updateControlPanel() {
-    	
+    	if (tournament == null) {
+    	    return;
+        }
+
         TournamentParameterSet tps = tournament.getTournamentParameterSet();
         // here the model was DefaultTableModel model = (DefaultTableModel) tblControlPanel.getModel();
         // with header: "Round", "Participants", "Assigned players", "Entered results"
@@ -444,4 +454,9 @@ public class GothaModel {
     public TournamentInterface getTournament() {
         return tournament;
     }
+
+    public void setTournament(TournamentInterface tournament) {
+        this.tournament = tournament;
+    }
+
 }

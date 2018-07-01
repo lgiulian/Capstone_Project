@@ -2,6 +2,10 @@ package com.crilu.gothandroid;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,15 +26,17 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.crilu.gothandroid.adapter.TournamentPublishedListAdapter;
+import com.crilu.gothandroid.data.GothaContract;
+import com.crilu.gothandroid.data.GothaPreferences;
 import com.crilu.gothandroid.model.TournamentsViewModel;
+import com.crilu.gothandroid.model.firestore.Subscription;
 import com.crilu.gothandroid.model.firestore.Tournament;
 import com.crilu.gothandroid.sync.GothaSyncUtils;
-import com.crilu.gothandroid.utils.FileUtils;
-import com.crilu.opengotha.ExternalDocument;
 import com.crilu.opengotha.TournamentInterface;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -39,8 +45,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -50,6 +58,8 @@ import java.util.Map;
 
 import timber.log.Timber;
 
+import static com.crilu.gothandroid.GothandroidApplication.RESULT_DOC_REF_RELATIVE_PATH;
+import static com.crilu.gothandroid.GothandroidApplication.SUBSCRIPTION_DOC_REF_RELATIVE_PATH;
 import static com.crilu.gothandroid.GothandroidApplication.TOURNAMENT_DOC_REF_PATH;
 
 public class MainActivity extends AppCompatActivity
@@ -64,6 +74,8 @@ public class MainActivity extends AppCompatActivity
     private ImageView mProfilePhoto;
     private List<Tournament> mPublishedTournament = new ArrayList<>();
     private TournamentPublishedListAdapter mAdapter;
+    private RecyclerView mRecyclerView;
+    private String mRefreshedToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,13 +107,14 @@ public class MainActivity extends AppCompatActivity
         mCoordinatorLayout = findViewById(R.id.coordinator_layout);
         mTournamentName = navigationView.getHeaderView(0).findViewById(R.id.tournament_name);
         mProfilePhoto = navigationView.getHeaderView(0).findViewById(R.id.imageView);
-        RecyclerView recyclerView = findViewById(R.id.tournaments_list_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView = findViewById(R.id.tournaments_list_view);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new TournamentPublishedListAdapter(this, mPublishedTournament);
-        recyclerView.setAdapter(mAdapter);
+        mRecyclerView.setAdapter(mAdapter);
 
-        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-        Timber.d("token: %s", refreshedToken);
+        mRefreshedToken = FirebaseInstanceId.getInstance().getToken();
+        GothandroidApplication.setCurrentToken(mRefreshedToken);
+        Timber.d("token: %s", mRefreshedToken);
 
         //fetchTournaments();
     }
@@ -113,6 +126,7 @@ public class MainActivity extends AppCompatActivity
             public void onChanged(@Nullable final List<Tournament> newList) {
                 // Update the UI
                 Timber.d("in MainActivity, in onChange of the observer set on viewModel");
+                mPublishedTournament = newList;
                 mAdapter.setData(newList);
                 mAdapter.notifyDataSetChanged();
             }
@@ -142,6 +156,38 @@ public class MainActivity extends AppCompatActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        int position = mAdapter.getSelectedItemForContextMenu();
+        Tournament selectedTournament = mPublishedTournament.get(position);
+        switch (item.getItemId()) {
+            case R.id.open:
+                openTournament(selectedTournament);
+                return true;
+            case R.id.edit:
+                editTournament(selectedTournament);
+                return true;
+            case R.id.delete:
+                deleteTournament(selectedTournament);
+                return true;
+            case R.id.publish_results:
+                publishResultsOnFirestore(selectedTournament);
+                return true;
+            case R.id.publish_tournament:
+                createLocalFileAndPublishOnFirestore(selectedTournament);
+                return true;
+            case R.id.register:
+                register(selectedTournament);
+                return true;
+            case R.id.subscribe:
+                subscribe(selectedTournament);
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
     }
 
     @Override
@@ -182,7 +228,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_publish) {
-            createLocalFileAndPublishOnFirestore();
+
         } else if (id == R.id.nav_publish_results) {
         }
 
@@ -196,43 +242,45 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-    private void createLocalFileAndPublishOnFirestore() {
-        final TournamentInterface tournament = checkTournamentOpened();
-        if (tournament == null) return;
+    private void createLocalFileAndPublishOnFirestore(final Tournament selectedTournament) {
+        if (selectedTournament == null) {
+            Snackbar.make(mCoordinatorLayout, getString(R.string.no_tournament_selected), Snackbar.LENGTH_LONG).show();
+            return;
+        }
 
-        String filename = tournament.getFullName() + ".xml";
-        File file = new File(getFilesDir(), filename);
-        ExternalDocument.generateXMLFile(tournament, file);
         String currUser = GothandroidApplication.getCurrentUser();
-        try {
-            String tournamentContent = FileUtils.getFileContents(file);
-            if (!TextUtils.isEmpty(currUser) && !TextUtils.isEmpty(tournamentContent)) {
-                Map<String, Object> tournamentToSave = new HashMap<>();
-                tournamentToSave.put(Tournament.FULL_NAME, tournament.getFullName());
-                tournamentToSave.put(Tournament.SHORT_NAME, tournament.getShortName());
-                tournamentToSave.put(Tournament.BEGIN_DATE, tournament.getTournamentParameterSet().getGeneralParameterSet().getBeginDate());
-                tournamentToSave.put(Tournament.LOCATION, tournament.getTournamentParameterSet().getGeneralParameterSet().getLocation());
-                tournamentToSave.put(Tournament.DIRECTOR, tournament.getTournamentParameterSet().getGeneralParameterSet().getDirector());
-                tournamentToSave.put(Tournament.CONTENT, tournamentContent);
-                tournamentToSave.put(Tournament.CREATOR, GothandroidApplication.getCurrentUser());
-                tournamentToSave.put(Tournament.CREATION_DATE, new Date(System.currentTimeMillis()));
-                //DocumentReference docRef = FirebaseFirestore.getInstance().document(TOURNAMENT_DOC_REF_PATH
-                //        + "/" + currUser + "-#-" + tournament.getFullName());
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                db.collection(TOURNAMENT_DOC_REF_PATH).add(tournamentToSave).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentReference> task) {
-                        if (task.isSuccessful()) {
-                            Timber.d("Tournament %s was saved", tournament.getFullName());
-                            String givenId = task.getResult().getId();
-                        } else {
-                            Timber.d(task.getException());
-                        }
+        if (!TextUtils.isEmpty(currUser) && !TextUtils.isEmpty(selectedTournament.getContent())) {
+            Map<String, Object> tournamentToSave = new HashMap<>();
+            tournamentToSave.put(Tournament.FULL_NAME, selectedTournament.getFullName());
+            tournamentToSave.put(Tournament.SHORT_NAME, selectedTournament.getShortName());
+            tournamentToSave.put(Tournament.BEGIN_DATE, selectedTournament.getBeginDate());
+            tournamentToSave.put(Tournament.LOCATION, selectedTournament.getLocation());
+            tournamentToSave.put(Tournament.DIRECTOR, selectedTournament.getDirector());
+            tournamentToSave.put(Tournament.CONTENT, selectedTournament.getContent());
+            tournamentToSave.put(Tournament.CREATOR, mRefreshedToken);
+            tournamentToSave.put(Tournament.CREATION_DATE, new Date());
+            FirebaseFirestore db = GothandroidApplication.getFirebaseFirestore();
+            db.collection(TOURNAMENT_DOC_REF_PATH).add(tournamentToSave).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentReference> task) {
+                    if (task.isSuccessful()) {
+                        Timber.d("Tournament %s was saved", selectedTournament.getFullName());
+                        String givenId = task.getResult().getId();
+                        selectedTournament.setIdentity(givenId);
+                        ContentResolver gothaContentResolver = getContentResolver();
+                        ContentValues cv = GothaSyncUtils.getSingleTournamentContentValues(selectedTournament);
+                        gothaContentResolver.update(
+                                ContentUris.withAppendedId(GothaContract.TournamentEntry.CONTENT_URI, selectedTournament.getId()),
+                                cv,
+                                null,
+                                null);
+                        Snackbar.make(mCoordinatorLayout, getString(R.string.tournament_published), Snackbar.LENGTH_LONG).show();
+                    } else {
+                        Timber.d(task.getException());
+                        Snackbar.make(mCoordinatorLayout, getString(R.string.tournament_publish_error), Snackbar.LENGTH_LONG).show();
                     }
-                });
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+                }
+            });
         }
     }
 
@@ -246,27 +294,122 @@ public class MainActivity extends AppCompatActivity
         return tournament;
     }
 
-    private void publishResultsOnFirestore(String tournamentId) {
-        Timber.d("prepare to save results for tournament %s", tournamentId);
+    private void publishResultsOnFirestore(Tournament selectedTournament) {
+        String tournamentIdentity = selectedTournament.getIdentity();
+        Timber.d("prepare to save results for tournament %s", tournamentIdentity);
+
         Map<String, Object> resultToSave = new HashMap<>();
         resultToSave.put(Tournament.RESULT_CONTENT, "R1 R2 R3 R4 R5");
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection(TOURNAMENT_DOC_REF_PATH + "/" + tournamentId + "/result").add(resultToSave).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+        FirebaseFirestore db = GothandroidApplication.getFirebaseFirestore();
+        db.collection(TOURNAMENT_DOC_REF_PATH + "/" + tournamentIdentity + RESULT_DOC_REF_RELATIVE_PATH)
+                .add(resultToSave)
+                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
             @Override
             public void onComplete(@NonNull Task<DocumentReference> task) {
                 if (task.isSuccessful()) {
                     Timber.d("Result %s was saved", task.getResult().getId());
+                    Snackbar.make(mCoordinatorLayout, getString(R.string.tournament_result_published), Snackbar.LENGTH_LONG).show();
                 } else {
                     Timber.d(task.getException());
+                    Snackbar.make(mCoordinatorLayout, getString(R.string.tournament_result_error), Snackbar.LENGTH_LONG).show();
                 }
             }
         });
+    }
+
+    private void subscribe(Tournament selectedTournament) {
+        String tournamentIdentity = selectedTournament.getIdentity();
+        Timber.d("selectedTournament: %s", tournamentIdentity);
+        if (TextUtils.isEmpty(tournamentIdentity)) {
+            Snackbar.make(mCoordinatorLayout, getString(R.string.tournament_not_published), Snackbar.LENGTH_LONG).show();
+            return;
+        }
+        if (TextUtils.isEmpty(GothandroidApplication.getCurrentUser())) {
+            Snackbar.make(mCoordinatorLayout, getString(R.string.subscription_you_are_not_loggedin), Snackbar.LENGTH_LONG).show();
+            return;
+        }
+        FirebaseMessaging.getInstance().subscribeToTopic(tournamentIdentity);
+        recordSubscriptionOnFirebase(selectedTournament);
+    }
+
+    private void recordSubscriptionOnFirebase(Tournament selectedTournament) {
+        final Subscription subscription = new Subscription(selectedTournament.getId(), mRefreshedToken,
+                GothaPreferences.getUserEgfPin(this), GothaPreferences.getUserFfgLic(this),
+                GothaPreferences.getUserAgaId(this), Subscription.INTENT_OBSERVER,
+                new Date(), Subscription.STATE_ACTIVE);
+        Map<String, Object> subscriptionToSave = new HashMap<>();
+        subscriptionToSave.put(Subscription.AGA_ID, subscription.getAgaId());
+        subscriptionToSave.put(Subscription.EGF_PIN, subscription.getEgfPin());
+        subscriptionToSave.put(Subscription.FFG_LIC, subscription.getFfgLic());
+        subscriptionToSave.put(Subscription.INTENT, subscription.getIntent());
+        subscriptionToSave.put(Subscription.STATE, subscription.getState());
+        subscriptionToSave.put(Subscription.SUBSCRIPTION_DATE, subscription.getSubscriptionDate());
+        subscriptionToSave.put(Subscription.TOKEN, mRefreshedToken);
+        FirebaseFirestore db = GothandroidApplication.getFirebaseFirestore();
+        db.collection(TOURNAMENT_DOC_REF_PATH + "/" + selectedTournament.getIdentity() + SUBSCRIPTION_DOC_REF_RELATIVE_PATH)
+                .add(subscriptionToSave)
+                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentReference> task) {
+                if (task.isSuccessful()) {
+                    Timber.d("Subscription for pin %s was saved", GothaPreferences.getUserEgfPin(MainActivity.this));
+                    String givenId = task.getResult().getId();
+                    subscription.setIdentity(givenId);
+                    ContentResolver gothaContentResolver = getContentResolver();
+                    ContentValues cv = GothaSyncUtils.getSingleSubscriptionContentValues(subscription);
+                    gothaContentResolver.insert(
+                            GothaContract.SubscriptionEntry.CONTENT_URI,
+                            cv);
+                    Snackbar.make(mCoordinatorLayout, getString(R.string.tournament_subscription_success), Snackbar.LENGTH_LONG).show();
+                } else {
+                    Timber.d(task.getException());
+                    Snackbar.make(mCoordinatorLayout, getString(R.string.tournament_subscription_error), Snackbar.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
+    private void register(Tournament selectedTournament) {
+        String tournamentIdentity = selectedTournament.getIdentity();
+        Timber.d("selectedTournament: %s", tournamentIdentity);
+    }
+
+    private void deleteTournament(Tournament selectedTournament) {
+
+    }
+
+    private void editTournament(Tournament selectedTournament) {
+
+    }
+
+    private void openTournament(Tournament selectedTournament) {
+        String filename = "temp_tournament_file";
+        String fileContents = selectedTournament.getContent();
+        FileOutputStream outputStream;
+
+        try {
+            outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
+            outputStream.write(fileContents.getBytes());
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        File file = new File(getFilesDir(), filename);
+        try {
+            GothandroidApplication.getGothaModelInstance().openTournamentFromFile(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     private void updateUI() {
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
+            GothandroidApplication.setCurrentUser(currentUser.getUid());
             // Name, email address, and profile photo Url
             String name = currentUser.getDisplayName();
             String email = currentUser.getEmail();
@@ -310,10 +453,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onTournamentSelected(int position) {
-        Tournament selectedTournament = mPublishedTournament.get(position);
-        String tournamentId = selectedTournament.getIdentity();
-        Timber.d("selectedTournament: %s", tournamentId);
-        //FirebaseMessaging.getInstance().subscribeToTopic(tournamentId);
-        publishResultsOnFirestore(tournamentId);
+
     }
 }

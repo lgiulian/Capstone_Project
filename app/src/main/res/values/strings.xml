@@ -111,6 +111,32 @@
     <string name="pref_enable_notifications_label">Tournament Notifications</string>
     <string name="pref_enable_notifications_true">Enabled</string>
     <string name="pref_enable_notifications_false">Not Enabled</string>
-    <string name="pref_latest_known_published_tournament">latest_known_published_tournament</string>
+    <string name="pref_latest_known_published_tournament" translatable="false">latest_known_published_tournament</string>
+    <string name="pref_user_first_name" translatable="false">user_first_name</string>
+    <string name="pref_user_last_name" translatable="false">user_last_name</string>
+    <string name="pref_user_egf_pin" translatable="false">user_egf_pin</string>
+    <string name="pref_user_ffg_lic" translatable="false">user_ffg_lic</string>
+    <string name="pref_user_aga_id" translatable="false">user_aga_id</string>
+
+    <!-- Tournaments context menu -->
+    <string name="select_the_action">Select The Action</string>
+    <string name="open">Open</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="publish_tournament">Publish tournament</string>
+    <string name="publish_results">Publish results</string>
+    <string name="register">Register</string>
+    <string name="subscribe">Subscribe</string>
+
+    <!-- Main screen -->
+    <string name="no_tournament_selected">No tournament selected</string>
+    <string name="tournament_not_published">This tournament is not published yet</string>
+    <string name="subscription_you_are_not_loggedin">Subscription failed. You are not logged in.</string>
+    <string name="tournament_published">The tournament was published</string>
+    <string name="tournament_result_published">Results successfully published</string>
+    <string name="tournament_subscription_success">Subscription succeeded</string>
+    <string name="tournament_subscription_error">Subscription failed</string>
+    <string name="tournament_publish_error">Publishing failed</string>
+    <string name="tournament_result_error">Results publish failed</string>
 
 </resources>

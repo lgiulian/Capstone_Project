@@ -11,17 +11,13 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import timber.log.Timber;
-
 public class GothaContentProvider extends ContentProvider {
     private GothaDbHelper mDbHelper;
 
     public static final int TOURNAMENTS = 100;
     public static final int TOURNAMENT_WITH_ID = 101;
-    public static final int USERS = 200;
-    public static final int USER_WITH_ID = 201;
-    public static final int SUBSCRIPTIONS = 300;
-    public static final int SUBSCRIPTION_WITH_ID = 301;
+    public static final int SUBSCRIPTIONS = 200;
+    public static final int SUBSCRIPTION_WITH_ID = 201;
 
     private static final UriMatcher sUriMatcher = buildUriMatcher();
 
@@ -29,8 +25,6 @@ public class GothaContentProvider extends ContentProvider {
         UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         uriMatcher.addURI(GothaContract.AUTHORITY, GothaContract.PATH_TOURNAMENTS, TOURNAMENTS);
         uriMatcher.addURI(GothaContract.AUTHORITY, GothaContract.PATH_TOURNAMENTS + "/#", TOURNAMENT_WITH_ID);
-        uriMatcher.addURI(GothaContract.AUTHORITY, GothaContract.PATH_USERS, USERS);
-        uriMatcher.addURI(GothaContract.AUTHORITY, GothaContract.PATH_USERS + "/#", USER_WITH_ID);
         uriMatcher.addURI(GothaContract.AUTHORITY, GothaContract.PATH_SUBSCRIPTION, SUBSCRIPTIONS);
         uriMatcher.addURI(GothaContract.AUTHORITY, GothaContract.PATH_SUBSCRIPTION + "/#", SUBSCRIPTION_WITH_ID);
 
@@ -68,27 +62,6 @@ public class GothaContentProvider extends ContentProvider {
                 String sel = GothaContract.TournamentEntry._ID + "=?";
                 String[] selArgs = new String[] {id};
                 retCursor = db.query(GothaContract.TournamentEntry.TABLE_NAME,
-                        projection,
-                        sel,
-                        selArgs,
-                        null,
-                        null,
-                        sortOrder);
-                break;
-            case USERS:
-                retCursor = db.query(GothaContract.UserEntry.TABLE_NAME,
-                        projection,
-                        selection,
-                        selectionArgs,
-                        null,
-                        null,
-                        sortOrder);
-                break;
-            case USER_WITH_ID:
-                id = uri.getPathSegments().get(1);
-                sel = GothaContract.UserEntry._ID + "=?";
-                selArgs = new String[] {id};
-                retCursor = db.query(GothaContract.UserEntry.TABLE_NAME,
                         projection,
                         sel,
                         selArgs,
@@ -145,14 +118,6 @@ public class GothaContentProvider extends ContentProvider {
                     throw new android.database.SQLException("Failed to insert row into " + uri);
                 }
                 break;
-            case USERS:
-                id = db.insert(GothaContract.UserEntry.TABLE_NAME, null, values);
-                if ( id > 0 ) {
-                    returnUri = ContentUris.withAppendedId(GothaContract.UserEntry.CONTENT_URI, id);
-                } else {
-                    throw new android.database.SQLException("Failed to insert row into " + uri);
-                }
-                break;
             case SUBSCRIPTIONS:
                 id = db.insert(GothaContract.SubscriptionEntry.TABLE_NAME, null, values);
                 if ( id > 0 ) {
@@ -184,27 +149,6 @@ public class GothaContentProvider extends ContentProvider {
                 try {
                     for (ContentValues value : values) {
                         long _id = db.insert(GothaContract.TournamentEntry.TABLE_NAME, null, value);
-                        if (_id != -1) {
-                            rowsInserted++;
-                        }
-                    }
-                    db.setTransactionSuccessful();
-                } finally {
-                    db.endTransaction();
-                }
-
-                if (rowsInserted > 0) {
-                    getContext().getContentResolver().notifyChange(uri, null);
-                }
-
-                return rowsInserted;
-
-            case USERS:
-                db.beginTransaction();
-                rowsInserted = 0;
-                try {
-                    for (ContentValues value : values) {
-                        long _id = db.insert(GothaContract.UserEntry.TABLE_NAME, null, value);
                         if (_id != -1) {
                             rowsInserted++;
                         }
@@ -263,13 +207,6 @@ public class GothaContentProvider extends ContentProvider {
                 String id = uri.getPathSegments().get(1);
                 rowsDeleted = db.delete(GothaContract.TournamentEntry.TABLE_NAME, "_id=?", new String[]{id});
                 break;
-            case USERS:
-                rowsDeleted = db.delete(GothaContract.UserEntry.TABLE_NAME, selection, selectionArgs);
-                break;
-            case USER_WITH_ID:
-                id = uri.getPathSegments().get(1);
-                rowsDeleted = db.delete(GothaContract.UserEntry.TABLE_NAME, "_id=?", new String[]{id});
-                break;
             case SUBSCRIPTIONS:
                 rowsDeleted = db.delete(GothaContract.SubscriptionEntry.TABLE_NAME, selection, selectionArgs);
                 break;
@@ -302,11 +239,6 @@ public class GothaContentProvider extends ContentProvider {
                 //update a single row by getting the id
                 String id = uri.getPathSegments().get(1);
                 rowsUpdated = mDbHelper.getWritableDatabase().update(GothaContract.TournamentEntry.TABLE_NAME, values, "_id=?", new String[]{id});
-                break;
-            case USER_WITH_ID:
-                //update a single row by getting the id
-                id = uri.getPathSegments().get(1);
-                rowsUpdated = mDbHelper.getWritableDatabase().update(GothaContract.UserEntry.TABLE_NAME, values, "_id=?", new String[]{id});
                 break;
             case SUBSCRIPTION_WITH_ID:
                 //update a single row by getting the id

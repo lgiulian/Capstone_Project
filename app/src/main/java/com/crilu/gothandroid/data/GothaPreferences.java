@@ -3,6 +3,7 @@ package com.crilu.gothandroid.data;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 
 import com.crilu.gothandroid.R;
 
@@ -31,5 +32,63 @@ public class GothaPreferences {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         long latestKnownPublishedTournament = sp.getLong(latestKnownPublishedTournamentKey, 0);
         return latestKnownPublishedTournament;
+    }
+
+    @NonNull
+    private static String getStringPref(Context context, int prefKey) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getString(context.getString(prefKey), "");
+    }
+
+    private static void saveStringPref(Context context, String value, int prefKey) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString(context.getString(prefKey), value);
+        editor.apply();
+    }
+
+    public static void saveUserFirstName(Context context, String firstName) {
+        saveStringPref(context, firstName, R.string.pref_user_first_name);
+    }
+
+    public static void saveUserLastName(Context context, String lastName) {
+        saveStringPref(context, lastName, R.string.pref_user_last_name);
+    }
+
+    public static void saveUserAgaId(Context context, String agaId) {
+        saveStringPref(context, agaId, R.string.pref_user_aga_id);
+    }
+
+    public static void saveUserFfgLic(Context context, String ffgLic) {
+        saveStringPref(context, ffgLic, R.string.pref_user_ffg_lic);
+    }
+
+    public static void saveUserEgfPin(Context context, String egfPin) {
+        saveStringPref(context, egfPin, R.string.pref_user_egf_pin);
+    }
+
+    @NonNull
+    public static String getUserFirstName(Context context) {
+        return getStringPref(context, R.string.pref_user_first_name);
+    }
+
+    @NonNull
+    public static String getUserLastName(Context context) {
+        return getStringPref(context, R.string.pref_user_last_name);
+    }
+
+    @NonNull
+    public static String getUserEgfPin(Context context) {
+        return getStringPref(context, R.string.pref_user_egf_pin);
+    }
+
+    @NonNull
+    public static String getUserFfgLic(Context context) {
+        return getStringPref(context, R.string.pref_user_ffg_lic);
+    }
+
+    @NonNull
+    public static String getUserAgaId(Context context) {
+        return getStringPref(context, R.string.pref_user_aga_id);
     }
 }

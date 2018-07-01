@@ -1,6 +1,5 @@
 package com.crilu.gothandroid.model.firestore;
 
-import java.util.Calendar;
 import java.util.Date;
 
 public class Tournament {
@@ -15,7 +14,7 @@ public class Tournament {
     public static final String CREATOR = "creator";
     public static final String CREATION_DATE = "creationDate";
 
-    private Integer id;
+    private Long id;
     private String identity;
     private String fullName;
     private String shortName;
@@ -26,11 +25,11 @@ public class Tournament {
     private String creator;
     private Date creationDate;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

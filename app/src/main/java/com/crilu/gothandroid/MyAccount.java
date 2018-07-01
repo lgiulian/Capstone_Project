@@ -12,11 +12,14 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
+import com.crilu.gothandroid.data.GothaPreferences;
 import com.crilu.gothandroid.databinding.ActivityMyAccountBinding;
+import com.crilu.gothandroid.model.firestore.User;
 import com.crilu.opengotha.RatedPlayer;
 import com.crilu.opengotha.RatingList;
 import com.firebase.ui.auth.AuthUI;
@@ -25,15 +28,21 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import timber.log.Timber;
+
+import static com.crilu.gothandroid.GothandroidApplication.USER_DOC_REF_PATH;
 
 public class MyAccount extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
@@ -84,6 +93,11 @@ public class MyAccount extends AppCompatActivity implements AdapterView.OnItemCl
             mBinding.egfPlayer.setAdapter(mAdapter);
             mBinding.egfPlayer.setOnItemClickListener(this);
         }
+        mBinding.firstName.setText(GothaPreferences.getUserFirstName(this));
+        mBinding.lastName.setText(GothaPreferences.getUserLastName(this));
+        mBinding.egfPlayer.setText(GothaPreferences.getUserEgfPin(this));
+        mBinding.agaId.setText(GothaPreferences.getUserAgaId(this));
+        mBinding.ffgLic.setText(GothaPreferences.getUserFfgLic(this));
     }
 
     public void onClickLogin(View view) {
@@ -100,7 +114,11 @@ public class MyAccount extends AppCompatActivity implements AdapterView.OnItemCl
                         .setAvailableProviders(providers)
                         .build(),
                 RC_SIGN_IN);
-
+        GothaPreferences.saveUserFirstName(this, mBinding.firstName.getText().toString());
+        GothaPreferences.saveUserLastName(this, mBinding.lastName.getText().toString());
+        GothaPreferences.saveUserAgaId(this, mBinding.agaId.getText().toString());
+        GothaPreferences.saveUserFfgLic(this, mBinding.ffgLic.getText().toString());
+        GothaPreferences.saveUserEgfPin(this, mBinding.egfPlayer.getText().toString());
     }
 
     public void onClickLogout(View view) {
@@ -161,6 +179,7 @@ public class MyAccount extends AppCompatActivity implements AdapterView.OnItemCl
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         mEgdPlayer = mAdapter.getItem(position);
+        mBinding.egfPlayer.setText(mEgdPlayer.getEgfPin());
     }
 
     @Override
@@ -175,6 +194,7 @@ public class MyAccount extends AppCompatActivity implements AdapterView.OnItemCl
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 Timber.d("user=%s, uid=%s", user, user.getUid());
                 GothandroidApplication.setCurrentUser(user.getUid());
+                saveUserOnFirestore(user.getUid());
                 Snackbar.make(mBinding.coordinatorLayout, getString(R.string.you_are_logged_in_now), Snackbar.LENGTH_LONG).show();
                 updateUI();
             } else {
@@ -186,6 +206,33 @@ public class MyAccount extends AppCompatActivity implements AdapterView.OnItemCl
             }
         } else if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
             setPic();
+        }
+    }
+
+    private void saveUserOnFirestore(final String currUser) {
+        if (!TextUtils.isEmpty(currUser)) {
+            Map<String, Object> userToSave = new HashMap<>();
+            userToSave.put(User.UID, currUser);
+            userToSave.put(User.TOKEN, GothandroidApplication.getCurrentToken());
+            userToSave.put(User.FIRST_NAME, mBinding.firstName.getText().toString());
+            userToSave.put(User.LAST_NAME, mBinding.lastName.getText().toString());
+            userToSave.put(User.EGF_PIN, mBinding.egfPlayer.getText().toString());
+            userToSave.put(User.FFG_LIC, mBinding.ffgLic.getText().toString());
+            userToSave.put(User.AGA_ID, mBinding.agaId.getText().toString());
+            userToSave.put(User.REGISTRATION_DATE, new Date(System.currentTimeMillis()));
+            FirebaseFirestore db = GothandroidApplication.getFirebaseFirestore();
+            db.collection(USER_DOC_REF_PATH).add(userToSave).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentReference> task) {
+                    if (task.isSuccessful()) {
+                        Timber.d("User %s was saved", currUser);
+                    } else {
+                        Timber.d(task.getException());
+                    }
+                }
+            });
+        } else {
+
         }
     }
 

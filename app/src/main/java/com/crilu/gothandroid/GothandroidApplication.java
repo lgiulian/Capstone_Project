@@ -16,6 +16,8 @@ import com.crilu.opengotha.model.GothaModel;
 import com.crilu.opengotha.model.PlayersManager;
 import com.facebook.stetho.Stetho;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreSettings;
 
 import java.text.DateFormat;
 
@@ -24,6 +26,9 @@ import timber.log.Timber;
 public class GothandroidApplication extends Application {
 
     public static final String TOURNAMENT_DOC_REF_PATH = "tournament";
+    public static final String USER_DOC_REF_PATH = "user";
+    public static final String SUBSCRIPTION_DOC_REF_RELATIVE_PATH = "/subscription";
+    public static final String RESULT_DOC_REF_RELATIVE_PATH = "/result";
 
     public static final DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM);
 
@@ -32,6 +37,8 @@ public class GothandroidApplication extends Application {
     private static GamesPair sGamesPair;
     private static PlayersManager sPlayersManager;
     private static String sCurrentUser;
+    private static FirebaseFirestore sFirestore;
+    private static String sCurrentToken;
 
     @Override
     public void onCreate() {
@@ -97,6 +104,14 @@ public class GothandroidApplication extends Application {
         GothandroidApplication.sCurrentUser = currentUser;
     }
 
+    public static void setCurrentToken(String currentToken) {
+        GothandroidApplication.sCurrentToken = currentToken;
+    }
+
+    public static String getCurrentToken() {
+        return sCurrentToken;
+    }
+
     /** A tree which logs important information for crash reporting. */
     private static class CrashReportingTree extends Timber.Tree {
         @Override protected void log(int priority, String tag, @NonNull String message, Throwable t) {
@@ -132,4 +147,15 @@ public class GothandroidApplication extends Application {
         }
     }
 
+    @NonNull
+    public static FirebaseFirestore getFirebaseFirestore() {
+        if (sFirestore == null) {
+            sFirestore = FirebaseFirestore.getInstance();
+            FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+                    .setTimestampsInSnapshotsEnabled(true)
+                    .build();
+            sFirestore.setFirestoreSettings(settings);
+        }
+        return sFirestore;
+    }
 }
