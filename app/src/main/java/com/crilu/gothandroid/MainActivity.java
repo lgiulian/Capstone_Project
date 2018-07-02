@@ -180,10 +180,10 @@ public class MainActivity extends AppCompatActivity
                 createLocalFileAndPublishOnFirestore(selectedTournament);
                 return true;
             case R.id.register:
-                register(selectedTournament);
+                registerTournament(selectedTournament);
                 return true;
             case R.id.subscribe:
-                subscribe(selectedTournament);
+                observeTournament(selectedTournament);
                 return true;
             default:
                 return super.onContextItemSelected(item);
@@ -317,7 +317,15 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-    private void subscribe(Tournament selectedTournament) {
+    private void observeTournament(Tournament selectedTournament) {
+        recordSubscriptionOnFirebase(selectedTournament, Subscription.INTENT_OBSERVER, R.string.tournament_subscription_success, R.string.tournament_subscription_error);
+    }
+
+    private void registerTournament(Tournament selectedTournament) {
+        recordSubscriptionOnFirebase(selectedTournament, Subscription.INTENT_PARTICIPANT, R.string.tournament_registration_success, R.string.tournament_registration_error);
+    }
+
+    private void recordSubscriptionOnFirebase(Tournament selectedTournament, String intention, final int successMessage, final int errorMessage) {
         String tournamentIdentity = selectedTournament.getIdentity();
         Timber.d("selectedTournament: %s", tournamentIdentity);
         if (TextUtils.isEmpty(tournamentIdentity)) {
@@ -329,13 +337,9 @@ public class MainActivity extends AppCompatActivity
             return;
         }
         FirebaseMessaging.getInstance().subscribeToTopic(tournamentIdentity);
-        recordSubscriptionOnFirebase(selectedTournament);
-    }
-
-    private void recordSubscriptionOnFirebase(Tournament selectedTournament) {
         final Subscription subscription = new Subscription(selectedTournament.getId(), mRefreshedToken,
                 GothaPreferences.getUserEgfPin(this), GothaPreferences.getUserFfgLic(this),
-                GothaPreferences.getUserAgaId(this), Subscription.INTENT_OBSERVER,
+                GothaPreferences.getUserAgaId(this), intention,
                 new Date(), Subscription.STATE_ACTIVE);
         Map<String, Object> subscriptionToSave = new HashMap<>();
         subscriptionToSave.put(Subscription.AGA_ID, subscription.getAgaId());
@@ -360,18 +364,13 @@ public class MainActivity extends AppCompatActivity
                     gothaContentResolver.insert(
                             GothaContract.SubscriptionEntry.CONTENT_URI,
                             cv);
-                    Snackbar.make(mCoordinatorLayout, getString(R.string.tournament_subscription_success), Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(mCoordinatorLayout, getString(successMessage), Snackbar.LENGTH_LONG).show();
                 } else {
                     Timber.d(task.getException());
-                    Snackbar.make(mCoordinatorLayout, getString(R.string.tournament_subscription_error), Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(mCoordinatorLayout, getString(errorMessage), Snackbar.LENGTH_LONG).show();
                 }
             }
         });
-    }
-
-    private void register(Tournament selectedTournament) {
-        String tournamentIdentity = selectedTournament.getIdentity();
-        Timber.d("selectedTournament: %s", tournamentIdentity);
     }
 
     private void deleteTournament(Tournament selectedTournament) {
