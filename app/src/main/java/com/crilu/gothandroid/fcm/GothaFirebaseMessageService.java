@@ -17,6 +17,8 @@ import java.util.Map;
 
 import timber.log.Timber;
 
+import static com.crilu.gothandroid.utils.NotificationUtils.CHANNEL_ID;
+
 public class GothaFirebaseMessageService extends FirebaseMessagingService {
 
     private static final int NOTIFICATION_MAX_CHARACTERS = 30;
@@ -55,7 +57,7 @@ public class GothaFirebaseMessageService extends FirebaseMessagingService {
         }
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle(String.format(getString(R.string.notification_message), tournament))
                 .setContentText(message)
