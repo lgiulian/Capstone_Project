@@ -19,6 +19,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import timber.log.Timber;
 
@@ -36,7 +37,7 @@ public class GothaSyncTask {
 
         final long latestKnownPublishedTournament = GothaPreferences.getLatestKnownPublishedTournament(context);
         final long startingTimestamp = latestKnownPublishedTournament > 0? latestKnownPublishedTournament: System
-                .currentTimeMillis();
+                .currentTimeMillis()- TimeUnit.DAYS.toSeconds(360)*1000;
         final List<Subscription> tournamentSubscriptions = new ArrayList<>();
         final long fetchTournamentsStartTime = System.currentTimeMillis();
         TournamentDao.fetchTournaments(startingTimestamp, new OnCompleteListener<QuerySnapshot>() {
