@@ -44,3 +44,43 @@ exports.sendSubscriberNotification = functions.firestore
           console.log('Error sending message:', error);
         });
     });
+
+exports.sendRegistrationNotification = functions.firestore
+    .document('/tournament/{topicId}/subscription/{docId}')
+    .onCreate((snap, context) => {
+      const newValue = snap.data();
+      const topicId = context.params.topicId;
+
+      if (newValue.intent !== 'participant') {
+        return 0;
+      }
+      console.log('We have a new registration for tournament:', topicId);
+
+      let creatorToken;
+      return admin.firestore()
+        .collection('tournament')
+        .doc(topicId)
+        .get()
+        .then(doc => {
+              creatorToken = doc.data().creator;
+              console.log('Got creator token: ' + creatorToken);
+              var message = {
+                data: {
+                  egf_pin: newValue.egfPin,
+                  message: 'This is a notification for a new registration'
+                },
+                token: creatorToken
+              };
+
+              // Send a message to tournament creator device.
+              return admin.messaging().send(message)
+                .then((response) => {
+                  // Response is a message ID string.
+                  console.log('Successfully sent message:', response);
+                  return 0;
+                })
+                .catch((error) => {
+                  console.log('Error sending message:', error);
+                });
+            });
+        });
