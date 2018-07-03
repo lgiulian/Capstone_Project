@@ -39,12 +39,14 @@ import com.crilu.gothandroid.model.firestore.Tournament;
 import com.crilu.gothandroid.sync.GothaSyncUtils;
 import com.crilu.opengotha.TournamentInterface;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.File;
@@ -112,9 +114,14 @@ public class MainActivity extends AppCompatActivity
         mAdapter = new TournamentPublishedListAdapter(this, mPublishedTournament);
         mRecyclerView.setAdapter(mAdapter);
 
-        mRefreshedToken = FirebaseInstanceId.getInstance().getToken();
-        GothandroidApplication.setCurrentToken(mRefreshedToken);
-        Timber.d("token: %s", mRefreshedToken);
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(this,  new OnSuccessListener<InstanceIdResult>() {
+            @Override
+            public void onSuccess(InstanceIdResult instanceIdResult) {
+                mRefreshedToken = instanceIdResult.getToken();
+                GothandroidApplication.setCurrentToken(mRefreshedToken);
+                Timber.d("token: %s", mRefreshedToken);
+            }
+        });
 
         //fetchTournaments();
     }

@@ -46,13 +46,13 @@ public class TournamentDao {
 
     public static void fetchTournaments(long startingTimestamp, OnCompleteListener<QuerySnapshot> listener) {
         FirebaseFirestore db = GothandroidApplication.getFirebaseFirestore();
-        Date beginDate;
+        Date fromDate;
         if (startingTimestamp > 0) {
-            beginDate = new Date(startingTimestamp);
+            fromDate = new Date(startingTimestamp);
         } else {
-            beginDate = new Date();
+            fromDate = new Date();
         }
-        db.collection(TOURNAMENT_DOC_REF_PATH).whereGreaterThanOrEqualTo(Tournament.CREATION_DATE, beginDate).get().addOnCompleteListener(listener);
+        db.collection(TOURNAMENT_DOC_REF_PATH).whereGreaterThanOrEqualTo(Tournament.CREATION_DATE, fromDate).get().addOnCompleteListener(listener);
     }
 
     public static void fetchSubscriptions(String tournamentIdentity, OnCompleteListener<QuerySnapshot> listener) {
