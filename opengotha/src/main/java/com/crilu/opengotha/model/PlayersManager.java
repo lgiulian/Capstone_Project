@@ -34,23 +34,11 @@ public class PlayersManager {
     private final static int PLAYER_MODE_MODIF = 2;
     private int playerMode = PLAYER_MODE_NEW;
     private Player playerInModification = null;
-    private static final int REG_COL = 0;
-    private static final int NAME_COL = 1;
-    private static final int FIRSTNAME_COL = 2;
-    private static final int COUNTRY_COL = 3;
-    private static final int CLUB_COL = 4;
-    private static final int RANK_COL = 5;
-    private static final int RATING_COL = 6;
-    private static final int GRADE_COL = 7;
     /**  current Tournament */
     private TournamentInterface tournament;
     /** Rating List */
     private RatingList ratingList = new RatingList();
 
-    private String[] registeredPlayersHeaders = new String [] {
-            "R", "Last name", "First name", "Co", "Club", "Rk", "Rating", "EGF Grade"
-        };
-    private List<String[]> registeredPlayers = new ArrayList<>();
     private boolean[] tabCkbParticipation;
     private List<String> cbxCountry = new ArrayList<>();
     private boolean ckbRatingList;
@@ -240,20 +228,6 @@ public class PlayersManager {
 
         PlayerComparator playerComparator = new PlayerComparator(playersSortType);
         Collections.sort(displayedPlayersList, playerComparator);
-
-        int line = 0;
-        for (Player p : displayedPlayersList) {
-        	registeredPlayers.set(line, new String[8]);
-        	registeredPlayers.get(line)[REG_COL] = (p.getRegisteringStatus().compareTo("PRE") == 0) ? "P" : "F";
-        	registeredPlayers.get(line)[NAME_COL] = p.getName();
-        	registeredPlayers.get(line)[FIRSTNAME_COL] = p.getFirstName();
-        	registeredPlayers.get(line)[RANK_COL] = Player.convertIntToKD(p.getRank());
-        	registeredPlayers.get(line)[COUNTRY_COL] = p.getCountry();
-        	registeredPlayers.get(line)[CLUB_COL] = p.getClub();
-        	registeredPlayers.get(line)[RATING_COL] = "" + p.getRating();
-        	registeredPlayers.get(line)[GRADE_COL] = p.getStrGrade();
-            line++;
-        }
     }
     
     private String normalizeCase(String name) {
