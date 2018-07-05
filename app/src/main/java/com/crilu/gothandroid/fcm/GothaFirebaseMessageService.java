@@ -10,6 +10,7 @@ import android.support.v4.app.NotificationCompat;
 
 import com.crilu.gothandroid.MainActivity;
 import com.crilu.gothandroid.R;
+import com.crilu.gothandroid.utils.TournamentUtils;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -23,8 +24,11 @@ public class GothaFirebaseMessageService extends FirebaseMessagingService {
 
     private static final int NOTIFICATION_MAX_CHARACTERS = 30;
     private static final String JSON_KEY_COMMAND = "command";
-    private static final String JSON_KEY_TOURNAMENT = "tournament";
+    private static final String JSON_KEY_TOURNAMENT_NAME = "tournament_name";
+    private static final String JSON_KEY_TOURNAMENT_IDENTITY = "tournament_id";
     private static final String JSON_KEY_MESSAGE = "message";
+    private static final String JSON_KEY_COMMAND_REGISTRATION = "registration";
+    private static final String JSON_KEY_EGF_PIN = "egf_pin";
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -47,7 +51,7 @@ public class GothaFirebaseMessageService extends FirebaseMessagingService {
                 PendingIntent.FLAG_ONE_SHOT);
 
         String command = data.get(JSON_KEY_COMMAND);
-        String tournament = data.get(JSON_KEY_TOURNAMENT);
+        String tournamentName = data.get(JSON_KEY_TOURNAMENT_NAME);
         String message = data.get(JSON_KEY_MESSAGE);
 
         // If the message is longer than the max number of characters we want in our
@@ -59,7 +63,7 @@ public class GothaFirebaseMessageService extends FirebaseMessagingService {
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setContentTitle(String.format(getString(R.string.notification_message), tournament))
+                .setContentTitle(String.format(getString(R.string.notification_message), tournamentName))
                 .setContentText(message)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
@@ -72,7 +76,14 @@ public class GothaFirebaseMessageService extends FirebaseMessagingService {
     }
 
     private void processMessage(Map<String, String> data) {
-
+        String command = data.get(JSON_KEY_COMMAND);
+        switch (command) {
+            case JSON_KEY_COMMAND_REGISTRATION:
+                String tournamentIdentity = data.get(JSON_KEY_TOURNAMENT_IDENTITY);
+                String egfPin = data.get(JSON_KEY_EGF_PIN);
+                TournamentUtils.registerPlayerForTournament(this, egfPin, tournamentIdentity);
+                break;
+        }
     }
 
 }

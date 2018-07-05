@@ -66,6 +66,9 @@ exports.sendRegistrationNotification = functions.firestore
               console.log('Got creator token: ' + creatorToken);
               var message = {
                 data: {
+                  command: 'registration',
+                  tournament_name: doc.data().fullName,
+                  tournament_id: topicId,
                   egf_pin: newValue.egfPin,
                   message: 'This is a notification for a new registration'
                 },

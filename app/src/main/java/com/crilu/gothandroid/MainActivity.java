@@ -5,7 +5,6 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -37,6 +36,7 @@ import com.crilu.gothandroid.model.TournamentsViewModel;
 import com.crilu.gothandroid.model.firestore.Subscription;
 import com.crilu.gothandroid.model.firestore.Tournament;
 import com.crilu.gothandroid.sync.GothaSyncUtils;
+import com.crilu.gothandroid.utils.TournamentUtils;
 import com.crilu.opengotha.TournamentInterface;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -49,9 +49,6 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -389,26 +386,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void openTournament(Tournament selectedTournament) {
-        String filename = "temp_tournament_file";
         String fileContents = selectedTournament.getContent();
-        FileOutputStream outputStream;
-
-        try {
-            outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
-            outputStream.write(fileContents.getBytes());
-            outputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        File file = new File(getFilesDir(), filename);
-        try {
-            GothandroidApplication.getGothaModelInstance().openTournamentFromFile(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        TournamentUtils.openTournament(this, fileContents);
     }
 
     private void updateUI() {

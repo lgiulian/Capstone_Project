@@ -76,15 +76,19 @@ public class GothandroidApplication extends Application {
     }
 
     public static PlayersManager getPlayersManagerInstance() {
-        if (sPlayersManager == null && sGothaModel.getTournament() != null) {
+        if (sGothaModel.getTournament() != null) {
             sPlayersManager = new PlayersManager(sGothaModel.getTournament());
+        } else {
+            sPlayersManager = null;
         }
         return sPlayersManager;
     }
 
     public static GamesPair getGamesPairInstance() {
-        if (sGamesPair == null && sGothaModel.getTournament() != null) {
+        if (sGothaModel.getTournament() != null) {
             sGamesPair = new GamesPair(sGothaModel.getTournament());
+        } else {
+            sGamesPair = null;
         }
         return sGamesPair;
     }

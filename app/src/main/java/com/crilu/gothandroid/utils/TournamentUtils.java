@@ -1,0 +1,86 @@
+package com.crilu.gothandroid.utils;
+
+import android.content.Context;
+
+import com.crilu.gothandroid.GothandroidApplication;
+import com.crilu.gothandroid.R;
+import com.crilu.gothandroid.data.TournamentDao;
+import com.crilu.gothandroid.model.firestore.Tournament;
+import com.crilu.opengotha.Gotha;
+import com.crilu.opengotha.RatedPlayer;
+import com.crilu.opengotha.RatingList;
+import com.crilu.opengotha.model.PlayersManager;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.concurrent.Callable;
+import java.util.concurrent.FutureTask;
+
+import timber.log.Timber;
+
+public class TournamentUtils {
+
+    public static void registerPlayerForTournament(final Context context, final String egfPin, final String tournamentIdentity) {
+        // First ensure the players are loaded and then make the registration
+        FutureTask<RatingList> futureTask = new FutureTask<>(new Callable<RatingList>() {
+            @Override
+            public RatingList call() throws Exception {
+                RatingList ratingList = GothandroidApplication.getRatingList();
+                if (ratingList == null) {
+                    ratingList = new RatingList(RatingList.TYPE_EGF, context.getResources().openRawResource(R.raw.egf_db));
+                }
+                GothandroidApplication.setRatingList(ratingList);
+                Tournament tournament = TournamentDao.getTournamentByIdentity(context, tournamentIdentity);
+                if (tournament != null) {
+                    openTournament(context, tournament.getContent());
+                    PlayersManager playersManager = GothandroidApplication.getPlayersManagerInstance();
+                    RatedPlayer selectedPlayer = ratingList.getRatedPlayer(egfPin);
+                    boolean[] participation = new boolean[Gotha.MAX_NUMBER_OF_ROUNDS];
+                    Arrays.fill(participation, Boolean.TRUE);
+                    playersManager.register(selectedPlayer.getName(),
+                            selectedPlayer.getFirstName(),
+                            selectedPlayer.getCountry(),
+                            selectedPlayer.getClub(),
+                            selectedPlayer.getEgfPin(),
+                            selectedPlayer.getFfgLicence(),
+                            selectedPlayer.getFfgLicenceStatus(),
+                            selectedPlayer.getAgaId(),
+                            selectedPlayer.getAgaExpirationDate(),
+                            selectedPlayer.getStrGrade(),
+                            "FIN",
+                            selectedPlayer.getStrRawRating(),
+                            selectedPlayer.getStrRawRating(),
+                            "0",
+                            participation);
+                } else {
+                    Timber.d("No tournament found for identity %s", tournamentIdentity);
+                }
+                return ratingList;
+            }
+        });
+        AppExecutors.getInstance().diskIO().execute(futureTask);
+    }
+
+    public static void openTournament(Context context, String fileContents) {
+        String filename = "temp_tournament_file";
+        FileOutputStream outputStream;
+        try {
+            outputStream = context.openFileOutput(filename, Context.MODE_PRIVATE);
+            outputStream.write(fileContents.getBytes());
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        File file = new File(context.getFilesDir(), filename);
+        try {
+            GothandroidApplication.getGothaModelInstance().openTournamentFromFile(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+}
