@@ -23,7 +23,7 @@ import java.text.DateFormat;
 
 import timber.log.Timber;
 
-public class GothandroidApplication extends Application {
+public class GothandroidApplication extends Application implements GothaModel.GothaListener {
 
     public static final String TOURNAMENT_DOC_REF_PATH = "tournament";
     public static final String USER_DOC_REF_PATH = "user";
@@ -39,6 +39,8 @@ public class GothandroidApplication extends Application {
     private static String sCurrentUser;
     private static FirebaseFirestore sFirestore;
     private static String sCurrentToken;
+
+    private static GothandroidApplication sInstance;
 
     @Override
     public void onCreate() {
@@ -58,6 +60,8 @@ public class GothandroidApplication extends Application {
 
         Intent parsePlayersIntent = new Intent(this, ParsePlayersIntentService.class);
         startService(parsePlayersIntent);
+
+        sInstance = this;
     }
 
     public static RatingList getRatingList() {
@@ -68,27 +72,28 @@ public class GothandroidApplication extends Application {
         GothandroidApplication.sRatingList = ratingList;
     }
 
+    public static GothandroidApplication getInstance() {
+        return sInstance;
+    }
+
     public static GothaModel getGothaModelInstance() {
         if (sGothaModel == null) {
             sGothaModel = new GothaModel();
+            sGothaModel.addGothaListener(sInstance);
         }
         return sGothaModel;
     }
 
     public static PlayersManager getPlayersManagerInstance() {
-        if (sGothaModel.getTournament() != null) {
+        if (sPlayersManager == null && sGothaModel.getTournament() != null) {
             sPlayersManager = new PlayersManager(sGothaModel.getTournament());
-        } else {
-            sPlayersManager = null;
         }
         return sPlayersManager;
     }
 
     public static GamesPair getGamesPairInstance() {
-        if (sGothaModel.getTournament() != null) {
+        if (sGamesPair == null && sGothaModel.getTournament() != null) {
             sGamesPair = new GamesPair(sGothaModel.getTournament());
-        } else {
-            sGamesPair = null;
         }
         return sGamesPair;
     }
@@ -162,4 +167,36 @@ public class GothandroidApplication extends Application {
         }
         return sFirestore;
     }
+
+    @Override
+    public void onCurrentTournamentChanged() {
+        sPlayersManager = null;
+        sGamesPair = null;
+    }
+
+    @Override
+    public void updateTitle() {
+
+    }
+
+    @Override
+    public void warnPreliminaryRegisteringStatus(String message) {
+
+    }
+
+    @Override
+    public void controlPannelModelUpdated() {
+
+    }
+
+    @Override
+    public void updateTime(String time) {
+
+    }
+
+    @Override
+    public void roundNumberChanged(int round) {
+
+    }
+
 }

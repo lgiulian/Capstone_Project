@@ -29,12 +29,13 @@ import java.util.prefs.Preferences;
 
 public class GothaModel {
 
-    interface GothaListener {
+    public interface GothaListener {
 		void updateTitle();
 		void warnPreliminaryRegisteringStatus(String message);
 		void controlPannelModelUpdated();
 		void updateTime(String time);
 		void roundNumberChanged(int round);
+        void onCurrentTournamentChanged();
 	}
 
     private static final long REFRESH_DELAY = 2000;
@@ -150,6 +151,7 @@ public class GothaModel {
         }
         tournament.setLastTournamentModificationTime(tournament.getCurrentTournamentTime());
 
+        currentTournamentChanged();
         updateAllViews();
     }
 
@@ -425,6 +427,11 @@ public class GothaModel {
 		}
     }
 
+    private void currentTournamentChanged() {
+        for (GothaListener callback : mCallbacks) {
+            callback.onCurrentTournamentChanged();
+        }
+    }
     private void closeTournament() {
         if (tournament == null) {
             return;
@@ -457,6 +464,7 @@ public class GothaModel {
 
     public void setTournament(TournamentInterface tournament) {
         this.tournament = tournament;
+        currentTournamentChanged();
     }
 
 }
