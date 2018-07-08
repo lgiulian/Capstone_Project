@@ -8,6 +8,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 
+import com.crilu.gothandroid.GothandroidApplication;
 import com.crilu.gothandroid.MainActivity;
 import com.crilu.gothandroid.R;
 import com.crilu.gothandroid.utils.TournamentUtils;
@@ -73,6 +74,17 @@ public class GothaFirebaseMessageService extends FirebaseMessagingService {
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+    }
+
+    @Override
+    public void onNewToken(String token) {
+        GothandroidApplication.setCurrentToken(token);
+        Timber.d("new token: %s", token);
+        sendRegistrationToServer(token);
+    }
+
+    private void sendRegistrationToServer(String refreshedToken) {
+
     }
 
     private void processMessage(Map<String, String> data) {

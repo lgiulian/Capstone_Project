@@ -41,7 +41,7 @@ public class GothaContract {
         public static final String TABLE_NAME = "subscription";
         public static final String COLUMN_IDENTITY = "identity";
         public static final String COLUMN_TOURNAMENT_ID = "tournament_id";
-        public static final String COLUMN_TOKEN = "token";
+        public static final String COLUMN_UID = "uid";
         public static final String COLUMN_EGF_PIN = "egf_pin";
         public static final String COLUMN_FFG_LIC = "ffg_lic";
         public static final String COLUMN_AGA_ID = "aga_id";

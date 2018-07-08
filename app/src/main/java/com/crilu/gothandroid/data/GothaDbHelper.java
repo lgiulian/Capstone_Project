@@ -10,7 +10,7 @@ import com.crilu.gothandroid.data.GothaContract.TournamentEntry;
 public class GothaDbHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "gotha.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     public GothaDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -35,7 +35,7 @@ public class GothaDbHelper extends SQLiteOpenHelper {
                 SubscriptionEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 SubscriptionEntry.COLUMN_IDENTITY + " TEXT, " +
                 SubscriptionEntry.COLUMN_TOURNAMENT_ID + " INTEGER, " +
-                SubscriptionEntry.COLUMN_TOKEN + " TEXT, " +
+                SubscriptionEntry.COLUMN_UID + " TEXT, " +
                 SubscriptionEntry.COLUMN_EGF_PIN + " TEXT, " +
                 SubscriptionEntry.COLUMN_FFG_LIC + " TEXT, " +
                 SubscriptionEntry.COLUMN_AGA_ID + " TEXT, " +

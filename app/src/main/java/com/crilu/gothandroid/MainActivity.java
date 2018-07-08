@@ -251,6 +251,8 @@ public class MainActivity extends AppCompatActivity
             Snackbar.make(mCoordinatorLayout, getString(R.string.no_tournament_selected), Snackbar.LENGTH_LONG).show();
             return;
         }
+        String UID = checkUserLoggedIn();
+        if (TextUtils.isEmpty(UID)) return;
 
         String currUser = GothandroidApplication.getCurrentUser();
         Date creationDate = selectedTournament.getCreationDate() != null? selectedTournament.getCreationDate(): new Date();
@@ -262,7 +264,7 @@ public class MainActivity extends AppCompatActivity
             tournamentToSave.put(Tournament.LOCATION, selectedTournament.getLocation());
             tournamentToSave.put(Tournament.DIRECTOR, selectedTournament.getDirector());
             tournamentToSave.put(Tournament.CONTENT, selectedTournament.getContent());
-            tournamentToSave.put(Tournament.CREATOR, mRefreshedToken);
+            tournamentToSave.put(Tournament.CREATOR, UID);
             tournamentToSave.put(Tournament.CREATION_DATE, creationDate);
             FirebaseFirestore db = GothandroidApplication.getFirebaseFirestore();
             db.collection(TOURNAMENT_DOC_REF_PATH).add(tournamentToSave).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
@@ -297,6 +299,15 @@ public class MainActivity extends AppCompatActivity
             return null;
         }
         return tournament;
+    }
+
+    private String checkUserLoggedIn() {
+        String UID = GothandroidApplication.getCurrentUser();
+        if (TextUtils.isEmpty(UID)) {
+            Snackbar.make(mCoordinatorLayout, getString(R.string.you_are_not_logged_in), Snackbar.LENGTH_LONG).show();
+            return null;
+        }
+        return UID;
     }
 
     private void publishResultsOnFirestore(Tournament selectedTournament) {
@@ -337,12 +348,11 @@ public class MainActivity extends AppCompatActivity
             Snackbar.make(mCoordinatorLayout, getString(R.string.tournament_not_published), Snackbar.LENGTH_LONG).show();
             return;
         }
-        if (TextUtils.isEmpty(GothandroidApplication.getCurrentUser())) {
-            Snackbar.make(mCoordinatorLayout, getString(R.string.subscription_you_are_not_loggedin), Snackbar.LENGTH_LONG).show();
-            return;
-        }
+        String UID = checkUserLoggedIn();
+        if (TextUtils.isEmpty(UID)) return;
+
         FirebaseMessaging.getInstance().subscribeToTopic(tournamentIdentity);
-        final Subscription subscription = new Subscription(selectedTournament.getId(), mRefreshedToken,
+        final Subscription subscription = new Subscription(selectedTournament.getId(), UID,
                 GothaPreferences.getUserEgfPin(this), GothaPreferences.getUserFfgLic(this),
                 GothaPreferences.getUserAgaId(this), intention,
                 new Date(), Subscription.STATE_ACTIVE);
@@ -353,7 +363,7 @@ public class MainActivity extends AppCompatActivity
         subscriptionToSave.put(Subscription.INTENT, subscription.getIntent());
         subscriptionToSave.put(Subscription.STATE, subscription.getState());
         subscriptionToSave.put(Subscription.SUBSCRIPTION_DATE, subscription.getSubscriptionDate());
-        subscriptionToSave.put(Subscription.TOKEN, mRefreshedToken);
+        subscriptionToSave.put(Subscription.UID, subscription.getUid());
         FirebaseFirestore db = GothandroidApplication.getFirebaseFirestore();
         db.collection(TOURNAMENT_DOC_REF_PATH + "/" + selectedTournament.getIdentity() + SUBSCRIPTION_DOC_REF_RELATIVE_PATH)
                 .add(subscriptionToSave)

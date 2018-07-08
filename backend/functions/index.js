@@ -56,13 +56,17 @@ exports.sendRegistrationNotification = functions.firestore
       }
       console.log('We have a new registration for tournament:', topicId);
 
+      let creatorUid;
       let creatorToken;
       return admin.firestore()
         .collection('tournament')
         .doc(topicId)
         .get()
         .then(doc => {
-              creatorToken = doc.data().creator;
+            creatorUid = doc.data().creator;
+            console.log('Got creator uid: ' + creatorUid);
+            return admin.firestore().collection('user').doc(creatorUid).get().then(snap => {
+              creatorToken = snap.data().token;
               console.log('Got creator token: ' + creatorToken);
               var message = {
                 data: {
@@ -85,5 +89,6 @@ exports.sendRegistrationNotification = functions.firestore
                 .catch((error) => {
                   console.log('Error sending message:', error);
                 });
+              });
             });
         });

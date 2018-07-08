@@ -18,8 +18,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import com.crilu.gothandroid.data.GothaPreferences;
+import com.crilu.gothandroid.data.UserDao;
 import com.crilu.gothandroid.databinding.ActivityMyAccountBinding;
-import com.crilu.gothandroid.model.firestore.User;
 import com.crilu.opengotha.RatedPlayer;
 import com.crilu.opengotha.RatingList;
 import com.firebase.ui.auth.AuthUI;
@@ -28,21 +28,15 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import timber.log.Timber;
-
-import static com.crilu.gothandroid.GothandroidApplication.USER_DOC_REF_PATH;
 
 public class MyAccount extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
@@ -211,28 +205,10 @@ public class MyAccount extends AppCompatActivity implements AdapterView.OnItemCl
 
     private void saveUserOnFirestore(final String currUser) {
         if (!TextUtils.isEmpty(currUser)) {
-            Map<String, Object> userToSave = new HashMap<>();
-            userToSave.put(User.UID, currUser);
-            userToSave.put(User.TOKEN, GothandroidApplication.getCurrentToken());
-            userToSave.put(User.FIRST_NAME, mBinding.firstName.getText().toString());
-            userToSave.put(User.LAST_NAME, mBinding.lastName.getText().toString());
-            userToSave.put(User.EGF_PIN, mBinding.egfPlayer.getText().toString());
-            userToSave.put(User.FFG_LIC, mBinding.ffgLic.getText().toString());
-            userToSave.put(User.AGA_ID, mBinding.agaId.getText().toString());
-            userToSave.put(User.REGISTRATION_DATE, new Date(System.currentTimeMillis()));
-            FirebaseFirestore db = GothandroidApplication.getFirebaseFirestore();
-            db.collection(USER_DOC_REF_PATH).add(userToSave).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentReference> task) {
-                    if (task.isSuccessful()) {
-                        Timber.d("User %s was saved", currUser);
-                    } else {
-                        Timber.d(task.getException());
-                    }
-                }
-            });
+            UserDao.saveOrUpdateUserOnFirebase(currUser, mBinding.firstName.getText().toString(), mBinding.lastName.getText().toString(),
+                    mBinding.egfPlayer.getText().toString(), mBinding.ffgLic.getText().toString(), mBinding.agaId.getText().toString());
         } else {
-
+            Snackbar.make(mBinding.coordinatorLayout, getString(R.string.no_uid_available), Snackbar.LENGTH_LONG).show();
         }
     }
 

@@ -10,7 +10,7 @@ public class Subscription {
     public static final String STATE_ACTIVE = "active";
     public static final String STATE_INACTIVE = "inactive";
 
-    public static final String TOKEN = "token";
+    public static final String UID = "uid";
     public static final String EGF_PIN = "egfPin";
     public static final String FFG_LIC = "ffgLic";
     public static final String AGA_ID = "agaId";
@@ -21,9 +21,9 @@ public class Subscription {
     public Subscription() {
     }
 
-    public Subscription(Long tournamentId, String token, String egfPin, String ffgLic, String agaId, String intent, Date subscriptionDate, String state) {
+    public Subscription(Long tournamentId, String uid, String egfPin, String ffgLic, String agaId, String intent, Date subscriptionDate, String state) {
         this.tournamentId = tournamentId;
-        this.token = token;
+        this.uid = uid;
         this.egfPin = egfPin;
         this.ffgLic = ffgLic;
         this.agaId = agaId;
@@ -36,7 +36,7 @@ public class Subscription {
     private String identity;
     private Long tournamentId;
     private String tournamentIdentity;
-    private String token;
+    private String uid;
     private String egfPin;
     private String ffgLic;
     private String agaId;
@@ -76,12 +76,12 @@ public class Subscription {
         this.tournamentIdentity = tournamentIdentity;
     }
 
-    public String getToken() {
-        return token;
+    public String getUid() {
+        return uid;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public String getEgfPin() {

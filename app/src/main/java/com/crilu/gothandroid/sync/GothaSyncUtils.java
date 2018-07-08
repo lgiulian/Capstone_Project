@@ -26,7 +26,7 @@ import java.util.concurrent.TimeUnit;
 
 public class GothaSyncUtils {
 
-    private static final int SYNC_INTERVAL_HOURS = 3;
+    private static final int SYNC_INTERVAL_HOURS = 1;
     private static final int SYNC_INTERVAL_SECONDS = (int) TimeUnit.HOURS.toSeconds(SYNC_INTERVAL_HOURS);
     private static final int SYNC_FLEXTIME_SECONDS = SYNC_INTERVAL_SECONDS / 3;
 
@@ -147,7 +147,7 @@ public class GothaSyncUtils {
         values.put(GothaContract.SubscriptionEntry.COLUMN_SUBSCRIPTION_DATE, subscription.getSubscriptionDate().getTime());
         values.put(GothaContract.SubscriptionEntry.COLUMN_IDENTITY, subscription.getIdentity());
         values.put(GothaContract.SubscriptionEntry.COLUMN_TOURNAMENT_ID, subscription.getTournamentId());
-        values.put(GothaContract.SubscriptionEntry.COLUMN_TOKEN, subscription.getToken());
+        values.put(GothaContract.SubscriptionEntry.COLUMN_UID, subscription.getUid());
         values.put(GothaContract.SubscriptionEntry.COLUMN_STATE, subscription.getState());
         values.put(GothaContract.SubscriptionEntry.COLUMN_INTENT, subscription.getState());
         values.put(GothaContract.SubscriptionEntry.COLUMN_FFG_LIC, subscription.getFfgLic());
@@ -181,7 +181,7 @@ public class GothaSyncUtils {
             values.put(GothaContract.SubscriptionEntry.COLUMN_FFG_LIC, subscription.getFfgLic());
             values.put(GothaContract.SubscriptionEntry.COLUMN_INTENT, subscription.getIntent());
             values.put(GothaContract.SubscriptionEntry.COLUMN_STATE, subscription.getState());
-            values.put(GothaContract.SubscriptionEntry.COLUMN_TOKEN, subscription.getToken());
+            values.put(GothaContract.SubscriptionEntry.COLUMN_UID, subscription.getUid());
             values.put(GothaContract.SubscriptionEntry.COLUMN_IDENTITY, subscription.getIdentity());
             values.put(GothaContract.SubscriptionEntry.COLUMN_TOURNAMENT_ID, subscription.getTournamentIdentity());
             contentValues[counter] = values;

@@ -140,5 +140,7 @@
     <string name="tournament_registration_error">Registration failed</string>
     <string name="tournament_publish_error">Publishing failed</string>
     <string name="tournament_result_error">Results publish failed</string>
+    <string name="you_are_not_logged_in">Operation canceled. You are not logged in.</string>
+    <string name="no_uid_available">Saving user information results in error</string>
 
 </resources>
