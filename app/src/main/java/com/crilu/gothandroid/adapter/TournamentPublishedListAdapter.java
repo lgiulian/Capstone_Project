@@ -2,6 +2,7 @@ package com.crilu.gothandroid.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -84,15 +85,25 @@ public class TournamentPublishedListAdapter extends RecyclerView.Adapter<Tournam
 
         @Override
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-            menu.setHeaderTitle(R.string.select_the_action);
-            menu.add(0, R.id.open, 0, v.getContext().getString(R.string.open));
-            menu.add(0, R.id.edit, 0, v.getContext().getString(R.string.edit));
-            menu.add(0, R.id.delete, 0, v.getContext().getString(R.string.delete));
-            menu.add(0, R.id.publish_tournament, 0, v.getContext().getString(R.string.publish_tournament));
-            menu.add(0, R.id.publish_results, 0, v.getContext().getString(R.string.publish_results));
-            menu.add(0, R.id.register, 0, v.getContext().getString(R.string.register));
-            menu.add(0, R.id.subscribe, 0, v.getContext().getString(R.string.subscribe));
             mSelectedItemForContextMenu = getAdapterPosition();
+            menu.setHeaderTitle(R.string.select_the_action);
+            Tournament selectedTournamentForContextMenu = mData.get(mSelectedItemForContextMenu);
+            String uID = GothandroidApplication.getCurrentUser();
+            boolean published = !TextUtils.isEmpty(selectedTournamentForContextMenu.getIdentity());
+            boolean iAmOwner = uID != null && uID.equals(selectedTournamentForContextMenu.getCreator());
+            if (iAmOwner) {
+                menu.add(0, R.id.open, 0, v.getContext().getString(R.string.open));
+                menu.add(0, R.id.edit, 0, v.getContext().getString(R.string.edit));
+                menu.add(0, R.id.delete, 0, v.getContext().getString(R.string.delete));
+                menu.add(0, R.id.publish_tournament, 0, v.getContext().getString(R.string.publish_tournament));
+            }
+            if (iAmOwner && published) {
+                menu.add(0, R.id.publish_results, 0, v.getContext().getString(R.string.publish_results));
+            }
+            if (published) {
+                menu.add(0, R.id.register, 0, v.getContext().getString(R.string.register));
+                menu.add(0, R.id.subscribe, 0, v.getContext().getString(R.string.subscribe));
+            }
         }
     }
 }
