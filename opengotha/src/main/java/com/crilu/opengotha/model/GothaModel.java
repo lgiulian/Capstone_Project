@@ -136,8 +136,9 @@ public class GothaModel {
         this.tournamentChanged();
     }
 
-    public void openTournamentFromFile(File f) throws IOException, ClassNotFoundException {
+    public void openTournamentFromFile(File f, String tournamentIdentity) throws IOException, ClassNotFoundException {
         tournament = Gotha.getTournamentFromFile(f);
+        tournament.setTournamentIdentity(tournamentIdentity);
         this.tournamentChanged();
     }
 

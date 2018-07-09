@@ -145,4 +145,7 @@ public interface TournamentInterface {
     public void addClubToClubsGroup(String groupName, String clubName);
     public void removeClubFromClubsGroup(String groupName, String clubName);
     public boolean playersAreInCommonGroup(Player p1, Player p2);
+
+    public void setTournamentIdentity(String identity);
+    public String getTournamentIdentity();
 }

@@ -14,6 +14,9 @@
         android:id="@+id/publish_tournament"
         android:title="@string/publish_tournament" />
     <item
+        android:id="@+id/save_and_upload"
+        android:title="@string/save_and_upload_tournament" />
+    <item
         android:id="@+id/publish_results"
         android:title="@string/publish_results" />
     <item

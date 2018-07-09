@@ -36,7 +36,9 @@ import com.crilu.gothandroid.model.TournamentsViewModel;
 import com.crilu.gothandroid.model.firestore.Subscription;
 import com.crilu.gothandroid.model.firestore.Tournament;
 import com.crilu.gothandroid.sync.GothaSyncUtils;
+import com.crilu.gothandroid.utils.FileUtils;
 import com.crilu.gothandroid.utils.TournamentUtils;
+import com.crilu.opengotha.ExternalDocument;
 import com.crilu.opengotha.TournamentInterface;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -45,10 +47,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -183,6 +188,9 @@ public class MainActivity extends AppCompatActivity
             case R.id.publish_tournament:
                 createLocalFileAndPublishOnFirestore(selectedTournament);
                 return true;
+            case R.id.save_and_upload:
+                saveAndUploadOnFirestore(selectedTournament);
+                return true;
             case R.id.register:
                 registerTournament(selectedTournament);
                 return true;
@@ -285,6 +293,60 @@ public class MainActivity extends AppCompatActivity
                     } else {
                         Timber.d(task.getException());
                         Snackbar.make(mCoordinatorLayout, getString(R.string.tournament_publish_error), Snackbar.LENGTH_LONG).show();
+                    }
+                }
+            });
+        }
+    }
+
+    private void saveAndUploadOnFirestore(final Tournament selectedTournament) {
+        if (selectedTournament == null) {
+            Snackbar.make(mCoordinatorLayout, getString(R.string.no_tournament_selected), Snackbar.LENGTH_LONG).show();
+            return;
+        }
+        String UID = checkUserLoggedIn();
+        if (TextUtils.isEmpty(UID)) return;
+        final TournamentInterface currentOpenedTournament = checkTournamentOpened();
+        if (currentOpenedTournament == null) return;
+        if (!TextUtils.isEmpty(selectedTournament.getIdentity())
+                && selectedTournament.getIdentity().equals(currentOpenedTournament.getTournamentIdentity())) {
+            String filename = currentOpenedTournament.getFullName() + ".xml";
+            File file = new File(getFilesDir(), filename);
+            ExternalDocument.generateXMLFile(currentOpenedTournament, file);
+            try {
+                String tournamentContent = FileUtils.getFileContents(file);
+                selectedTournament.setContent(tournamentContent);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        String currUser = GothandroidApplication.getCurrentUser();
+        if (!TextUtils.isEmpty(currUser) && !TextUtils.isEmpty(selectedTournament.getContent())) {
+            Map<String, Object> tournamentToSave = new HashMap<>();
+            tournamentToSave.put(Tournament.FULL_NAME, selectedTournament.getFullName());
+            tournamentToSave.put(Tournament.SHORT_NAME, selectedTournament.getShortName());
+            tournamentToSave.put(Tournament.BEGIN_DATE, selectedTournament.getBeginDate());
+            tournamentToSave.put(Tournament.LOCATION, selectedTournament.getLocation());
+            tournamentToSave.put(Tournament.DIRECTOR, selectedTournament.getDirector());
+            tournamentToSave.put(Tournament.CONTENT, selectedTournament.getContent());
+            tournamentToSave.put(Tournament.CREATOR, UID);
+            FirebaseFirestore db = GothandroidApplication.getFirebaseFirestore();
+            db.collection(TOURNAMENT_DOC_REF_PATH).document(selectedTournament.getIdentity()).set(tournamentToSave, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        Timber.d("Tournament %s was saved and uploaded", selectedTournament.getFullName());
+                        ContentResolver gothaContentResolver = getContentResolver();
+                        ContentValues cv = GothaSyncUtils.getSingleTournamentContentValues(selectedTournament);
+                        gothaContentResolver.update(
+                                ContentUris.withAppendedId(GothaContract.TournamentEntry.CONTENT_URI, selectedTournament.getId()),
+                                cv,
+                                null,
+                                null);
+                        Snackbar.make(mCoordinatorLayout, getString(R.string.tournament_saved_and_uploaded), Snackbar.LENGTH_LONG).show();
+                    } else {
+                        Timber.d(task.getException());
+                        Snackbar.make(mCoordinatorLayout, getString(R.string.tournament_saved_and_uploaded_error), Snackbar.LENGTH_LONG).show();
                     }
                 }
             });
@@ -398,7 +460,7 @@ public class MainActivity extends AppCompatActivity
 
     private void openTournament(Tournament selectedTournament) {
         String fileContents = selectedTournament.getContent();
-        TournamentUtils.openTournament(this, fileContents);
+        TournamentUtils.openTournament(this, fileContents, selectedTournament.getIdentity());
     }
 
     private void updateUI() {

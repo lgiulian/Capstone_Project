@@ -74,7 +74,7 @@ public class Tournament implements TournamentInterface, java.io.Serializable {
     private transient long lastTournamentModificationTime = System.currentTimeMillis();
     public transient ScoredTeamsSet scoredTeamsSet;
     
-
+    private String tournamentIdentity;
 
     public Tournament() {
         tournamentParameterSet = new TournamentParameterSet();
@@ -86,6 +86,15 @@ public class Tournament implements TournamentInterface, java.io.Serializable {
 
         hmTeams = new HashMap<String, Team>();
         hmClubsGroups = new HashMap<String, ClubsGroup>();
+    }
+
+    @Override
+    public String getTournamentIdentity() {
+        return tournamentIdentity;
+    }
+
+    public void setTournamentIdentity(String tournamentIdentity) {
+        this.tournamentIdentity = tournamentIdentity;
     }
 
     @Override

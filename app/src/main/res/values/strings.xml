@@ -124,6 +124,7 @@
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="publish_tournament">Publish tournament</string>
+    <string name="save_and_upload_tournament">Save and upload tournament</string>
     <string name="publish_results">Publish results</string>
     <string name="register">Register</string>
     <string name="subscribe">Subscribe</string>
@@ -133,12 +134,14 @@
     <string name="tournament_not_published">This tournament is not published yet</string>
     <string name="subscription_you_are_not_loggedin">Subscription failed. You are not logged in.</string>
     <string name="tournament_published">The tournament was published</string>
+    <string name="tournament_publish_error">Publishing failed</string>
+    <string name="tournament_saved_and_uploaded">The tournament was saved and uploaded</string>
+    <string name="tournament_saved_and_uploaded_error">Saving tournament results in error</string>
     <string name="tournament_result_published">Results successfully published</string>
     <string name="tournament_subscription_success">Subscription succeeded</string>
     <string name="tournament_subscription_error">Subscription failed</string>
     <string name="tournament_registration_success">Registration succeeded</string>
     <string name="tournament_registration_error">Registration failed</string>
-    <string name="tournament_publish_error">Publishing failed</string>
     <string name="tournament_result_error">Results publish failed</string>
     <string name="you_are_not_logged_in">Operation canceled. You are not logged in.</string>
     <string name="no_uid_available">Saving user information results in error</string>

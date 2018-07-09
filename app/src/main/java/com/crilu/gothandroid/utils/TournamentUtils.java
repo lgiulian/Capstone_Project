@@ -34,7 +34,7 @@ public class TournamentUtils {
                 GothandroidApplication.setRatingList(ratingList);
                 Tournament tournament = TournamentDao.getTournamentByIdentity(context, tournamentIdentity);
                 if (tournament != null) {
-                    openTournament(context, tournament.getContent());
+                    openTournament(context, tournament.getContent(), tournament.getIdentity());
                     PlayersManager playersManager = GothandroidApplication.getPlayersManagerInstance();
                     RatedPlayer selectedPlayer = ratingList.getRatedPlayer(egfPin);
                     boolean[] participation = new boolean[Gotha.MAX_NUMBER_OF_ROUNDS];
@@ -63,7 +63,7 @@ public class TournamentUtils {
         AppExecutors.getInstance().diskIO().execute(futureTask);
     }
 
-    public static void openTournament(Context context, String fileContents) {
+    public static void openTournament(Context context, String fileContents, String tournamentIdentity) {
         String filename = "temp_tournament_file";
         FileOutputStream outputStream;
         try {
@@ -76,7 +76,7 @@ public class TournamentUtils {
 
         File file = new File(context.getFilesDir(), filename);
         try {
-            GothandroidApplication.getGothaModelInstance().openTournamentFromFile(file);
+            GothandroidApplication.getGothaModelInstance().openTournamentFromFile(file, tournamentIdentity);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
