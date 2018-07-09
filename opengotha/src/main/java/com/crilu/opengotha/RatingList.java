@@ -55,6 +55,7 @@ public class RatingList {
     }
 
     public RatingList(int ratingListType, InputStream is) {
+        Logger.getLogger(RatingList.class.getName()).log(Level.INFO, "starting to parse players file");
         this.ratingListType = ratingListType;
         try {
             parseFile(new BufferedReader(new InputStreamReader(is, "ISO-8859-15")));
@@ -74,6 +75,7 @@ public class RatingList {
             String strNaFi = (rp.getName() + rp.getFirstName()).replaceAll(" ", "").toUpperCase();
             hmNaFiRatedPlayers.put(strNaFi, rp);
         }
+        Logger.getLogger(RatingList.class.getName()).log(Level.INFO, "finished parsing players file");
     }
 
     private void parseFile(File f) {

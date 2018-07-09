@@ -11,10 +11,16 @@ import android.support.v4.app.NotificationCompat;
 import com.crilu.gothandroid.GothandroidApplication;
 import com.crilu.gothandroid.MainActivity;
 import com.crilu.gothandroid.R;
+import com.crilu.gothandroid.data.TournamentDao;
+import com.crilu.gothandroid.model.firestore.Tournament;
+import com.crilu.gothandroid.utils.FileUtils;
 import com.crilu.gothandroid.utils.TournamentUtils;
+import com.crilu.opengotha.TournamentInterface;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 
 import timber.log.Timber;
@@ -94,6 +100,19 @@ public class GothaFirebaseMessageService extends FirebaseMessagingService {
                 String tournamentIdentity = data.get(JSON_KEY_TOURNAMENT_IDENTITY);
                 String egfPin = data.get(JSON_KEY_EGF_PIN);
                 TournamentUtils.registerPlayerForTournament(this, egfPin, tournamentIdentity);
+
+                // update tournament model with the new content and save it in DB
+                final TournamentInterface currentOpenedTournament = GothandroidApplication.getGothaModelInstance().getTournament();
+                Tournament tournamentModel = TournamentDao.getTournamentByIdentity(this, tournamentIdentity);
+                File file = TournamentUtils.getXmlFile(this, currentOpenedTournament);
+                try {
+                    String tournamentContent = FileUtils.getFileContents(file);
+                    tournamentModel.setContent(tournamentContent);
+                    TournamentDao.saveTournament(this, tournamentModel);
+                } catch (IOException e) {
+                    Timber.d("Failed to read tournament file");
+                    e.printStackTrace();
+                }
                 break;
         }
     }

@@ -1,14 +1,17 @@
 package com.crilu.gothandroid.utils;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.crilu.gothandroid.GothandroidApplication;
 import com.crilu.gothandroid.R;
 import com.crilu.gothandroid.data.TournamentDao;
 import com.crilu.gothandroid.model.firestore.Tournament;
+import com.crilu.opengotha.ExternalDocument;
 import com.crilu.opengotha.Gotha;
 import com.crilu.opengotha.RatedPlayer;
 import com.crilu.opengotha.RatingList;
+import com.crilu.opengotha.TournamentInterface;
 import com.crilu.opengotha.model.PlayersManager;
 
 import java.io.File;
@@ -76,6 +79,7 @@ public class TournamentUtils {
 
         File file = new File(context.getFilesDir(), filename);
         try {
+            Timber.d("Opening tournament %s", tournamentIdentity);
             GothandroidApplication.getGothaModelInstance().openTournamentFromFile(file, tournamentIdentity);
         } catch (IOException e) {
             e.printStackTrace();
@@ -83,4 +87,13 @@ public class TournamentUtils {
             e.printStackTrace();
         }
     }
+
+    @NonNull
+    public static File getXmlFile(Context context, TournamentInterface currentOpenedTournament) {
+        String filename = currentOpenedTournament.getFullName() + ".xml";
+        File file = new File(context.getFilesDir(), filename);
+        ExternalDocument.generateXMLFile(currentOpenedTournament, file);
+        return file;
+    }
+
 }

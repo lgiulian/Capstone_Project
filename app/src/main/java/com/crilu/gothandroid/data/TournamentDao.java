@@ -1,17 +1,37 @@
 package com.crilu.gothandroid.data;
 
+import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.support.annotation.NonNull;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
+import android.text.TextUtils;
 
 import com.crilu.gothandroid.GothandroidApplication;
+import com.crilu.gothandroid.R;
 import com.crilu.gothandroid.model.firestore.Tournament;
+import com.crilu.gothandroid.sync.GothaSyncUtils;
+import com.crilu.gothandroid.utils.FileUtils;
+import com.crilu.gothandroid.utils.TournamentUtils;
+import com.crilu.opengotha.TournamentInterface;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import timber.log.Timber;
 
 import static com.crilu.gothandroid.GothandroidApplication.SUBSCRIPTION_DOC_REF_RELATIVE_PATH;
 import static com.crilu.gothandroid.GothandroidApplication.TOURNAMENT_DOC_REF_PATH;
@@ -87,4 +107,58 @@ public class TournamentDao {
         String collectionPath = TOURNAMENT_DOC_REF_PATH + "/" + tournamentIdentity + SUBSCRIPTION_DOC_REF_RELATIVE_PATH;
         db.collection(collectionPath).get().addOnCompleteListener(listener);
     }
+
+    public static void saveCurrentTournamentAndUploadOnFirestore(final Context context, final Tournament tournamentModel, String UID, final boolean displayFeedback, final CoordinatorLayout coordinatorLayout) {
+        final TournamentInterface currentOpenedTournament = GothandroidApplication.getGothaModelInstance().getTournament();
+        File file = TournamentUtils.getXmlFile(context, currentOpenedTournament);
+        try {
+            String tournamentContent = FileUtils.getFileContents(file);
+            tournamentModel.setContent(tournamentContent);
+
+            String currUser = GothandroidApplication.getCurrentUser();
+            if (!TextUtils.isEmpty(currUser) && !TextUtils.isEmpty(tournamentModel.getContent())) {
+                Map<String, Object> tournamentToSave = new HashMap<>();
+                tournamentToSave.put(Tournament.FULL_NAME, tournamentModel.getFullName());
+                tournamentToSave.put(Tournament.SHORT_NAME, tournamentModel.getShortName());
+                tournamentToSave.put(Tournament.BEGIN_DATE, tournamentModel.getBeginDate());
+                tournamentToSave.put(Tournament.LOCATION, tournamentModel.getLocation());
+                tournamentToSave.put(Tournament.DIRECTOR, tournamentModel.getDirector());
+                tournamentToSave.put(Tournament.CONTENT, tournamentModel.getContent());
+                tournamentToSave.put(Tournament.CREATOR, UID);
+                Timber.d("uploading tournament on firestore");
+                FirebaseFirestore db = GothandroidApplication.getFirebaseFirestore();
+                db.collection(TOURNAMENT_DOC_REF_PATH).document(tournamentModel.getIdentity()).set(tournamentToSave, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Timber.d("saving  tournament in database");
+                            saveTournament(context, tournamentModel);
+                            Timber.d("Tournament %s was saved and uploaded", tournamentModel.getFullName());
+                            if (displayFeedback) {
+                                Snackbar.make(coordinatorLayout, context.getString(R.string.tournament_saved_and_uploaded), Snackbar.LENGTH_LONG).show();
+                            }
+                        } else {
+                            Timber.d(task.getException());
+                            if (displayFeedback) {
+                                Snackbar.make(coordinatorLayout, context.getString(R.string.tournament_saved_and_uploaded_error), Snackbar.LENGTH_LONG).show();
+                            }
+                        }
+                    }
+                });
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void saveTournament(Context context, Tournament tournamentModel) {
+        ContentResolver gothaContentResolver = context.getContentResolver();
+        ContentValues cv = GothaSyncUtils.getSingleTournamentContentValues(tournamentModel);
+        gothaContentResolver.update(
+                ContentUris.withAppendedId(GothaContract.TournamentEntry.CONTENT_URI, tournamentModel.getId()),
+                cv,
+                null,
+                null);
+    }
+
 }
