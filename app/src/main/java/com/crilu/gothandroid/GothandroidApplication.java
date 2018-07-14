@@ -28,6 +28,7 @@ public class GothandroidApplication extends Application implements GothaModel.Go
     public static final String TOURNAMENT_DOC_REF_PATH = "tournament";
     public static final String USER_DOC_REF_PATH = "user";
     public static final String SUBSCRIPTION_DOC_REF_RELATIVE_PATH = "/subscription";
+    public static final String MESSAGE_DOC_REF_RELATIVE_PATH = "/message";
     public static final String RESULT_DOC_REF_RELATIVE_PATH = "/result";
 
     public static final DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM);

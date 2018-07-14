@@ -2,8 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.crilu.gothandroid">
 
-    <uses-feature android:name="android.hardware.camera" android:required="false" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="18" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18" />
 
     <application
         android:name=".GothandroidApplication"
@@ -27,8 +32,8 @@
         <activity
             android:name=".CreateTournamentActivity"
             android:label="@string/title_activity_create_tournament"
-            android:parentActivityName=".MainActivity"
             android:launchMode="singleTop"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -37,29 +42,38 @@
         <activity
             android:name=".PlayersManagerActivity"
             android:label="@string/title_activity_players_manager"
-            android:parentActivityName=".MainActivity"
             android:launchMode="singleTop"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.crilu.gothandroid.MainActivity" />
         </activity>
-
         <activity
             android:name=".PairActivity"
             android:label="@string/title_activity_pair"
-            android:parentActivityName=".MainActivity"
             android:launchMode="singleTop"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.crilu.gothandroid.MainActivity" />
+        </activity>
+        <activity
+            android:name=".MyAccount"
+            android:label="@string/title_activity_myAccount"
+            android:launchMode="singleTop"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.crilu.gothandroid.MainActivity" />
         </activity>
 
-        <activity android:name=".MyAccount"
-            android:label="@string/title_activity_myAccount"
-            android:parentActivityName=".MainActivity"
+        <activity android:name=".SendMessageActivity"
+            android:label="@string/send_message_title"
             android:launchMode="singleTop"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -74,7 +88,7 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <!--This is required for immediate syncs -->
+        <!-- This is required for immediate syncs -->
         <service
             android:name=".sync.GothaSyncIntentService"
             android:exported="false" />
@@ -82,15 +96,14 @@
             android:name=".sync.GothaFirebaseJobService"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />
             </intent-filter>
         </service>
 
         <provider
             android:name=".data.GothaContentProvider"
             android:authorities="com.crilu.gothandroid"
-            android:exported="false"/>
-
+            android:exported="false" />
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.example.android.fileprovider"
@@ -98,7 +111,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"></meta-data>
+                android:resource="@xml/file_paths" />
         </provider>
 
     </application>

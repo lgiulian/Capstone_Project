@@ -10,7 +10,7 @@ import com.crilu.gothandroid.data.GothaContract.TournamentEntry;
 public class GothaDbHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "gotha.db";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 5;
 
     public GothaDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

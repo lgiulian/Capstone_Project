@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
+import android.text.TextUtils;
 
 import com.crilu.gothandroid.GothandroidApplication;
 import com.crilu.gothandroid.MainActivity;
@@ -95,24 +96,15 @@ public class GothaFirebaseMessageService extends FirebaseMessagingService {
 
     private void processMessage(Map<String, String> data) {
         String command = data.get(JSON_KEY_COMMAND);
+        if (TextUtils.isEmpty(command)) {
+            return;
+        }
         switch (command) {
             case JSON_KEY_COMMAND_REGISTRATION:
                 String tournamentIdentity = data.get(JSON_KEY_TOURNAMENT_IDENTITY);
                 String egfPin = data.get(JSON_KEY_EGF_PIN);
                 TournamentUtils.registerPlayerForTournament(this, egfPin, tournamentIdentity);
 
-                // update tournament model with the new content and save it in DB
-                final TournamentInterface currentOpenedTournament = GothandroidApplication.getGothaModelInstance().getTournament();
-                Tournament tournamentModel = TournamentDao.getTournamentByIdentity(this, tournamentIdentity);
-                File file = TournamentUtils.getXmlFile(this, currentOpenedTournament);
-                try {
-                    String tournamentContent = FileUtils.getFileContents(file);
-                    tournamentModel.setContent(tournamentContent);
-                    TournamentDao.saveTournament(this, tournamentModel);
-                } catch (IOException e) {
-                    Timber.d("Failed to read tournament file");
-                    e.printStackTrace();
-                }
                 break;
         }
     }

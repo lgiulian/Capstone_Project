@@ -92,3 +92,30 @@ exports.sendRegistrationNotification = functions.firestore
               });
             });
         });
+
+exports.sendTournamentMessage = functions.firestore
+    .document('/tournament/{topicId}/message/{docId}')
+    .onCreate((snap, context) => {
+      const topicId = context.params.topicId;
+      const newMessage = snap.data();
+      console.log('We have a new message to participant in tournament:', topicId);
+
+      var message = {
+        data: {
+          message: newMessage.message,
+          tournament_name: newMessage.from
+        },
+        topic: topicId
+      };
+
+      // Send a message to devices subscribed to the provided topic.
+      return admin.messaging().send(message)
+        .then((response) => {
+          // Response is a message ID string.
+          console.log('Successfully sent message:', response);
+          return 0;
+        })
+        .catch((error) => {
+          console.log('Error sending message:', error);
+        });
+    });

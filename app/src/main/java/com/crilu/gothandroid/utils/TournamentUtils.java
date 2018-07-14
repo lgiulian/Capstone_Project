@@ -57,6 +57,7 @@ public class TournamentUtils {
                             selectedPlayer.getStrRawRating(),
                             "0",
                             participation);
+                    updateTournamentModelAndSaveInDB(context, tournamentIdentity);
                 } else {
                     Timber.d("No tournament found for identity %s", tournamentIdentity);
                 }
@@ -64,6 +65,21 @@ public class TournamentUtils {
             }
         });
         AppExecutors.getInstance().diskIO().execute(futureTask);
+    }
+
+    private static void updateTournamentModelAndSaveInDB(Context context, String tournamentIdentity) {
+        // update tournament model with the new content and save it in DB
+        final TournamentInterface currentOpenedTournament = GothandroidApplication.getGothaModelInstance().getTournament();
+        Tournament tournamentModel = TournamentDao.getTournamentByIdentity(context, tournamentIdentity);
+        File file = TournamentUtils.getXmlFile(context, currentOpenedTournament);
+        try {
+            String tournamentContent = FileUtils.getFileContents(file);
+            tournamentModel.setContent(tournamentContent);
+            TournamentDao.saveTournament(context, tournamentModel);
+        } catch (IOException e) {
+            Timber.d("Failed to read tournament file");
+            e.printStackTrace();
+        }
     }
 
     public static void openTournament(Context context, String fileContents, String tournamentIdentity) {

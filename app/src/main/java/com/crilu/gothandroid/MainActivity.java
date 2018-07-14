@@ -184,6 +184,9 @@ public class MainActivity extends AppCompatActivity
             case R.id.publish_tournament:
                 createLocalFileAndPublishOnFirestore(selectedTournament);
                 return true;
+            case R.id.send_message_to_all:
+                sendMessageToAll(selectedTournament);
+                return true;
             case R.id.save_and_upload:
                 saveAndUploadOnFirestore(selectedTournament);
                 return true;
@@ -310,6 +313,19 @@ public class MainActivity extends AppCompatActivity
                 && selectedTournament.getIdentity().equals(currentOpenedTournament.getTournamentIdentity())) {
             Timber.d("saving tournament %s", selectedTournament.getIdentity());
             TournamentDao.saveCurrentTournamentAndUploadOnFirestore(this, selectedTournament, UID, true, mCoordinatorLayout);
+        }
+    }
+
+    private void sendMessageToAll(Tournament selectedTournament) {
+        if (selectedTournament == null) {
+            Snackbar.make(mCoordinatorLayout, getString(R.string.no_tournament_selected), Snackbar.LENGTH_LONG).show();
+            return;
+        }
+        if (!TextUtils.isEmpty(selectedTournament.getIdentity())) {
+            Timber.d("sending message to tournament %s", selectedTournament.getIdentity());
+            Intent intent = new Intent(this, SendMessageActivity.class);
+            intent.putExtra(SendMessageActivity.TOURNAMENT_KEY, selectedTournament.getIdentity());
+            startActivity(intent);
         }
     }
 

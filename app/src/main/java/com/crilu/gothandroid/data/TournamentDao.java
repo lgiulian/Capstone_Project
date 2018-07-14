@@ -12,6 +12,7 @@ import android.text.TextUtils;
 
 import com.crilu.gothandroid.GothandroidApplication;
 import com.crilu.gothandroid.R;
+import com.crilu.gothandroid.model.firestore.Message;
 import com.crilu.gothandroid.model.firestore.Tournament;
 import com.crilu.gothandroid.sync.GothaSyncUtils;
 import com.crilu.gothandroid.utils.FileUtils;
@@ -19,6 +20,7 @@ import com.crilu.gothandroid.utils.TournamentUtils;
 import com.crilu.opengotha.TournamentInterface;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
@@ -33,6 +35,7 @@ import java.util.Map;
 
 import timber.log.Timber;
 
+import static com.crilu.gothandroid.GothandroidApplication.MESSAGE_DOC_REF_RELATIVE_PATH;
 import static com.crilu.gothandroid.GothandroidApplication.SUBSCRIPTION_DOC_REF_RELATIVE_PATH;
 import static com.crilu.gothandroid.GothandroidApplication.TOURNAMENT_DOC_REF_PATH;
 
@@ -152,6 +155,33 @@ public class TournamentDao {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public static void sendMessageToAll(final Context context, final Tournament tournamentModel, final String message, final CoordinatorLayout coordinatorLayout) {
+        if (!TextUtils.isEmpty(message)) {
+            Map<String, Object> messageToSave = new HashMap<>();
+            messageToSave.put(Message.MESSAGE, message);
+            messageToSave.put(Message.FROM, tournamentModel.getFullName());
+            messageToSave.put(Message.MESSAGE_DATE, new Date());
+            Timber.d("uploading message on firestore");
+            FirebaseFirestore db = GothandroidApplication.getFirebaseFirestore();
+            db.collection(TOURNAMENT_DOC_REF_PATH + "/" + tournamentModel.getIdentity() + MESSAGE_DOC_REF_RELATIVE_PATH).add(messageToSave).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentReference> task) {
+                    if (task.isSuccessful()) {
+                        Timber.d("Message %s was uploaded", message);
+                        if (coordinatorLayout != null) {
+                            Snackbar.make(coordinatorLayout, context.getString(R.string.tournament_send_message), Snackbar.LENGTH_LONG).show();
+                        }
+                    } else {
+                        Timber.d(task.getException());
+                        if (coordinatorLayout != null) {
+                            Snackbar.make(coordinatorLayout, context.getString(R.string.tournament_send_message_error), Snackbar.LENGTH_LONG).show();
+                        }
+                    }
+                }
+            });
         }
     }
 

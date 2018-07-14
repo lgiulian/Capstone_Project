@@ -55,7 +55,9 @@ public class TournamentsViewModel extends AndroidViewModel {
 
     @Override
     protected void finalize() throws Throwable {
-        getApplication().getContentResolver().unregisterContentObserver(mContentObserver);
+        if (mContentObserver != null) {
+            getApplication().getContentResolver().unregisterContentObserver(mContentObserver);
+        }
         super.finalize();
     }
 }

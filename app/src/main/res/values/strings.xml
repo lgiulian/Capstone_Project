@@ -76,7 +76,7 @@
     <string name="tables_header_hd">Hd</string>
 
     <!-- Message and Notification Strings -->
-    <string name="notification_message">"New update for %1$s"</string>
+    <string name="notification_message">"%1$s update"</string>
     <string name="menu_drawer_publish_results">Publish Results</string>
 
     <string name="title_activity_myAccount">My Account</string>
@@ -126,6 +126,7 @@
     <string name="publish_tournament">Publish tournament</string>
     <string name="save_and_upload_tournament">Save and upload tournament</string>
     <string name="publish_results">Publish results</string>
+    <string name="send_message_to_all">Send message to all</string>
     <string name="register">Register</string>
     <string name="subscribe">Subscribe</string>
 
@@ -145,5 +146,19 @@
     <string name="tournament_result_error">Results publish failed</string>
     <string name="you_are_not_logged_in">Operation canceled. You are not logged in.</string>
     <string name="no_uid_available">Saving user information results in error</string>
+    <string name="tournament_send_message">The message was sent successfuly</string>
+    <string name="tournament_send_message_error">An error occured sending message</string>
+
+    <!-- Send Message screen -->
+    <string name="send_message_title">Send Message</string>
+    <string name="enter_message_to_be_sent">Enter the message to be sent</string>
+    <string name="format_tournament_info">
+        Tournament: <xliff:g id="name">%1$s</xliff:g> -
+        Start: <xliff:g id="start">%2$s</xliff:g>
+        Loc: <xliff:g id="location">%3$s</xliff:g>
+    </string>
+    <string name="format_tournament_participants">
+        Number of participants: <xliff:g id="name">%1$s</xliff:g>
+    </string>
 
 </resources>
