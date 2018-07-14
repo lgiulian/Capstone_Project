@@ -261,6 +261,7 @@ public class MainActivity extends AppCompatActivity
         String currUser = GothandroidApplication.getCurrentUser();
         Date creationDate = selectedTournament.getCreationDate() != null? selectedTournament.getCreationDate(): new Date();
         if (!TextUtils.isEmpty(currUser) && !TextUtils.isEmpty(selectedTournament.getContent())) {
+            selectedTournament.setLastModificationDate(creationDate);
             Map<String, Object> tournamentToSave = new HashMap<>();
             tournamentToSave.put(Tournament.FULL_NAME, selectedTournament.getFullName());
             tournamentToSave.put(Tournament.SHORT_NAME, selectedTournament.getShortName());
@@ -270,6 +271,7 @@ public class MainActivity extends AppCompatActivity
             tournamentToSave.put(Tournament.CONTENT, selectedTournament.getContent());
             tournamentToSave.put(Tournament.CREATOR, UID);
             tournamentToSave.put(Tournament.CREATION_DATE, creationDate);
+            tournamentToSave.put(Tournament.LAST_MODIFICATION_DATE, creationDate);
             FirebaseFirestore db = GothandroidApplication.getFirebaseFirestore();
             db.collection(TOURNAMENT_DOC_REF_PATH).add(tournamentToSave).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                 @Override

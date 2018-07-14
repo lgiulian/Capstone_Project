@@ -13,6 +13,7 @@ public class Tournament {
     public static final String RESULT_CONTENT = "content";
     public static final String CREATOR = "creator";
     public static final String CREATION_DATE = "creationDate";
+    public static final String LAST_MODIFICATION_DATE = "lastModificationDate";
 
     private Long id;
     private String identity;
@@ -24,6 +25,7 @@ public class Tournament {
     private String content;
     private String creator;
     private Date creationDate;
+    private Date lastModificationDate;
 
     public Long getId() {
         return id;
@@ -103,5 +105,13 @@ public class Tournament {
 
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public Date getLastModificationDate() {
+        return lastModificationDate;
+    }
+
+    public void setLastModificationDate(Date lastModificationDate) {
+        this.lastModificationDate = lastModificationDate;
     }
 }

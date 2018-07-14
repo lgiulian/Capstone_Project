@@ -99,9 +99,9 @@
     <!-- Used by NotificationUtils -->
     <!-- The format of the notification we show when the tournaments are updated -->
     <string name="format_notification">
-        Tournament:<xliff:g id="name">%1$s</xliff:g> -
-        Start:<xliff:g id="start">%2$s</xliff:g>
-        Loc:<xliff:g id="location">%3$s</xliff:g>
+        Tournament: <xliff:g id="name">%1$s</xliff:g> -
+        Start: <xliff:g id="start">%2$s</xliff:g>
+        Loc: <xliff:g id="location">%3$s</xliff:g>
     </string>
     <string name="channel_name">Gotha_channel_name</string>
     <string name="channel_description">Gotha_channel_description</string>

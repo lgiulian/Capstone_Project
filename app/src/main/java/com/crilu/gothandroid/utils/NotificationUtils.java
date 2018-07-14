@@ -81,9 +81,10 @@ public class NotificationUtils {
              * next time the tournaments are refreshed if we should show another notification.
              */
             GothaPreferences.saveLatestKnownPublishedTournament(context, latestPublishedTournamentTime);
+
+            tournamentsCursor.close();
         }
 
-        tournamentsCursor.close();
     }
 
     private static String getNotificationText(Context context, String name, Long startDate, String location) {

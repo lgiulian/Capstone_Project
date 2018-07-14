@@ -131,6 +131,7 @@ public class GothaSyncUtils {
         ContentValues values = new ContentValues();
         values.put(GothaContract.TournamentEntry.COLUMN_BEGIN_DATE, tournament.getBeginDate().getTime());
         values.put(GothaContract.TournamentEntry.COLUMN_CREATION_DATE, tournament.getCreationDate().getTime());
+        values.put(GothaContract.TournamentEntry.COLUMN_LAST_MODIFICATION_DATE, tournament.getLastModificationDate().getTime());
         values.put(GothaContract.TournamentEntry.COLUMN_CONTENT, tournament.getContent());
         values.put(GothaContract.TournamentEntry.COLUMN_CREATOR, tournament.getCreator());
         values.put(GothaContract.TournamentEntry.COLUMN_DIRECTOR, tournament.getDirector());
@@ -158,9 +159,11 @@ public class GothaSyncUtils {
 
     @NonNull
     public static ContentValues getGothaTournamentContentValues(TournamentInterface tournament, String tournamentContent) {
+        long currentTime = System.currentTimeMillis();
         ContentValues values = new ContentValues();
         values.put(GothaContract.TournamentEntry.COLUMN_BEGIN_DATE, tournament.getTournamentParameterSet().getGeneralParameterSet().getBeginDate().getTime());
-        values.put(GothaContract.TournamentEntry.COLUMN_CREATION_DATE, System.currentTimeMillis());
+        values.put(GothaContract.TournamentEntry.COLUMN_CREATION_DATE, currentTime);
+        values.put(GothaContract.TournamentEntry.COLUMN_LAST_MODIFICATION_DATE, currentTime);
         values.put(GothaContract.TournamentEntry.COLUMN_CONTENT, tournamentContent);
         values.put(GothaContract.TournamentEntry.COLUMN_CREATOR, GothandroidApplication.getCurrentUser());
         values.put(GothaContract.TournamentEntry.COLUMN_DIRECTOR, tournament.getTournamentParameterSet().getGeneralParameterSet().getDirector());

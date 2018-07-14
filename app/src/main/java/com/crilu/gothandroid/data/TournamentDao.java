@@ -58,6 +58,7 @@ public class TournamentDao {
             tournament.setLocation(cursor.getString(cursor.getColumnIndex(GothaContract.TournamentEntry.COLUMN_LOCATION)));
             tournament.setShortName(cursor.getString(cursor.getColumnIndex(GothaContract.TournamentEntry.COLUMN_SHORT_NAME)));
             tournament.setCreationDate(new Date(cursor.getLong(cursor.getColumnIndex(GothaContract.TournamentEntry.COLUMN_CREATION_DATE))));
+            tournament.setLastModificationDate(new Date(cursor.getLong(cursor.getColumnIndex(GothaContract.TournamentEntry.COLUMN_LAST_MODIFICATION_DATE))));
 
             tournaments.add(tournament);
         }
@@ -86,6 +87,7 @@ public class TournamentDao {
             tournament.setLocation(cursor.getString(cursor.getColumnIndex(GothaContract.TournamentEntry.COLUMN_LOCATION)));
             tournament.setShortName(cursor.getString(cursor.getColumnIndex(GothaContract.TournamentEntry.COLUMN_SHORT_NAME)));
             tournament.setCreationDate(new Date(cursor.getLong(cursor.getColumnIndex(GothaContract.TournamentEntry.COLUMN_CREATION_DATE))));
+            tournament.setLastModificationDate(new Date(cursor.getLong(cursor.getColumnIndex(GothaContract.TournamentEntry.COLUMN_LAST_MODIFICATION_DATE))));
             cursor.close();
         }
         return tournament;
@@ -117,6 +119,7 @@ public class TournamentDao {
 
             String currUser = GothandroidApplication.getCurrentUser();
             if (!TextUtils.isEmpty(currUser) && !TextUtils.isEmpty(tournamentModel.getContent())) {
+                tournamentModel.setLastModificationDate(new Date());
                 Map<String, Object> tournamentToSave = new HashMap<>();
                 tournamentToSave.put(Tournament.FULL_NAME, tournamentModel.getFullName());
                 tournamentToSave.put(Tournament.SHORT_NAME, tournamentModel.getShortName());
@@ -125,6 +128,7 @@ public class TournamentDao {
                 tournamentToSave.put(Tournament.DIRECTOR, tournamentModel.getDirector());
                 tournamentToSave.put(Tournament.CONTENT, tournamentModel.getContent());
                 tournamentToSave.put(Tournament.CREATOR, UID);
+                tournamentToSave.put(Tournament.LAST_MODIFICATION_DATE, tournamentModel.getLastModificationDate());
                 Timber.d("uploading tournament on firestore");
                 FirebaseFirestore db = GothandroidApplication.getFirebaseFirestore();
                 db.collection(TOURNAMENT_DOC_REF_PATH).document(tournamentModel.getIdentity()).set(tournamentToSave, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
