@@ -10,4 +10,5 @@
     <dimen name="default_left_right_padding">16dp</dimen>
     <dimen name="default_dropdown_width">50dp</dimen>
     <dimen name="item_list_text_size">16sp</dimen>
+    <dimen name="badge_width">12dp</dimen>
 </resources>

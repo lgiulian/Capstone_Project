@@ -66,36 +66,11 @@ public class GothaSyncTask {
                                 GothaContract.TournamentEntry.CONTENT_URI,
                                 cv);
                         String id = uri.getPathSegments().get(1);
-                        fetchSubscriptions(context, Long.valueOf(id), tournamentIdentity, tournamentSubscriptions);
+                        fetchSubscriptions(context, Long.valueOf(id), tournamentIdentity, gothaContentResolver, tournamentSubscriptions);
                     }
-                    if (task.getResult().size() > 0) {
-                        ContentValues[] subscriptionValues = GothaSyncUtils.getSubscriptionValues(tournamentSubscriptions);
 
-                        if (subscriptionValues != null && subscriptionValues.length != 0) {
-                            /* Insert our new subscriptions data into Gotha's ContentProvider */
-                            gothaContentResolver.bulkInsert(
-                                    GothaContract.SubscriptionEntry.CONTENT_URI,
-                                    subscriptionValues);
-
-                            Timber.d("Tournament's subscriptions downloaded with success");
-                        }
-
-                        /*
-                         * Finally, after we insert data into the ContentProvider, determine whether or not
-                         * we should notify the user that the tournaments has been refreshed.
-                         */
-                        boolean notificationsEnabled = GothaPreferences.areNotificationsEnabled(context);
-
-                        /*
-                         * We only want to show the notification if the user wants them shown and we
-                         * have new published tournaments.
-                         */
-                        if (notificationsEnabled && latestKnownPublishedTournament < latestPublishedTournamentTime) {
-                            NotificationUtils.notifyUserOfNewTournament(context, latestPublishedTournamentTime);
-                        }
-                        Timber.d("Tournaments sync with success");
-                        Timber.d("fetchTournaments took %s", (System.currentTimeMillis() - fetchTournamentsStartTime)/1000);
-                    }
+                    Timber.d("Tournaments sync with success");
+                    Timber.d("fetchTournaments took %s", (System.currentTimeMillis() - fetchTournamentsStartTime)/1000);
                 } else {
                     Timber.d(task.getException());
                 }
@@ -103,7 +78,7 @@ public class GothaSyncTask {
         });
     }
 
-    private static void fetchSubscriptions(final Context context, final Long tournamentId, final String tournamentIdentity, final List<Subscription> tournamentSubscriptions) {
+    private static void fetchSubscriptions(final Context context, final Long tournamentId, final String tournamentIdentity, final ContentResolver gothaContentResolver, final List<Subscription> tournamentSubscriptions) {
         TournamentDao.fetchSubscriptions(tournamentIdentity, new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -116,10 +91,26 @@ public class GothaSyncTask {
                         subscription.setTournamentIdentity(tournamentIdentity);
                         tournamentSubscriptions.add(subscription);
                     }
+                    saveSubscriptions(tournamentSubscriptions, gothaContentResolver);
                 } else {
                     Timber.d(task.getException());
                 }
             }
         });
+    }
+
+    private static void saveSubscriptions(List<Subscription> tournamentSubscriptions, ContentResolver gothaContentResolver) {
+        if (tournamentSubscriptions.size() > 0) {
+            ContentValues[] subscriptionValues = GothaSyncUtils.getSubscriptionValues(tournamentSubscriptions);
+
+            if (subscriptionValues != null && subscriptionValues.length != 0) {
+                /* Insert our new subscriptions data into Gotha's ContentProvider */
+                gothaContentResolver.bulkInsert(
+                        GothaContract.SubscriptionEntry.CONTENT_URI,
+                        subscriptionValues);
+
+                Timber.d("Tournament's subscriptions saved with success");
+            }
+        }
     }
 }

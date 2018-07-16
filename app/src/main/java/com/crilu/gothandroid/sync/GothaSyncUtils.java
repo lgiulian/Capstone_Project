@@ -186,7 +186,7 @@ public class GothaSyncUtils {
             values.put(GothaContract.SubscriptionEntry.COLUMN_STATE, subscription.getState());
             values.put(GothaContract.SubscriptionEntry.COLUMN_UID, subscription.getUid());
             values.put(GothaContract.SubscriptionEntry.COLUMN_IDENTITY, subscription.getIdentity());
-            values.put(GothaContract.SubscriptionEntry.COLUMN_TOURNAMENT_ID, subscription.getTournamentIdentity());
+            values.put(GothaContract.SubscriptionEntry.COLUMN_TOURNAMENT_ID, subscription.getTournamentId());
             contentValues[counter] = values;
             counter++;
         }

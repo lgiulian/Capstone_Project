@@ -27,6 +27,7 @@ public class GothaContract {
         public static final String COLUMN_CREATOR = "creator";
         public static final String COLUMN_CREATION_DATE = "creation_date";
         public static final String COLUMN_LAST_MODIFICATION_DATE = "last_modification_date";
+        public static final String COLUMN_SUBSCRIPTION_TYPE = "subscription_type";
 
         public static Uri buildTournamentUriWithDate(long date) {
             return CONTENT_URI.buildUpon()

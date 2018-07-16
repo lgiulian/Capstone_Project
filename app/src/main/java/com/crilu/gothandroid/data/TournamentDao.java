@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import com.crilu.gothandroid.GothandroidApplication;
 import com.crilu.gothandroid.R;
 import com.crilu.gothandroid.model.firestore.Message;
+import com.crilu.gothandroid.model.firestore.Subscription;
 import com.crilu.gothandroid.model.firestore.Tournament;
 import com.crilu.gothandroid.sync.GothaSyncUtils;
 import com.crilu.gothandroid.utils.FileUtils;
@@ -195,4 +196,30 @@ public class TournamentDao {
                 null);
     }
 
+    public static Subscription getSubscriptionByTournamentAndUid(Context context, long tournamentId, String UID) {
+        Subscription subscription = null;
+        Cursor cursor = context.getContentResolver().query(
+                GothaContract.SubscriptionEntry.CONTENT_URI,
+                null,
+                GothaContract.SubscriptionEntry.COLUMN_TOURNAMENT_ID + "=? AND " +
+                        GothaContract.SubscriptionEntry.COLUMN_UID + "=?",
+                new String[] {String.valueOf(tournamentId), UID},
+                null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            subscription = new Subscription();
+            subscription.setId(cursor.getLong(cursor.getColumnIndex(GothaContract.SubscriptionEntry._ID)));
+            subscription.setIdentity(cursor.getString(cursor.getColumnIndex(GothaContract.SubscriptionEntry.COLUMN_IDENTITY)));
+            subscription.setAgaId(cursor.getString(cursor.getColumnIndex(GothaContract.SubscriptionEntry.COLUMN_AGA_ID)));
+            subscription.setEgfPin(cursor.getString(cursor.getColumnIndex(GothaContract.SubscriptionEntry.COLUMN_EGF_PIN)));
+            subscription.setFfgLic(cursor.getString(cursor.getColumnIndex(GothaContract.SubscriptionEntry.COLUMN_FFG_LIC)));
+            subscription.setIntent(cursor.getString(cursor.getColumnIndex(GothaContract.SubscriptionEntry.COLUMN_INTENT)));
+            subscription.setState(cursor.getString(cursor.getColumnIndex(GothaContract.SubscriptionEntry.COLUMN_STATE)));
+            subscription.setUid(cursor.getString(cursor.getColumnIndex(GothaContract.SubscriptionEntry.COLUMN_UID)));
+            subscription.setTournamentId(cursor.getLong(cursor.getColumnIndex(GothaContract.SubscriptionEntry.COLUMN_TOURNAMENT_ID)));
+            subscription.setSubscriptionDate(new Date(cursor.getLong(cursor.getColumnIndex(GothaContract.SubscriptionEntry.COLUMN_SUBSCRIPTION_DATE))));
+            cursor.close();
+        }
+        return subscription;
+    }
 }

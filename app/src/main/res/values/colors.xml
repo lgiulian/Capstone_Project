@@ -7,4 +7,9 @@
     <color name="primaryTextColor">#212121</color>
     <color name="secondaryTextColor">#757575</color>
 
+    <color name="badge_owner">#400000FF</color>
+    <color name="badge_participant">#FF00FF00</color>
+    <color name="badge_observer">#FF0000FF</color>
+    <color name="badge_opened">#FFFFE600</color>
+
 </resources>

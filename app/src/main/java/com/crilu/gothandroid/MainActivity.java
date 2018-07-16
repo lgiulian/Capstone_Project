@@ -18,6 +18,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, TournamentPublishedListAdapter.OnTournamentClickListener {
 
     private FirebaseAuth mAuth;
+    private FirebaseUser mCurrentUser;
 
     private TournamentsViewModel mModel;
 
@@ -108,7 +110,11 @@ public class MainActivity extends AppCompatActivity
         mTournamentName = navigationView.getHeaderView(0).findViewById(R.id.tournament_name);
         mProfilePhoto = navigationView.getHeaderView(0).findViewById(R.id.imageView);
         mRecyclerView = findViewById(R.id.tournaments_list_view);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(layoutManager);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(),
+                layoutManager.getOrientation());
+        mRecyclerView.addItemDecoration(dividerItemDecoration);
         mAdapter = new TournamentPublishedListAdapter(this, mPublishedTournament);
         mRecyclerView.setAdapter(mAdapter);
 
@@ -125,6 +131,13 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setupViewModel() {
+        mAuth = FirebaseAuth.getInstance();
+        Timber.d("Getting mCurrentUser");
+        mCurrentUser = mAuth.getCurrentUser();
+        if (mCurrentUser != null) {
+            Timber.d("Setting current user");
+            GothandroidApplication.setCurrentUser(mCurrentUser.getUid());
+        }
         mModel = ViewModelProviders.of(this).get(TournamentsViewModel.class);
         final Observer<List<Tournament>> listObserver = new Observer<List<Tournament>>() {
             @Override
@@ -440,22 +453,20 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void updateUI() {
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
-            GothandroidApplication.setCurrentUser(currentUser.getUid());
+        if (mCurrentUser != null) {
+            GothandroidApplication.setCurrentUser(mCurrentUser.getUid());
             // Name, email address, and profile photo Url
-            String name = currentUser.getDisplayName();
-            String email = currentUser.getEmail();
-            Uri photoUrl = currentUser.getPhotoUrl();
+            String name = mCurrentUser.getDisplayName();
+            String email = mCurrentUser.getEmail();
+            Uri photoUrl = mCurrentUser.getPhotoUrl();
 
             // Check if user's email is verified
-            boolean emailVerified = currentUser.isEmailVerified();
+            boolean emailVerified = mCurrentUser.isEmailVerified();
 
             // The user's ID, unique to the Firebase project. Do NOT use this value to
             // authenticate with your backend server, if you have one. Use
             // FirebaseUser.getToken() instead.
-            String uid = currentUser.getUid();
+            String uid = mCurrentUser.getUid();
             Timber.d("Name -%s , email -%s , address -%s , profile photo -%s, uid -%s", name, email, photoUrl, emailVerified, uid);
         }
         TournamentInterface currentTournament = GothandroidApplication.getGothaModelInstance().getTournament();
@@ -473,6 +484,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void createNewTournament() {
+        String UID = checkUserLoggedIn();
+        if (TextUtils.isEmpty(UID)) return;
         Intent intent = new Intent(this, CreateTournamentActivity.class);
         startActivity(intent);
     }

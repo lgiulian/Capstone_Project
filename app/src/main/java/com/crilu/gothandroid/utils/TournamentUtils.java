@@ -2,10 +2,12 @@ package com.crilu.gothandroid.utils;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import com.crilu.gothandroid.GothandroidApplication;
 import com.crilu.gothandroid.R;
 import com.crilu.gothandroid.data.TournamentDao;
+import com.crilu.gothandroid.model.firestore.Subscription;
 import com.crilu.gothandroid.model.firestore.Tournament;
 import com.crilu.opengotha.ExternalDocument;
 import com.crilu.opengotha.Gotha;
@@ -112,4 +114,21 @@ public class TournamentUtils {
         return file;
     }
 
+    public static boolean isMeOwner(Tournament tournament) {
+        String uID = GothandroidApplication.getCurrentUser();
+        return uID != null && uID.equals(tournament.getCreator());
+    }
+
+    public static boolean isPublished(Tournament tournament) {
+        return !TextUtils.isEmpty(tournament.getIdentity());
+    }
+
+    public static String getSubscriptionType(Context context, Tournament tournament) {
+        String UID = GothandroidApplication.getCurrentUser();
+        Subscription subscription = null;
+        if (!TextUtils.isEmpty(UID)) {
+            subscription = TournamentDao.getSubscriptionByTournamentAndUid(context, tournament.getId(), UID);
+        }
+        return subscription != null? subscription.getIntent(): null;
+    }
 }

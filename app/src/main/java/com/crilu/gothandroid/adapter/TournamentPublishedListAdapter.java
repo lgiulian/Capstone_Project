@@ -1,8 +1,8 @@
 package com.crilu.gothandroid.adapter;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +11,9 @@ import android.widget.TextView;
 
 import com.crilu.gothandroid.GothandroidApplication;
 import com.crilu.gothandroid.R;
+import com.crilu.gothandroid.model.firestore.Subscription;
 import com.crilu.gothandroid.model.firestore.Tournament;
+import com.crilu.gothandroid.utils.TournamentUtils;
 
 import java.util.List;
 
@@ -55,6 +57,19 @@ public class TournamentPublishedListAdapter extends RecyclerView.Adapter<Tournam
         holder.beginDate.setText(GothandroidApplication.dateFormat.format(tournament.getBeginDate()));
         holder.fullName.setText(tournament.getFullName());
         holder.location.setText(tournament.getLocation());
+        if (TournamentUtils.isMeOwner(tournament)) {
+            holder.rootView.setBackgroundResource(R.drawable.list_color_owner_selector);
+        } else {
+            holder.rootView.setBackgroundResource(R.drawable.list_color_selector);
+        }
+        String subscriptionType = TournamentUtils.getSubscriptionType(holder.getContext(), tournament);
+        if (Subscription.INTENT_OBSERVER.equals(subscriptionType)) {
+            holder.badge.setBackgroundResource(R.color.badge_observer);
+        } else if (Subscription.INTENT_PARTICIPANT.equals(subscriptionType)) {
+            holder.badge.setBackgroundResource(R.color.badge_participant);
+        } else {
+            holder.badge.setBackgroundResource(R.color.badge_opened);
+        }
     }
 
     @Override
@@ -63,18 +78,28 @@ public class TournamentPublishedListAdapter extends RecyclerView.Adapter<Tournam
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener {
+        Context context;
         TextView beginDate;
         TextView fullName;
         TextView location;
         TextView director;
+        View badge;
+        View rootView;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            context = itemView.getContext();
             beginDate = itemView.findViewById(R.id.begin_date);
             fullName = itemView.findViewById(R.id.full_name);
             location = itemView.findViewById(R.id.location);
+            badge = itemView.findViewById(R.id.badge_view);
+            rootView = itemView.findViewById(R.id.root_view);
             itemView.setOnClickListener(this);
             itemView.setOnCreateContextMenuListener(this);
+        }
+
+        public Context getContext() {
+            return context;
         }
 
         @Override
@@ -88,9 +113,8 @@ public class TournamentPublishedListAdapter extends RecyclerView.Adapter<Tournam
             mSelectedItemForContextMenu = getAdapterPosition();
             menu.setHeaderTitle(R.string.select_the_action);
             Tournament selectedTournamentForContextMenu = mData.get(mSelectedItemForContextMenu);
-            String uID = GothandroidApplication.getCurrentUser();
-            boolean published = !TextUtils.isEmpty(selectedTournamentForContextMenu.getIdentity());
-            boolean iAmOwner = uID != null && uID.equals(selectedTournamentForContextMenu.getCreator());
+            boolean published = TournamentUtils.isPublished(selectedTournamentForContextMenu);
+            boolean iAmOwner = TournamentUtils.isMeOwner(selectedTournamentForContextMenu);
             if (iAmOwner) {
                 menu.add(0, R.id.open, 0, v.getContext().getString(R.string.open));
                 menu.add(0, R.id.edit, 0, v.getContext().getString(R.string.edit));
@@ -110,4 +134,5 @@ public class TournamentPublishedListAdapter extends RecyclerView.Adapter<Tournam
             }
         }
     }
+
 }

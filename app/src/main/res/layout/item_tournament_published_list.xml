@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="@dimen/default_top_bottom_padding"
     android:paddingEnd="@dimen/default_left_right_padding"
-    android:paddingLeft="@dimen/default_left_right_padding"
     android:paddingRight="@dimen/default_left_right_padding"
-    android:paddingStart="@dimen/default_left_right_padding"
-    android:paddingTop="@dimen/default_top_bottom_padding"
     android:background="@drawable/list_color_selector">
+
+    <View
+        android:id="@+id/badge_view"
+        android:layout_width="@dimen/badge_width"
+        android:layout_height="0dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignBottom="@id/begin_date"
+        android:layout_alignTop="@id/full_name"
+        android:layout_centerHorizontal="true"
+        android:background="@color/badge_opened"/>
 
     <TextView
         android:id="@+id/full_name"
@@ -17,6 +24,9 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
         android:textColor="@color/primaryTextColor"
+        android:paddingTop="@dimen/default_top_bottom_padding"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:layout_toRightOf="@+id/badge_view"
         android:textSize="@dimen/item_list_text_size"
         tools:text="Full name"/>
 
@@ -25,6 +35,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/full_name"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:paddingBottom="@dimen/default_top_bottom_padding"
+        android:layout_toRightOf="@+id/badge_view"
         android:textStyle="italic"
         tools:text="2018 May 5"/>
 
@@ -37,6 +50,7 @@
         android:layout_below="@+id/full_name"
         android:layout_toRightOf="@+id/begin_date"
         android:layout_toEndOf="@+id/begin_date"
+        android:paddingBottom="@dimen/default_top_bottom_padding"
         tools:text="Location"
         android:textStyle="italic"/>
 
