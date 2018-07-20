@@ -4,13 +4,14 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.crilu.gothandroid.data.GothaContract.MessageEntry;
 import com.crilu.gothandroid.data.GothaContract.SubscriptionEntry;
 import com.crilu.gothandroid.data.GothaContract.TournamentEntry;
 
 public class GothaDbHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "gotha.db";
-    private static final int DATABASE_VERSION = 6;
+    private static final int DATABASE_VERSION = 7;
 
     public GothaDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -46,14 +47,26 @@ public class GothaDbHelper extends SQLiteOpenHelper {
                 SubscriptionEntry.COLUMN_SUBSCRIPTION_DATE + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP" +
                 ");";
 
+        final String SQL_CREATE_MESSAGE_TABLE = "CREATE TABLE " + MessageEntry.TABLE_NAME + " (" +
+                MessageEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                MessageEntry.COLUMN_TOURNAMENT_IDENTITY + " TEXT, " +
+                MessageEntry.COLUMN_TITLE + " TEXT, " +
+                MessageEntry.COLUMN_MESSAGE + " TEXT, " +
+                MessageEntry.COLUMN_COMMAND + " TEXT, " +
+                MessageEntry.COLUMN_EGF_PIN + " TEXT, " +
+                MessageEntry.COLUMN_MESSAGE_DATE + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP" +
+                ");";
+
         db.execSQL(SQL_CREATE_TOURNAMENT_TABLE);
         db.execSQL(SQL_CREATE_SUBSCRIPTION_TABLE);
+        db.execSQL(SQL_CREATE_MESSAGE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TournamentEntry.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + SubscriptionEntry.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + MessageEntry.TABLE_NAME);
         onCreate(db);
     }
 }

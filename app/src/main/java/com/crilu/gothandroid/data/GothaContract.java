@@ -11,6 +11,7 @@ public class GothaContract {
 
     public static final String PATH_TOURNAMENTS = "tournament";
     public static final String PATH_SUBSCRIPTION = "subscription";
+    public static final String PATH_MESSAGE = "message";
 
     public static final class TournamentEntry implements BaseColumns {
         public static final Uri CONTENT_URI =
@@ -50,6 +51,19 @@ public class GothaContract {
         public static final String COLUMN_INTENT = "intent"; // participant, observer
         public static final String COLUMN_SUBSCRIPTION_DATE = "subscription_date";
         public static final String COLUMN_STATE = "state"; // active, inactive
+    }
+
+    public static final class MessageEntry implements BaseColumns {
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_MESSAGE).build();
+
+        public static final String TABLE_NAME = "message";
+        public static final String COLUMN_TOURNAMENT_IDENTITY = "tournament_identity";
+        public static final String COLUMN_TITLE = "title";
+        public static final String COLUMN_MESSAGE = "message"; // participant, observer
+        public static final String COLUMN_COMMAND = "command";
+        public static final String COLUMN_EGF_PIN = "egf_pin";
+        public static final String COLUMN_MESSAGE_DATE = "message_date";
     }
 
 }

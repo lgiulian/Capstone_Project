@@ -11,17 +11,13 @@ import android.text.TextUtils;
 
 import com.crilu.gothandroid.GothandroidApplication;
 import com.crilu.gothandroid.MainActivity;
+import com.crilu.gothandroid.MessageActivity;
 import com.crilu.gothandroid.R;
-import com.crilu.gothandroid.data.TournamentDao;
-import com.crilu.gothandroid.model.firestore.Tournament;
-import com.crilu.gothandroid.utils.FileUtils;
+import com.crilu.gothandroid.data.MessageDao;
 import com.crilu.gothandroid.utils.TournamentUtils;
-import com.crilu.opengotha.TournamentInterface;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Map;
 
 import timber.log.Timber;
@@ -52,7 +48,7 @@ public class GothaFirebaseMessageService extends FirebaseMessagingService {
     }
 
     private void sendNotification(Map<String, String> data) {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, MessageActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         // Create the pending intent to launch the activity
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
@@ -61,18 +57,20 @@ public class GothaFirebaseMessageService extends FirebaseMessagingService {
         String command = data.get(JSON_KEY_COMMAND);
         String tournamentName = data.get(JSON_KEY_TOURNAMENT_NAME);
         String message = data.get(JSON_KEY_MESSAGE);
+        String messageTrimmed = message;
+        String title = String.format(getString(R.string.notification_message), tournamentName);
 
         // If the message is longer than the max number of characters we want in our
         // notification, truncate it and add the unicode character for ellipsis
         if (message.length() > NOTIFICATION_MAX_CHARACTERS) {
-            message = message.substring(0, NOTIFICATION_MAX_CHARACTERS) + "\u2026";
+            messageTrimmed = message.substring(0, NOTIFICATION_MAX_CHARACTERS) + "\u2026";
         }
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setContentTitle(String.format(getString(R.string.notification_message), tournamentName))
-                .setContentText(message)
+                .setContentTitle(title)
+                .setContentText(messageTrimmed)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
@@ -81,6 +79,8 @@ public class GothaFirebaseMessageService extends FirebaseMessagingService {
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+
+        MessageDao.insertMessage(getApplicationContext(), title, message);
     }
 
     @Override
@@ -91,7 +91,7 @@ public class GothaFirebaseMessageService extends FirebaseMessagingService {
     }
 
     private void sendRegistrationToServer(String refreshedToken) {
-
+        // FIXME: here I should update user on firestore
     }
 
     private void processMessage(Map<String, String> data) {

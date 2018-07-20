@@ -161,4 +161,7 @@
         Number of participants: <xliff:g id="name">%1$s</xliff:g>
     </string>
 
+    <!-- Messages screen -->
+    <string name="message_title">Messages</string>
+
 </resources>

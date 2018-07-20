@@ -18,6 +18,8 @@ public class GothaContentProvider extends ContentProvider {
     public static final int TOURNAMENT_WITH_ID = 101;
     public static final int SUBSCRIPTIONS = 200;
     public static final int SUBSCRIPTION_WITH_ID = 201;
+    public static final int MESSAGES = 300;
+    public static final int MESSAGE_WITH_ID = 301;
 
     private static final UriMatcher sUriMatcher = buildUriMatcher();
 
@@ -27,6 +29,8 @@ public class GothaContentProvider extends ContentProvider {
         uriMatcher.addURI(GothaContract.AUTHORITY, GothaContract.PATH_TOURNAMENTS + "/#", TOURNAMENT_WITH_ID);
         uriMatcher.addURI(GothaContract.AUTHORITY, GothaContract.PATH_SUBSCRIPTION, SUBSCRIPTIONS);
         uriMatcher.addURI(GothaContract.AUTHORITY, GothaContract.PATH_SUBSCRIPTION + "/#", SUBSCRIPTION_WITH_ID);
+        uriMatcher.addURI(GothaContract.AUTHORITY, GothaContract.PATH_MESSAGE, MESSAGES);
+        uriMatcher.addURI(GothaContract.AUTHORITY, GothaContract.PATH_MESSAGE + "/#", MESSAGE_WITH_ID);
 
         return uriMatcher;
     }
@@ -90,6 +94,28 @@ public class GothaContentProvider extends ContentProvider {
                         null,
                         sortOrder);
                 break;
+            case MESSAGES:
+                //Timber.d("query tournaments table");
+                retCursor = db.query(GothaContract.MessageEntry.TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder);
+                break;
+            case MESSAGE_WITH_ID:
+                id = uri.getPathSegments().get(1);
+                sel = GothaContract.MessageEntry._ID + "=?";
+                selArgs = new String[] {id};
+                retCursor = db.query(GothaContract.TournamentEntry.TABLE_NAME,
+                        projection,
+                        sel,
+                        selArgs,
+                        null,
+                        null,
+                        sortOrder);
+                break;
             // Default exception
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -122,6 +148,14 @@ public class GothaContentProvider extends ContentProvider {
                 id = db.insert(GothaContract.SubscriptionEntry.TABLE_NAME, null, values);
                 if ( id > 0 ) {
                     returnUri = ContentUris.withAppendedId(GothaContract.SubscriptionEntry.CONTENT_URI, id);
+                } else {
+                    throw new android.database.SQLException("Failed to insert row into " + uri);
+                }
+                break;
+            case MESSAGES:
+                id = db.insert(GothaContract.MessageEntry.TABLE_NAME, null, values);
+                if ( id > 0 ) {
+                    returnUri = ContentUris.withAppendedId(GothaContract.MessageEntry.CONTENT_URI, id);
                 } else {
                     throw new android.database.SQLException("Failed to insert row into " + uri);
                 }
@@ -185,6 +219,27 @@ public class GothaContentProvider extends ContentProvider {
 
                 return rowsInserted;
 
+            case MESSAGES:
+                db.beginTransaction();
+                rowsInserted = 0;
+                try {
+                    for (ContentValues value : values) {
+                        long _id = db.insert(GothaContract.MessageEntry.TABLE_NAME, null, value);
+                        if (_id != -1) {
+                            rowsInserted++;
+                        }
+                    }
+                    db.setTransactionSuccessful();
+                } finally {
+                    db.endTransaction();
+                }
+
+                if (rowsInserted > 0) {
+                    getContext().getContentResolver().notifyChange(uri, null);
+                }
+
+                return rowsInserted;
+
             default:
                 return super.bulkInsert(uri, values);
         }
@@ -213,6 +268,13 @@ public class GothaContentProvider extends ContentProvider {
             case SUBSCRIPTION_WITH_ID:
                 id = uri.getPathSegments().get(1);
                 rowsDeleted = db.delete(GothaContract.SubscriptionEntry.TABLE_NAME, "_id=?", new String[]{id});
+                break;
+            case MESSAGES:
+                rowsDeleted = db.delete(GothaContract.MessageEntry.TABLE_NAME, selection, selectionArgs);
+                break;
+            case MESSAGE_WITH_ID:
+                id = uri.getPathSegments().get(1);
+                rowsDeleted = db.delete(GothaContract.MessageEntry.TABLE_NAME, "_id=?", new String[]{id});
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -244,6 +306,11 @@ public class GothaContentProvider extends ContentProvider {
                 //update a single row by getting the id
                 id = uri.getPathSegments().get(1);
                 rowsUpdated = mDbHelper.getWritableDatabase().update(GothaContract.SubscriptionEntry.TABLE_NAME, values, "_id=?", new String[]{id});
+                break;
+            case MESSAGE_WITH_ID:
+                //update a single row by getting the id
+                id = uri.getPathSegments().get(1);
+                rowsUpdated = mDbHelper.getWritableDatabase().update(GothaContract.MessageEntry.TABLE_NAME, values, "_id=?", new String[]{id});
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
