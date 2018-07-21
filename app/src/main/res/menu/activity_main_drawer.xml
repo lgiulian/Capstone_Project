@@ -41,6 +41,10 @@
     <item android:title="@string/menu_drawer_communicate">
         <menu>
             <item
+                android:id="@+id/nav_message"
+                android:icon="@drawable/ic_menu_message"
+                android:title="@string/menu_drawer_message" />
+            <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
                 android:title="@string/menu_drawer_share" />

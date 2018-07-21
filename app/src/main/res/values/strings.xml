@@ -29,6 +29,7 @@
     <string name="menu_drawer_my_account">My Account</string>
     <string name="menu_drawer_players_manager">Player Registration</string>
     <string name="menu_drawer_pair">Pair</string>
+    <string name="menu_drawer_message">Messages</string>
 
     <string name="title_activity_create_tournament">Create Tournament</string>
     <string name="tournament_name_label">Name</string>
@@ -147,7 +148,7 @@
     <string name="you_are_not_logged_in">Operation canceled. You are not logged in.</string>
     <string name="no_uid_available">Saving user information results in error</string>
     <string name="tournament_send_message">The message was sent successfuly</string>
-    <string name="tournament_send_message_error">An error occured sending message</string>
+    <string name="tournament_send_message_error">An error occurred sending message</string>
 
     <!-- Send Message screen -->
     <string name="send_message_title">Send Message</string>

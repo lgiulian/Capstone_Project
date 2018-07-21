@@ -249,6 +249,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_game_options) {
         } else if (id == R.id.nav_my_account) {
             myAccount();
+        } else if (id == R.id.nav_message) {
+            startActivity(new Intent(this, MessageActivity.class));
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_publish) {

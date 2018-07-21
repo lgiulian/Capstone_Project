@@ -59,6 +59,7 @@ public class SendMessageActivity extends AppCompatActivity {
     public void sendMessage(View view) {
         if (mTournament != null) {
             TournamentDao.sendMessageToAll(this, mTournament, mBinding.message.getText().toString(), mBinding.coordinatorLayout);
+            finish();
         }
     }
 }
