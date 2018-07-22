@@ -10,12 +10,15 @@ import android.view.ViewGroup;
 import com.crilu.gothandroid.adapter.TableAdapter;
 import com.crilu.gothandroid.model.PairViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
 import de.codecrafters.tableview.TableView;
+import de.codecrafters.tableview.listeners.TableDataLongClickListener;
 import de.codecrafters.tableview.model.TableColumnWeightModel;
 import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
+import timber.log.Timber;
 
 public class TablesFragment extends Fragment {
 
@@ -49,8 +52,22 @@ public class TablesFragment extends Fragment {
         mTablesTable.setColumnModel(columnModel);
 
         mTablesTable.setDataAdapter(mTablesAdapter);
+        mTablesTable.addDataLongClickListener(new TableLongClickListener());
 
         return rootView;
+    }
+
+    private class TableLongClickListener implements TableDataLongClickListener<Vector<String>> {
+        @Override
+        public boolean onDataLongClicked(int rowIndex, Vector<String> clickedTable) {
+            // unpair selected game
+            Timber.d("unpair game %s at position %s", clickedTable.get(1), rowIndex);
+            ArrayList<Integer> selectedTables = new ArrayList<>();
+            int selectedTable = Integer.parseInt(clickedTable.get(0));
+            selectedTables.add(selectedTable);
+            mPairViewModel.getGamesPair().unpair(selectedTables);
+            return true;
+        }
     }
 
     public void setTables(List<Vector<String>> tables) {

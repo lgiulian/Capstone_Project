@@ -1,53 +1,57 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_margin"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context="com.crilu.gothandroid.PairActivity">
 
-        <TextView
-            android:id="@+id/pair_round_no_label"
-            android:layout_gravity="center_vertical"
-            style="@style/RegularLabelStyle"
-            android:text="@string/pair_round_no" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_margin"
+            android:orientation="horizontal">
 
-        <Spinner
-            android:id="@+id/pair_round_no_spinner"
+            <TextView
+                android:id="@+id/pair_round_no_label"
+                style="@style/RegularLabelStyle"
+                android:layout_gravity="center_vertical"
+                android:text="@string/pair_round_no" />
+
+            <Spinner
+                android:id="@+id/pair_round_no_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/default_margin"
+                android:layout_marginStart="@dimen/default_margin"
+                android:dropDownWidth="@dimen/default_dropdown_width"
+                android:entries="@array/round_number_array" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/pairable_players_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2" />
+
+        <FrameLayout
+            android:id="@+id/tables_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2" />
+
+        <Button
+            android:id="@+id/ok_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/default_margin"
-            android:layout_marginStart="@dimen/default_margin"
-            android:dropDownWidth="@dimen/default_dropdown_width"
-            android:entries="@array/round_number_array"
-            android:layout_gravity="center_vertical"/>
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/default_margin"
+            android:onClick="onClickOk"
+            android:text="@string/pair_ok_label" />
     </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/pairable_players_container"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"/>
-
-    <FrameLayout
-        android:id="@+id/tables_container"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"/>
-
-    <Button
-        android:id="@+id/ok_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_margin"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/pair_ok_label"
-        android:onClick="onClickOk"
-        />
-</LinearLayout>
+</layout>

@@ -88,6 +88,7 @@ public class GamesPair {
     	tblGames.clear();
     	
         this.roundNumber = this.processedRoundNumber + 1;
+        demandedDisplayedRoundNumberHasChanged();
 
         HashMap<String, Player> hmPlayers = null;
         ArrayList<Game> alActualGames = null;
@@ -411,7 +412,7 @@ public class GamesPair {
 		this.tournamentChanged();
     }
 
-    private void unpair(ArrayList<Integer> selectedTablesNumber) {
+    public void unpair(ArrayList<Integer> selectedTablesNumber) {
 //        boolean bRemoveAllGames = false;
         ArrayList<Game> alGamesToRemove = selectedGamesList(selectedTablesNumber);
 
@@ -819,4 +820,8 @@ public class GamesPair {
         this.pairListener = pairListener;
     }
 
+    public void setSpnRoundNumber(int spnRoundNumber) {
+        this.spnRoundNumber = spnRoundNumber;
+        demandedDisplayedRoundNumberHasChanged();
+    }
 }
