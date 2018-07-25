@@ -20,6 +20,13 @@
         app:tableView_columnCount="5"
         app:tableView_headerElevation="10"
         app:tableView_headerColor="@color/colorPrimary"
-        android:layout_below="@id/results_tv"/>
+        android:layout_below="@id/results_tv"
+        android:layout_above="@+id/info_tv"/>
+
+    <TextView
+        android:id="@+id/info_tv"
+        style="@style/RegularLabelStyle"
+        android:text="@string/results_info_label"
+        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>
