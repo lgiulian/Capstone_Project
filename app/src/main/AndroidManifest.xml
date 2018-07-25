@@ -79,9 +79,18 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.crilu.gothandroid.MainActivity" />
         </activity>
-
-        <activity android:name=".MessageActivity"
+        <activity
+            android:name=".MessageActivity"
             android:label="@string/message_title"
+            android:launchMode="singleTop"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.crilu.gothandroid.MainActivity" />
+        </activity>
+
+        <activity android:name=".ResultActivity" android:label="@string/results_title"
             android:launchMode="singleTop"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">

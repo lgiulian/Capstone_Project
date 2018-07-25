@@ -245,6 +245,8 @@ public class MainActivity extends AppCompatActivity
             managePlayers();
         } else if (id == R.id.nav_pair) {
             pair();
+        } else if (id == R.id.nav_results) {
+            startActivity(new Intent(this, ResultActivity.class));
         } else if (id == R.id.nav_tournament_options) {
         } else if (id == R.id.nav_game_options) {
         } else if (id == R.id.nav_my_account) {

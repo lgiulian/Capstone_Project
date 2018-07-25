@@ -25,6 +25,10 @@
             android:icon="@drawable/ic_menu_pair"
             android:title="@string/menu_drawer_pair" />
         <item
+            android:id="@+id/nav_results"
+            android:icon="@drawable/ic_menu_results"
+            android:title="@string/menu_drawer_results" />
+        <item
             android:id="@+id/nav_tournament_options"
             android:icon="@drawable/ic_menu_settings"
             android:title="@string/menu_drawer_tournament_options" />

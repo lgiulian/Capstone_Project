@@ -165,4 +165,15 @@
     <!-- Messages screen -->
     <string name="message_title">Messages</string>
 
+    <!-- Results screen -->
+    <string name="results_title">Results</string>
+    <string name="results_label">Results</string>
+    <string name="games_header_table">Table</string>
+    <string name="games_header_white">White</string>
+    <string name="games_header_black">Black</string>
+    <string name="games_header_hd">Hd</string>
+    <string name="games_header_result">Result</string>
+    <string name="menu_drawer_results">Results</string>
+
+
 </resources>

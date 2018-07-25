@@ -12,6 +12,7 @@ import com.crilu.gothandroid.utils.NotificationUtils;
 import com.crilu.gothandroid.utils.ParsePlayersIntentService;
 import com.crilu.opengotha.RatingList;
 import com.crilu.opengotha.model.GamesPair;
+import com.crilu.opengotha.model.GamesResults;
 import com.crilu.opengotha.model.GothaModel;
 import com.crilu.opengotha.model.PlayersManager;
 import com.facebook.stetho.Stetho;
@@ -36,6 +37,7 @@ public class GothandroidApplication extends Application implements GothaModel.Go
     private static RatingList sRatingList;
     private static GothaModel sGothaModel;
     private static GamesPair sGamesPair;
+    private static GamesResults sGamesResults;
     private static PlayersManager sPlayersManager;
     private static String sCurrentUser;
     private static FirebaseFirestore sFirestore;
@@ -99,12 +101,12 @@ public class GothandroidApplication extends Application implements GothaModel.Go
         return sGamesPair;
     }
 
-    //public static GamesPair getGamesPairInstance() {
-    //    if (sGamesPair == null && sGothaModel.getTournament() != null) {
-    //        sGamesPair = new GamesPair(sGothaModel.getTournament());
-    //    }
-    //    return sGamesPair;
-    //}
+    public static GamesResults getGamesResultsInstance() {
+        if (sGamesResults == null && sGothaModel.getTournament() != null) {
+            sGamesResults = new GamesResults(sGothaModel.getTournament());
+        }
+        return sGamesResults;
+    }
 
     public static String getCurrentUser() {
         return sCurrentUser;
