@@ -7,10 +7,15 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 
 import com.crilu.gothandroid.databinding.ActivityPairBinding;
 import com.crilu.gothandroid.model.PairViewModel;
+import com.crilu.opengotha.Gotha;
+import com.crilu.opengotha.TournamentInterface;
 import com.crilu.opengotha.model.GamesPair;
+
+import java.util.Arrays;
 
 import timber.log.Timber;
 
@@ -54,6 +59,14 @@ public class PairActivity extends AppCompatActivity implements GamesPair.OnPairL
     private void init() {
         mPairViewModel = ViewModelProviders.of(this).get(PairViewModel.class);
         mGamesPair = mPairViewModel.getGamesPair();
+
+        TournamentInterface tournament = GothandroidApplication.getGothaModelInstance().getTournament();
+        int rounds = Gotha.MAX_NUMBER_OF_ROUNDS;
+        if (tournament != null) {
+            rounds = tournament.getTournamentParameterSet().getGeneralParameterSet().getNumberOfRounds();
+        }
+        ArrayAdapter<String> spinnerRoundsArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, Arrays.copyOfRange(getResources().getStringArray(R.array.round_number_array), 0, rounds));
+        mBinding.form.pairRoundNoSpinner.setAdapter(spinnerRoundsArrayAdapter);
 
         mBinding.form.pairRoundNoSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

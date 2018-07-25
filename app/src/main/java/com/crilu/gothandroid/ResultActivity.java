@@ -2,18 +2,21 @@ package com.crilu.gothandroid;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 
 import com.crilu.gothandroid.databinding.ActivityResultBinding;
-import com.crilu.gothandroid.model.PairViewModel;
 import com.crilu.gothandroid.model.ResultViewModel;
-import com.crilu.opengotha.model.GamesPair;
+import com.crilu.opengotha.Gotha;
+import com.crilu.opengotha.TournamentInterface;
 import com.crilu.opengotha.model.GamesResults;
+
+import java.util.Arrays;
 
 import timber.log.Timber;
 
@@ -42,7 +45,13 @@ public class ResultActivity extends AppCompatActivity implements GamesResults.Ga
 
     private void init() {
         mResultViewModel = ViewModelProviders.of(this).get(ResultViewModel.class);
-
+        TournamentInterface tournament = GothandroidApplication.getGothaModelInstance().getTournament();
+        int rounds = Gotha.MAX_NUMBER_OF_ROUNDS;
+        if (tournament != null) {
+            rounds = tournament.getTournamentParameterSet().getGeneralParameterSet().getNumberOfRounds();
+        }
+        ArrayAdapter<String> spinnerRoundsArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, Arrays.copyOfRange(getResources().getStringArray(R.array.round_number_array), 0, rounds));
+        mBinding.roundNoSpinner.setAdapter(spinnerRoundsArrayAdapter);
         mBinding.roundNoSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
