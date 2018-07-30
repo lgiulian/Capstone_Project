@@ -1,7 +1,6 @@
 
 package com.crilu.opengotha;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -52,5 +51,6 @@ public class ClubsGroup implements java.io.Serializable{
      */
     public HashMap<String, Club> getHmClubs() {
         return hmClubs;
-    }   
+    }
+
 }

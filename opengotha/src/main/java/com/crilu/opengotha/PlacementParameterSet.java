@@ -5,11 +5,11 @@ public class PlacementParameterSet implements java.io.Serializable{
     
     public final static int PLA_MAX_NUMBER_OF_CRITERIA = 6; 
     
-    final static int PLA_CRIT_NUL    = 0;       // Null criterion
+    public final static int PLA_CRIT_NUL    = 0;       // Null criterion
     final static int PLA_CRIT_CAT    = 1;       // Category
     
     final static int PLA_CRIT_RANK   = 11;      // Rank
-    final static int PLA_CRIT_RATING = 12;      // Rating
+    public final static int PLA_CRIT_RATING = 12;      // Rating
 
     public final static int PLA_CRIT_NBW    = 100;	// Number of Wins
     final static int PLA_CRIT_MMS    = 200;	// McMahon score
@@ -34,10 +34,10 @@ public class PlacementParameterSet implements java.io.Serializable{
     final static int PLA_CRIT_EXT    = 401;     // Exploits Reussis
     final static int PLA_CRIT_EXR    = 402;     // Exploits Tentes
     
-    final static int PLA_CRIT_SDC    = 501;     // Simplified Direct Confrontation 
-    final static int PLA_CRIT_DC     = 502;     // Direct Confrontation 
+    public final static int PLA_CRIT_SDC    = 501;     // Simplified Direct Confrontation
+    public final static int PLA_CRIT_DC     = 502;     // Direct Confrontation
 
-    final static PlacementCriterion[] allPlacementCriteria = {
+    public final static PlacementCriterion[] allPlacementCriteria = {
         new PlacementCriterion(PLA_CRIT_NUL, "NULL", "NULL", "No tie break", 1),
         new PlacementCriterion(PLA_CRIT_CAT, "CAT", "CAT", "Category", -1),
         new PlacementCriterion(PLA_CRIT_NBW, "NBW", "NBW", "Number of Wins", 2),
@@ -288,22 +288,3 @@ public class PlacementParameterSet implements java.io.Serializable{
     }
 }
     
-class PlacementCriterion implements java.io.Serializable{
-    private static final long serialVersionUID = Gotha.GOTHA_DATA_VERSION;
-    
-    public int uid;
-    public String shortName;
-    public String longName;
-    public String description;
-    public int coef;        // coef used for internal computations. Usually -1, 1, 2 or 4
-                            // used at display time for division before displaying
-    
-    public PlacementCriterion(int uid, String shortName, String longName, String description, int coef){
-        this.uid = uid;
-        this.shortName = shortName;
-        this.longName = longName;
-        this.description = description;
-        this.coef = coef;
-    }
-
-}

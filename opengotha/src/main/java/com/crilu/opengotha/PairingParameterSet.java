@@ -17,8 +17,8 @@ public class PairingParameterSet implements java.io.Serializable{
      * <br> Due to internal coding,
      * PAIBA_MAX_RANDOM should be strictly limited to 2 * 10^9
      **/
-    static final long PAIBA_MAX_RANDOM        =       1000000000L;   // 10^9
-    static final long PAIBA_MAX_BALANCEWB     =          1000000L;   // 10^6
+    public static final long PAIBA_MAX_RANDOM        =       1000000000L;   // 10^9
+    public static final long PAIBA_MAX_BALANCEWB     =          1000000L;   // 10^6
 
     
     private long paiBaAvoidDuplGame = PAIBA_MAX_AVOIDDUPLGAME;    
@@ -30,14 +30,14 @@ public class PairingParameterSet implements java.io.Serializable{
     // Ratio between PAIMA_MAX_MINIMIZE_SCORE_DIFFERENCE and PAIMA_MAX_AVOID_MIXING_CATEGORIES should stay below 1/ nbcat^2
     static final long PAIMA_MAX_MINIMIZE_SCORE_DIFFERENCE         =     100000000000L;  // 10^11
     static final long PAIMA_MAX_DUDD_WEIGHT                       =     PAIMA_MAX_MINIMIZE_SCORE_DIFFERENCE / 1000;  // Draw-ups Draw-downs
-    static final int  PAIMA_DUDD_TOP              = 1;
-    static final int  PAIMA_DUDD_MID              = 2;
-    static final int  PAIMA_DUDD_BOT              = 3;
+    public static final int  PAIMA_DUDD_TOP              = 1;
+    public static final int  PAIMA_DUDD_MID              = 2;
+    public static final int  PAIMA_DUDD_BOT              = 3;
     
     static final long PAIMA_MAX_MAXIMIZE_SEEDING                  =         PAIMA_MAX_MINIMIZE_SCORE_DIFFERENCE / 20000;
-    static final int  PAIMA_SEED_SPLITANDRANDOM   = 1;
-    static final int  PAIMA_SEED_SPLITANDFOLD     = 2;
-    static final int  PAIMA_SEED_SPLITANDSLIP     = 3;
+    public static final int  PAIMA_SEED_SPLITANDRANDOM   = 1;
+    public static final int  PAIMA_SEED_SPLITANDFOLD     = 2;
+    public static final int  PAIMA_SEED_SPLITANDSLIP     = 3;
 
     private long paiMaAvoidMixingCategories             = PAIMA_MAX_AVOID_MIXING_CATEGORIES;
 

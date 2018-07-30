@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/create_tournament_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".TournamentSettingsActivity$PlacementFragment">
+
+            <TextView
+                android:id="@+id/criterion1_tv"
+                style="@style/RegularLabelStyle"
+                android:text="@string/criterion_1"
+                app:layout_constraintBottom_toBottomOf="@+id/criterion1_spinner"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/criterion1_spinner" />
+
+            <TextView
+                android:id="@+id/criterion2_tv"
+                style="@style/RegularLabelStyle"
+                android:text="@string/criterion_2"
+                app:layout_constraintBottom_toBottomOf="@+id/criterion2_spinner"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/criterion2_spinner" />
+
+            <TextView
+                android:id="@+id/criterion3_tv"
+                style="@style/RegularLabelStyle"
+                android:text="@string/criterion_3"
+                app:layout_constraintBottom_toBottomOf="@+id/criterion3_spinner"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/criterion3_spinner" />
+
+            <TextView
+                android:id="@+id/criterion4_tv"
+                style="@style/RegularLabelStyle"
+                android:text="@string/criterion_4"
+                app:layout_constraintBottom_toBottomOf="@+id/criterion4_spinner"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/criterion4_spinner" />
+
+            <Spinner
+                android:id="@+id/criterion1_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:dropDownWidth="@dimen/default_criterion_dropdown_width"
+                app:layout_constraintStart_toEndOf="@+id/barrier1"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Spinner
+                android:id="@+id/criterion2_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:dropDownWidth="@dimen/default_criterion_dropdown_width"
+                app:layout_constraintStart_toEndOf="@+id/barrier1"
+                app:layout_constraintTop_toBottomOf="@+id/criterion1_spinner" />
+
+            <Spinner
+                android:id="@+id/criterion3_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:dropDownWidth="@dimen/default_criterion_dropdown_width"
+                app:layout_constraintStart_toEndOf="@+id/barrier1"
+                app:layout_constraintTop_toBottomOf="@+id/criterion2_spinner" />
+
+            <Spinner
+                android:id="@+id/criterion4_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:dropDownWidth="@dimen/default_criterion_dropdown_width"
+                app:layout_constraintStart_toEndOf="@+id/barrier1"
+                app:layout_constraintTop_toBottomOf="@+id/criterion3_spinner" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/save_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                android:text="@string/save"
+                app:layout_constraintEnd_toStartOf="@+id/export_btn"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/criterion4_spinner" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/export_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                android:text="@string/export"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/save_btn"
+                app:layout_constraintTop_toBottomOf="@+id/criterion4_spinner" />
+
+            <android.support.constraint.Barrier
+                android:id="@+id/barrier1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="end"
+                app:constraint_referenced_ids="criterion4_tv,criterion1_tv,criterion2_tv,criterion3_tv" />
+
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v4.widget.NestedScrollView>
+</layout>

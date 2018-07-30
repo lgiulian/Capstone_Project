@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/create_tournament_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".TournamentSettingsActivity$HandicapFragment">
+
+            <TextView
+                android:id="@+id/no_handicap_tv"
+                style="@style/RegularLabelStyle"
+                android:layout_width="0dp"
+                android:text="@string/no_handicap_when_both_player_s_mms_above"
+                app:layout_constraintEnd_toStartOf="@+id/no_handicap"
+                app:layout_constraintBottom_toBottomOf="@+id/no_handicap"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/handicap_ceiling_tv"
+                style="@style/RegularLabelStyle"
+                android:text="@string/handicap_ceiling"
+                app:layout_constraintBaseline_toBaselineOf="@+id/handicap_ceiling"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <EditText
+                android:id="@+id/no_handicap"
+                style="@style/TextInputRegularStyle"
+                android:layout_width="@dimen/default_input_width"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/no_handicap_tv"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/handicap_ceiling"
+                style="@style/TextInputRegularStyle"
+                android:layout_width="@dimen/default_input_width"
+                app:layout_constraintStart_toEndOf="@+id/handicap_ceiling_tv"
+                app:layout_constraintTop_toBottomOf="@+id/no_handicap" />
+
+            <TextView
+                android:id="@+id/handicap_based_on_tv"
+                style="@style/RegularLabelStyle"
+                android:layout_marginTop="16dp"
+                android:text="@string/handicap_based_on"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/handicap_ceiling" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup_handicap_based_on"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/default_left_right_padding"
+                android:layout_marginStart="@dimen/default_left_right_padding"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/handicap_based_on_tv">
+
+                <RadioButton
+                    android:id="@+id/mcmahon_rb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mcmahon_score" />
+
+                <RadioButton
+                    android:id="@+id/rank_rb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rank" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/handicap_correction_tv"
+                style="@style/RegularLabelStyle"
+                android:layout_marginTop="16dp"
+                android:text="@string/handicap_correction"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/radioGroup_handicap_based_on" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup_handicap_correction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/default_left_right_padding"
+                android:layout_marginStart="@dimen/default_left_right_padding"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/handicap_correction_tv">
+
+                <RadioButton
+                    android:id="@+id/hnd_correction_rb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/handicap_not_corrected" />
+
+                <RadioButton
+                    android:id="@+id/hnd_correction1_rb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/handicap_1" />
+
+                <RadioButton
+                    android:id="@+id/hnd_correction2_rb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/handicap_2" />
+
+                <RadioButton
+                    android:id="@+id/hnd_correction3_rb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/handicap_3" />
+
+                <RadioButton
+                    android:id="@+id/hnd_correction_plus1_rb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/handicap_plus_1" />
+            </RadioGroup>
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/save_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                android:text="@string/save"
+                app:layout_constraintEnd_toStartOf="@+id/export_btn"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/radioGroup_handicap_correction" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/export_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                android:text="@string/export"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/save_btn"
+                app:layout_constraintTop_toBottomOf="@+id/radioGroup_handicap_correction" />
+
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v4.widget.NestedScrollView>
+</layout>

@@ -9,6 +9,10 @@
     <string name="twitter_consumer_key" translatable="false">YOUR_CONSUMER_KEY</string>
     <string name="twitter_consumer_secret" translatable="false">YOUR_CONSUMER_SECRET</string>
 
+    <string name="save">Save</string>
+    <string name="publish">Publish</string>
+    <string name="export">Export</string>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Tournament Manager</string>
@@ -176,5 +180,63 @@
     <string name="menu_drawer_results">Results</string>
     <string name="results_info_label">Click on rows to change the result</string>
 
+    <!-- Tournament settings screen -->
+    <string name="title_activity_tournament_settings">Tournament Settings</string>
+    <string name="tab_general">General</string>
+    <string name="tab_handicap">Handicap</string>
+    <string name="tab_placement">Placement</string>
+    <string name="tab_pairing">Pairing</string>
+    <string name="tournament_special_results">Special Results</string>
+    <string name="tournament_nbw_absent">NBW for Absent player</string>
+    <string name="tournament_mms_absent">MMS for Absent player</string>
+    <string name="tournament_nbw_bye">NBW for Bye player</string>
+    <string name="tournament_mms_bye">MMS for Bye player</string>
+    <string name="round_down_nbw_and_mms_scores">Round down NBW and MMS scores</string>
+    <string name="tournament_mcmahon_system">McMahon System</string>
+    <string name="mcmahon_bar_label">McMahon Bar</string>
+    <string name="mcmahon_floor_label">McMahon Floor</string>
+    <string name="mcmahon_zero_label">McMahon Zero</string>
+    <string name="no_handicap_when_both_player_s_mms_above">No handicap when both player\'s MMS above</string>
+    <string name="handicap_ceiling">Handicap ceiling</string>
+    <string name="handicap_based_on">Handicap based on</string>
+    <string name="handicap_correction">Handicap correction</string>
+    <string name="mcmahon_score">McMahon score</string>
+    <string name="rank">Rank</string>
+    <string name="handicap_not_corrected">Handicap not corrected</string>
+    <string name="handicap_1">handicap -1</string>
+    <string name="handicap_2">handicap -2</string>
+    <string name="handicap_3">handicap -3</string>
+    <string name="handicap_plus_1">handicap +1</string>
+    <string name="criterion_1">First by</string>
+    <string name="criterion_2">Second by</string>
+    <string name="criterion_3">Third by</string>
+    <string name="criterion_4">Fourth by</string>
+    <string name="main_criteria">Main criteria</string>
+    <string name="inside_a_goup_use_a_seeding_system">Inside a goup, use a seeding system</string>
+    <string name="earlier_rounds_up_to_round">Earlier rounds up to round</string>
+    <string name="earlier_rounds">Earlier rounds</string>
+    <string name="add_a_sorting_on_rating">Add a sorting on rating</string>
+    <string name="split_and_random">Split and Random</string>
+    <string name="split_and_fold">Split and Fold</string>
+    <string name="split_and_slip">Split and Slip</string>
+    <string name="later_rounds">Later rounds</string>
+    <string name="when_pairing_players_from_different_groups_is_necessary">When pairing players from different groups is necessary:</string>
+    <string name="avoid_drawing_up_down_a_player_twice_in_the_same_sense">Avoid drawing up/down a player twice in the same sense</string>
+    <string name="compesate_a_previous_draw_up_down_by_a_draw_down_up">Compesate a previous Draw up/down by a Draw down/up</string>
+    <string name="then_preferably_choose">Then, preferably choose:</string>
+    <string name="the_player_in_the_upper_group">the player in the upper group</string>
+    <string name="in_the_top_of_the_group">in the top of the group</string>
+    <string name="in_the_middle_of_the_group">in the middle of the group</string>
+    <string name="in_the_bottom_of_the_group">in the bottom of the group</string>
+    <string name="the_player_in_the_lower_group">the player in the lower group</string>
+    <string name="base_criteria">Base criteria</string>
+    <string name="avoid_pairing_same_pair_twice">Avoid pairing same pair twice</string>
+    <string name="no_random">No random</string>
+    <string name="accept_random">Accept random</string>
+    <string name="balance_white_and_black">Balance White and Black</string>
+    <string name="secondary_criteria">Secondary criteria</string>
+    <string name="don_not_apply_secondary_criteria_for_players_with_a_mms_equal_or_stronger_than">Don not apply secondary criteria for players with a MMS equal or stronger than:</string>
+    <string name="for_players_with_at_least_nbrounds_2_wins">for players with at least nbRounds/2 wins</string>
+    <string name="for_players_above_mcmahon_bar">for players above McMahon bar</string>
 
 </resources>

@@ -25,7 +25,7 @@ public class TeamPlacementParameterSet implements java.io.Serializable{
 
     final static int TPL_CRIT_MEAN_RATING = 201;
 
-    final static PlacementCriterion[] allPlacementCriteria = {
+    public final static PlacementCriterion[] allPlacementCriteria = {
         new PlacementCriterion(TPL_CRIT_NUL, "NULL", "NULL", "No tie break", 1),
         new PlacementCriterion(TPL_CRIT_TEAMPOINTS, "TP", "TEAMP", "Team points", 1),
         new PlacementCriterion(TPL_CRIT_SOST, "SOST", "SOST", "Sum of Opponents Scores (Team points)", 1),

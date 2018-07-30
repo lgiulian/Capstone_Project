@@ -14,13 +14,13 @@ import java.util.Date;
 public class GeneralParameterSet implements java.io.Serializable{
     private static final long serialVersionUID = Gotha.GOTHA_DATA_VERSION;
    
-    final static int GEN_MM_FLOOR_MIN   = -30;  // 30K
-    final static int GEN_MM_FLOOR_MAX   =  0;   // 1D
-    final static int GEN_MM_BAR_MIN     = -10;  // 10K
-    final static int GEN_MM_BAR_MAX     =  8;   // 9D
-    final static int GEN_MM_ZERO_MIN     = -30;  // 30K
-    final static int GEN_MM_ZERO_MAX     =  0;   // 1D
-  
+    public final static int GEN_MM_FLOOR_MIN   = -30;  // 30K
+    public final static int GEN_MM_FLOOR_MAX   =  0;   // 1D
+    public final static int GEN_MM_BAR_MIN     = -10;  // 10K
+    public final static int GEN_MM_BAR_MAX     =  8;   // 9D
+    public final static int GEN_MM_ZERO_MIN     = -30;  // 30K
+    public final static int GEN_MM_ZERO_MAX     =  0;   // 1D
+
     /**  For instance : paris2009 */
     private String shortName = "Undefined";
     /**  For instance : Toyota Tour Paris Tournament 2009 */

@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/create_tournament_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".TournamentSettingsActivity$GeneralFragment">
+
+            <TextView
+                android:id="@+id/tournament_details_tv"
+                style="@style/RegularLabelStyle"
+                android:text="@string/tournament_details"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tournament_name_tv"
+                style="@style/RegularLabelStyle"
+                android:text="@string/tournament_name_label"
+                app:layout_constraintBaseline_toBaselineOf="@+id/tournament_name"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/tournament_short_name_tv"
+                style="@style/RegularLabelStyle"
+                android:text="@string/tournament_short_name_label"
+                app:layout_constraintBaseline_toBaselineOf="@+id/tournament_short_name"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/tournament_location_tv"
+                style="@style/RegularLabelStyle"
+                android:text="@string/tournament_location"
+                app:layout_constraintBaseline_toBaselineOf="@+id/tournament_location"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/tournament_director_tv"
+                style="@style/RegularLabelStyle"
+                android:text="@string/tournament_director"
+                app:layout_constraintBaseline_toBaselineOf="@+id/tournament_director"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/tournament_begin_date_tv"
+                style="@style/RegularLabelStyle"
+                android:text="@string/tournament_begin_date"
+                app:layout_constraintBaseline_toBaselineOf="@+id/tournament_begin_date"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/tournament_end_date_tv"
+                style="@style/RegularLabelStyle"
+                android:text="@string/tournament_end_date"
+                app:layout_constraintBaseline_toBaselineOf="@+id/tournament_end_date"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <android.support.constraint.Barrier
+                android:id="@+id/barrier1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="end"
+                app:constraint_referenced_ids="tournament_end_date_tv,tournament_begin_date_tv,tournament_director_tv,tournament_location_tv,tournament_short_name_tv,tournament_name_tv,tournament_number_of_rounds_tv" />
+
+            <EditText
+                android:id="@+id/tournament_name"
+                style="@style/TextInputRegularStyle"
+                android:hint="@string/tournament_name_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/barrier1"
+                app:layout_constraintTop_toBottomOf="@+id/tournament_details_tv" />
+
+            <EditText
+                android:id="@+id/tournament_short_name"
+                style="@style/TextInputRegularStyle"
+                android:hint="@string/tournament_short_name_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/barrier1"
+                app:layout_constraintTop_toBottomOf="@+id/tournament_name" />
+
+            <EditText
+                android:id="@+id/tournament_location"
+                style="@style/TextInputRegularStyle"
+                android:hint="@string/tournament_location"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/barrier1"
+                app:layout_constraintTop_toBottomOf="@+id/tournament_short_name" />
+
+            <EditText
+                android:id="@+id/tournament_director"
+                style="@style/TextInputRegularStyle"
+                android:hint="@string/tournament_director"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/barrier1"
+                app:layout_constraintTop_toBottomOf="@+id/tournament_location" />
+
+            <EditText
+                android:id="@+id/tournament_begin_date"
+                style="@style/InputDateStyle"
+                android:hint="@string/tournament_begin_date"
+                app:layout_constraintEnd_toStartOf="@+id/begin_date_picker_btn"
+                app:layout_constraintStart_toEndOf="@+id/barrier1"
+                app:layout_constraintTop_toBottomOf="@+id/tournament_director" />
+
+            <EditText
+                android:id="@+id/tournament_end_date"
+                style="@style/InputDateStyle"
+                android:hint="@string/tournament_end_date"
+                app:layout_constraintEnd_toStartOf="@+id/end_date_picker_btn"
+                app:layout_constraintStart_toEndOf="@+id/barrier1"
+                app:layout_constraintTop_toBottomOf="@+id/tournament_begin_date" />
+
+            <android.support.v7.widget.AppCompatImageButton
+                android:id="@+id/begin_date_picker_btn"
+                style="@style/DatePickerBtnStyle"
+                app:layout_constraintBottom_toBottomOf="@+id/tournament_begin_date"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tournament_begin_date"
+                app:srcCompat="@drawable/ic_date" />
+
+            <android.support.v7.widget.AppCompatImageButton
+                android:id="@+id/end_date_picker_btn"
+                style="@style/DatePickerBtnStyle"
+                app:layout_constraintBottom_toBottomOf="@+id/tournament_end_date"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tournament_end_date"
+                app:srcCompat="@drawable/ic_date" />
+
+            <TextView
+                android:id="@+id/tournament_number_of_rounds_tv"
+                style="@style/RegularLabelStyle"
+                android:layout_marginLeft="@dimen/default_left_right_padding"
+                android:layout_marginStart="@dimen/default_left_right_padding"
+                android:text="@string/tournament_number_of_rounds"
+                app:layout_constraintBaseline_toBaselineOf="@+id/number_of_rounds_spinner"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Spinner
+                android:id="@+id/number_of_rounds_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/default_margin"
+                android:layout_marginStart="@dimen/default_margin"
+                android:layout_marginTop="@dimen/default_margin"
+                android:dropDownWidth="@dimen/default_dropdown_width"
+                android:entries="@array/round_number_array"
+                app:layout_constraintStart_toEndOf="@+id/tournament_number_of_rounds_tv"
+                app:layout_constraintTop_toBottomOf="@+id/tournament_end_date" />
+
+
+            <TextView
+                android:id="@+id/tournament_special_results_tv"
+                style="@style/RegularLabelStyle"
+                android:layout_marginTop="@dimen/default_left_right_padding"
+                android:text="@string/tournament_special_results"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/number_of_rounds_spinner" />
+
+            <TextView
+                android:id="@+id/tournament_nbw_absent_tv"
+                style="@style/RegularLabelStyle"
+                android:layout_marginLeft="@dimen/default_left_right_padding"
+                android:layout_marginStart="@dimen/default_left_right_padding"
+                android:text="@string/tournament_nbw_absent"
+                app:layout_constraintBottom_toBottomOf="@+id/radioGroup_nbw_absent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/radioGroup_nbw_absent" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup_nbw_absent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/default_left_right_padding"
+                android:layout_marginStart="@dimen/default_left_right_padding"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                app:layout_constraintLeft_toRightOf="@+id/tournament_nbw_absent_tv"
+                app:layout_constraintTop_toBottomOf="@+id/tournament_special_results_tv">
+
+                <RadioButton
+                    android:id="@+id/nbwAbsentButton1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="0" />
+
+                <RadioButton
+                    android:id="@+id/nbwAbsentButton2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="½" />
+
+                <RadioButton
+                    android:id="@+id/nbwAbsentButton3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="1" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/tournament_mms_absent_tv"
+                style="@style/RegularLabelStyle"
+                android:layout_marginLeft="@dimen/default_left_right_padding"
+                android:layout_marginStart="@dimen/default_left_right_padding"
+                android:text="@string/tournament_mms_absent"
+                app:layout_constraintBottom_toBottomOf="@+id/radioGroup_mms_absent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/radioGroup_mms_absent" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup_mms_absent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/default_left_right_padding"
+                android:layout_marginStart="@dimen/default_left_right_padding"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                app:layout_constraintLeft_toRightOf="@+id/tournament_mms_absent_tv"
+                app:layout_constraintTop_toBottomOf="@+id/radioGroup_nbw_absent">
+
+                <RadioButton
+                    android:id="@+id/mmsAbsentButton1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="0" />
+
+                <RadioButton
+                    android:id="@+id/mmsAbsentButton2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="½" />
+
+                <RadioButton
+                    android:id="@+id/mmsAbsentButton3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="1" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/tournament_nbw_bye_tv"
+                style="@style/RegularLabelStyle"
+                android:layout_marginLeft="@dimen/default_left_right_padding"
+                android:layout_marginStart="@dimen/default_left_right_padding"
+                android:text="@string/tournament_nbw_bye"
+                app:layout_constraintBottom_toBottomOf="@+id/radioGroup_nbw_bye"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/radioGroup_nbw_bye" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup_nbw_bye"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/default_left_right_padding"
+                android:layout_marginStart="@dimen/default_left_right_padding"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                app:layout_constraintLeft_toRightOf="@+id/tournament_nbw_bye_tv"
+                app:layout_constraintTop_toBottomOf="@+id/radioGroup_mms_absent">
+
+                <RadioButton
+                    android:id="@+id/nbwByeButton1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="0" />
+
+                <RadioButton
+                    android:id="@+id/nbwByeButton2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="½" />
+
+                <RadioButton
+                    android:id="@+id/nbwByeButton3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="1" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/tournament_mms_bye_tv"
+                style="@style/RegularLabelStyle"
+                android:layout_marginLeft="@dimen/default_left_right_padding"
+                android:layout_marginStart="@dimen/default_left_right_padding"
+                android:text="@string/tournament_mms_bye"
+                app:layout_constraintBottom_toBottomOf="@+id/radioGroup_mms_bye"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/radioGroup_mms_bye" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup_mms_bye"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/default_left_right_padding"
+                android:layout_marginStart="@dimen/default_left_right_padding"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                app:layout_constraintLeft_toRightOf="@+id/tournament_mms_bye_tv"
+                app:layout_constraintTop_toBottomOf="@+id/tournament_nbw_bye_tv">
+
+                <RadioButton
+                    android:id="@+id/mmsByeButton1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="0" />
+
+                <RadioButton
+                    android:id="@+id/mmsByeButton2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="½" />
+
+                <RadioButton
+                    android:id="@+id/mmsByeButton3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="1" />
+            </RadioGroup>
+
+            <CheckBox
+                android:id="@+id/roundDownChkBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/default_margin"
+                android:layout_marginStart="@dimen/default_margin"
+                android:text="@string/round_down_nbw_and_mms_scores"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/radioGroup_mms_bye" />
+
+            <TextView
+                android:id="@+id/tournament_mcmahon_system_tv"
+                style="@style/RegularLabelStyle"
+                android:layout_marginTop="@dimen/default_left_right_padding"
+                android:text="@string/tournament_mcmahon_system"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/roundDownChkBox" />
+
+            <TextView
+                android:id="@+id/mcmahon_bar_tv"
+                style="@style/RegularLabelStyle"
+                android:text="@string/mcmahon_bar_label"
+                app:layout_constraintBaseline_toBaselineOf="@+id/mcmahon_bar"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/mcmahon_floor_tv"
+                style="@style/RegularLabelStyle"
+                android:text="@string/mcmahon_floor_label"
+                app:layout_constraintBaseline_toBaselineOf="@+id/mcmahon_floor"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/mcmahon_zero_tv"
+                style="@style/RegularLabelStyle"
+                android:text="@string/mcmahon_zero_label"
+                app:layout_constraintBaseline_toBaselineOf="@+id/mcmahon_zero"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <android.support.constraint.Barrier
+                android:id="@+id/barrier2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="end"
+                app:constraint_referenced_ids="mcmahon_bar_tv,mcmahon_floor_tv,mcmahon_zero_tv" />
+
+            <EditText
+                android:id="@+id/mcmahon_bar"
+                style="@style/TextInputRegularStyle"
+                app:layout_constraintStart_toEndOf="@+id/barrier2"
+                app:layout_constraintTop_toBottomOf="@+id/tournament_mcmahon_system_tv" />
+
+            <EditText
+                android:id="@+id/mcmahon_floor"
+                style="@style/TextInputRegularStyle"
+                app:layout_constraintStart_toEndOf="@+id/barrier2"
+                app:layout_constraintTop_toBottomOf="@+id/mcmahon_bar" />
+
+            <EditText
+                android:id="@+id/mcmahon_zero"
+                style="@style/TextInputRegularStyle"
+                app:layout_constraintStart_toEndOf="@+id/barrier2"
+                app:layout_constraintTop_toBottomOf="@+id/mcmahon_floor" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/save_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                android:text="@string/save"
+                app:layout_constraintEnd_toStartOf="@+id/export_btn"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mcmahon_zero" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/export_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                android:text="@string/export"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/save_btn"
+                app:layout_constraintTop_toBottomOf="@+id/mcmahon_zero" />
+
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v4.widget.NestedScrollView>
+</layout>

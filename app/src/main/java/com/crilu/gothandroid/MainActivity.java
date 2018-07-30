@@ -248,6 +248,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_results) {
             startActivity(new Intent(this, ResultActivity.class));
         } else if (id == R.id.nav_tournament_options) {
+            tournamentSettings();
         } else if (id == R.id.nav_game_options) {
         } else if (id == R.id.nav_my_account) {
             myAccount();
@@ -499,6 +500,14 @@ public class MainActivity extends AppCompatActivity
         if (tournament == null) return;
 
         Intent intent = new Intent(this, PairActivity.class);
+        startActivity(intent);
+    }
+
+    private void tournamentSettings() {
+        final TournamentInterface tournament = checkTournamentOpened();
+        if (tournament == null) return;
+
+        Intent intent = new Intent(this, TournamentSettingsActivity.class);
         startActivity(intent);
     }
 

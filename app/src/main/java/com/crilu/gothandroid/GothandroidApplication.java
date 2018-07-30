@@ -15,12 +15,14 @@ import com.crilu.opengotha.model.GamesPair;
 import com.crilu.opengotha.model.GamesResults;
 import com.crilu.opengotha.model.GothaModel;
 import com.crilu.opengotha.model.PlayersManager;
+import com.crilu.opengotha.model.TournamentOptions;
 import com.facebook.stetho.Stetho;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import timber.log.Timber;
 
@@ -32,12 +34,13 @@ public class GothandroidApplication extends Application implements GothaModel.Go
     public static final String MESSAGE_DOC_REF_RELATIVE_PATH = "/message";
     public static final String RESULT_DOC_REF_RELATIVE_PATH = "/result";
 
-    public static final DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM);
+    public static final DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
 
     private static RatingList sRatingList;
     private static GothaModel sGothaModel;
     private static GamesPair sGamesPair;
     private static GamesResults sGamesResults;
+    private static TournamentOptions sTournamentOptions;
     private static PlayersManager sPlayersManager;
     private static String sCurrentUser;
     private static FirebaseFirestore sFirestore;
@@ -106,6 +109,11 @@ public class GothandroidApplication extends Application implements GothaModel.Go
             sGamesResults = new GamesResults(sGothaModel.getTournament());
         }
         return sGamesResults;
+    }
+
+    public static TournamentOptions getTournamentOptionsInstance() {
+        sTournamentOptions = new TournamentOptions(sGothaModel.getTournament());
+        return sTournamentOptions;
     }
 
     public static String getCurrentUser() {
