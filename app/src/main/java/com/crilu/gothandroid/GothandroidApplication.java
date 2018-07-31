@@ -16,6 +16,7 @@ import com.crilu.opengotha.model.GamesPair;
 import com.crilu.opengotha.model.GamesResults;
 import com.crilu.opengotha.model.GothaModel;
 import com.crilu.opengotha.model.PlayersManager;
+import com.crilu.opengotha.model.Publish;
 import com.crilu.opengotha.model.TournamentOptions;
 import com.facebook.stetho.Stetho;
 import com.google.firebase.FirebaseApp;
@@ -49,6 +50,7 @@ public class GothandroidApplication extends Application implements GothaModel.Go
     private static String sCurrentToken;
 
     private static GothandroidApplication sInstance;
+    private static Publish sPublish;
 
     @Override
     public void onCreate() {
@@ -121,6 +123,11 @@ public class GothandroidApplication extends Application implements GothaModel.Go
     public static GamesOptions getGamesOptionsInstance() {
         sGameOptions = new GamesOptions(sGothaModel.getTournament());
         return sGameOptions;
+    }
+
+    public static Publish getPublishInstance() {
+        sPublish = new Publish(sGothaModel.getTournament());
+        return sPublish;
     }
 
     public static String getCurrentUser() {

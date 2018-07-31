@@ -38,6 +38,7 @@ import com.crilu.gothandroid.model.TournamentsViewModel;
 import com.crilu.gothandroid.model.firestore.Subscription;
 import com.crilu.gothandroid.model.firestore.Tournament;
 import com.crilu.gothandroid.sync.GothaSyncUtils;
+import com.crilu.gothandroid.utils.FileUtils;
 import com.crilu.gothandroid.utils.TournamentUtils;
 import com.crilu.opengotha.TournamentInterface;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -47,10 +48,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -372,15 +376,15 @@ public class MainActivity extends AppCompatActivity
         Timber.d("prepare to save results for tournament %s", tournamentIdentity);
 
         Map<String, Object> resultToSave = new HashMap<>();
-        resultToSave.put(Tournament.RESULT_CONTENT, "R1 R2 R3 R4 R5");
+        String resultsHtml = getResultsHtml(selectedTournament);
+        resultToSave.put(Tournament.RESULT_CONTENT, resultsHtml);
         FirebaseFirestore db = GothandroidApplication.getFirebaseFirestore();
         db.collection(TOURNAMENT_DOC_REF_PATH + "/" + tournamentIdentity + RESULT_DOC_REF_RELATIVE_PATH)
-                .add(resultToSave)
-                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                .document("resultDocId").set(resultToSave, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
-            public void onComplete(@NonNull Task<DocumentReference> task) {
+            public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    Timber.d("Result %s was saved", task.getResult().getId());
+                    Timber.d("Results were saved");
                     Snackbar.make(mCoordinatorLayout, getString(R.string.tournament_result_published), Snackbar.LENGTH_LONG).show();
                 } else {
                     Timber.d(task.getException());
@@ -388,6 +392,20 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
+    }
+
+    private String getResultsHtml(Tournament tournament) {
+        String filename = tournament.getFullName() + "_Standings.html";
+        File file = new File(getFilesDir(), filename);
+        GothandroidApplication.getPublishInstance().btnPublishStActionPerformed(file);
+        String resultsHtml = null;
+        try {
+            resultsHtml = FileUtils.getFileContents(file);
+        } catch (IOException e) {
+            Timber.d("Failed to read tournament file");
+            e.printStackTrace();
+        }
+        return resultsHtml;
     }
 
     private void observeTournament(Tournament selectedTournament) {

@@ -32,11 +32,11 @@ public class TournamentPublishing {
     public static final int SUBTYPE_DEFAULT = 0;
     public static final int SUBTYPE_ST_CAT = 1; // Standings by cat
 
-    public static void publish(TournamentInterface tournament, int roundNumber, int type, int subtype){
+    public static void publish(File f, TournamentInterface tournament, int roundNumber, int type, int subtype){
         TournamentParameterSet tps = null;
         tps = tournament.getTournamentParameterSet();
         
-        publish(tournament, tps, roundNumber, type, subtype);
+        publish(f, tournament, tps, roundNumber, type, subtype);
     }
     
     /**
@@ -47,13 +47,12 @@ public class TournamentPublishing {
      * @param type
      * @param subtype 
      */
-    public static void publish(TournamentInterface tournament, TournamentParameterSet tps, int roundNumber, int type, int subtype){
+    public static void publish(File f, TournamentInterface tournament, TournamentParameterSet tps, int roundNumber, int type, int subtype){
         PublishParameterSet pubPS = tps.getPublishParameterSet();
         
         if (pubPS.isPrint()) print(tournament, tps, roundNumber, type, subtype);
-        
-        File f;
-        f = exportToLocalFile(tournament, tps, roundNumber, type, subtype);
+
+        exportToLocalFile(f, tournament, tps, roundNumber, type, subtype);
         
         if (pubPS.isExportHFToOGSite()) sendByFTPToOGSite(tournament, f);
         
@@ -91,20 +90,19 @@ public class TournamentPublishing {
         }
     }
 
-    public static File exportToLocalFile(TournamentInterface tournament, TournamentParameterSet tps, int roundNumber, int type, int subtype){
-        File f = null;
+    public static File exportToLocalFile(File f, TournamentInterface tournament, TournamentParameterSet tps, int roundNumber, int type, int subtype){
         switch(type){
             case TournamentPublishing.TYPE_PLAYERSLIST:
-                f = ExternalDocument.generatePlayersListHTMLFile(tournament);
+                f = ExternalDocument.generatePlayersListHTMLFile(f, tournament);
                 break;
             case TournamentPublishing.TYPE_TEAMSLIST:
-                f = ExternalDocument.generateTeamsListHTMLFile(tournament);
+                f = ExternalDocument.generateTeamsListHTMLFile(f, tournament);
                 break;
             case TournamentPublishing.TYPE_TOURNAMENT_PARAMETERS:
                 // 
                 break;
             case TournamentPublishing.TYPE_GAMESLIST:
-                f = ExternalDocument.generateGamesListHTMLFile(tournament, roundNumber);
+                f = ExternalDocument.generateGamesListHTMLFile(f, tournament, roundNumber);
                 break;
              case TournamentPublishing.TYPE_RESULTSHEETS:
                 //
@@ -113,13 +111,13 @@ public class TournamentPublishing {
                 // 
                 break;
             case TournamentPublishing.TYPE_STANDINGS:
-                f = ExternalDocument.generateStandingsHTMLFile(tournament, roundNumber);
+                f = ExternalDocument.generateStandingsHTMLFile(f, tournament, roundNumber);
                 break;
             case TournamentPublishing.TYPE_MATCHESLIST:
-                f = ExternalDocument.generateMatchesListHTMLFile(tournament, roundNumber);
+                f = ExternalDocument.generateMatchesListHTMLFile(f, tournament, roundNumber);
                 break;
             case TournamentPublishing.TYPE_TEAMSSTANDINGS:
-                f = ExternalDocument.generateTeamsStandingsHTMLFile(tournament, roundNumber);
+                f = ExternalDocument.generateTeamsStandingsHTMLFile(f, tournament, roundNumber);
                 break;
         }
                 
