@@ -30,8 +30,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -146,7 +149,7 @@ public class MyAccount extends AppCompatActivity implements AdapterView.OnItemCl
             // Continue only if the File was successfully created
             if (photoFile != null) {
                 Uri photoURI = FileProvider.getUriForFile(this,
-                        "com.example.android.fileprovider",
+                        "com.crilu.gothandroid.fileprovider",
                         photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
@@ -199,7 +202,11 @@ public class MyAccount extends AppCompatActivity implements AdapterView.OnItemCl
                 Snackbar.make(mBinding.coordinatorLayout, getString(R.string.error_logging_in), Snackbar.LENGTH_LONG).show();
             }
         } else if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
-            setPic();
+            // Get the dimensions of the View
+            int targetW = mBinding.profileBtn.getWidth();
+            int targetH = mBinding.profileBtn.getHeight();
+            Bitmap bitmap = getPic(targetW, targetH);
+            mBinding.profileBtn.setImageBitmap(bitmap);
         }
     }
 
@@ -212,11 +219,7 @@ public class MyAccount extends AppCompatActivity implements AdapterView.OnItemCl
         }
     }
 
-    private void setPic() {
-        // Get the dimensions of the View
-        int targetW = mBinding.profileBtn.getWidth();
-        int targetH = mBinding.profileBtn.getHeight();
-
+    private Bitmap getPic(int targetW, int targetH) {
         // Get the dimensions of the bitmap
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
         bmOptions.inJustDecodeBounds = true;
@@ -225,14 +228,49 @@ public class MyAccount extends AppCompatActivity implements AdapterView.OnItemCl
         int photoH = bmOptions.outHeight;
 
         // Determine how much to scale down the image
-        int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+        int scaleFactor = Math.max(photoW/targetW, photoH/targetH);
 
         // Decode the image file into a Bitmap sized to fill the View
         bmOptions.inJustDecodeBounds = false;
         bmOptions.inSampleSize = scaleFactor;
         bmOptions.inPurgeable = true;
 
-        Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-        mBinding.profileBtn.setImageBitmap(bitmap);
+        return BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+    }
+
+    public void sendProfilePhoto(View view) {
+        Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND_MULTIPLE);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Upload profile photo");
+        shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Hi,\n\n" +
+                "Please upload my profile photo with the attached file.\n" +
+        "My EGF Pin is " + mBinding.egfPlayer.getText().toString() + "\n\n" +
+        "Thank you.");
+        shareIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {"aldo.podavini@europeangodatabase.eu"});
+
+        ArrayList<Uri> uris = new ArrayList<Uri>();
+        File shareFile = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "profile_photo.png");
+        storeImage(getPic(80, 115), shareFile);
+        Uri contentUri = FileProvider.getUriForFile(this, "com.crilu.gothandroid.fileprovider", shareFile);
+        uris.add(contentUri);
+        shareIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
+
+        // Grant temporary read permission to the content URI
+        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+        String msgStr = "Send profile picture to EGF";
+        startActivity(Intent.createChooser(shareIntent, msgStr));
+    }
+
+    private void storeImage(Bitmap image, File pictureFile) {
+        try {
+            FileOutputStream fos = new FileOutputStream(pictureFile);
+            image.compress(Bitmap.CompressFormat.PNG, 90, fos);
+            fos.close();
+        } catch (FileNotFoundException e) {
+            Timber.e("File not found: %s", e.getMessage());
+        } catch (IOException e) {
+            Timber.e("Error accessing file: %s", e.getMessage());
+        }
     }
 }

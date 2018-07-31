@@ -143,6 +143,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginStart="16dp"
                 android:text="@string/send_to_egd"
+                android:onClick="sendProfilePhoto"
                 app:layout_constraintBottom_toBottomOf="@+id/profile_btn"
                 app:layout_constraintStart_toEndOf="@+id/barrier1"
                 app:layout_constraintTop_toTopOf="@+id/profile_btn" />
