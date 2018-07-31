@@ -5,6 +5,8 @@ import java.util.List;
 
 public class JPanel {
 
+    private boolean visible;
+
     private List<String> components = new ArrayList<>();
 
     public void add(String label) {
@@ -13,5 +15,9 @@ public class JPanel {
 
     public void remove(String label) {
         components.remove(label);
+    }
+
+    public void setVisible(boolean b) {
+        this.visible = b;
     }
 }

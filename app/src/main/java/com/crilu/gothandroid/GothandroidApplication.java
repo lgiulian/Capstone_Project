@@ -11,6 +11,7 @@ import android.util.Log;
 import com.crilu.gothandroid.utils.NotificationUtils;
 import com.crilu.gothandroid.utils.ParsePlayersIntentService;
 import com.crilu.opengotha.RatingList;
+import com.crilu.opengotha.model.GamesOptions;
 import com.crilu.opengotha.model.GamesPair;
 import com.crilu.opengotha.model.GamesResults;
 import com.crilu.opengotha.model.GothaModel;
@@ -41,6 +42,7 @@ public class GothandroidApplication extends Application implements GothaModel.Go
     private static GamesPair sGamesPair;
     private static GamesResults sGamesResults;
     private static TournamentOptions sTournamentOptions;
+    private static GamesOptions sGameOptions;
     private static PlayersManager sPlayersManager;
     private static String sCurrentUser;
     private static FirebaseFirestore sFirestore;
@@ -114,6 +116,11 @@ public class GothandroidApplication extends Application implements GothaModel.Go
     public static TournamentOptions getTournamentOptionsInstance() {
         sTournamentOptions = new TournamentOptions(sGothaModel.getTournament());
         return sTournamentOptions;
+    }
+
+    public static GamesOptions getGamesOptionsInstance() {
+        sGameOptions = new GamesOptions(sGothaModel.getTournament());
+        return sGameOptions;
     }
 
     public static String getCurrentUser() {

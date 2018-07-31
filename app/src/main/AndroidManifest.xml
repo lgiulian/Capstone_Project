@@ -99,10 +99,18 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.crilu.gothandroid.MainActivity" />
         </activity>
-
         <activity
             android:name=".TournamentSettingsActivity"
             android:label="@string/title_activity_tournament_settings"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.crilu.gothandroid.MainActivity" />
+        </activity>
+
+        <activity android:name=".GamesOptionsActivity"
+            android:label="@string/title_activity_games_settings"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data

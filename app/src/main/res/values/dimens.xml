@@ -14,4 +14,5 @@
     <dimen name="badge_width">12dp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>
     <dimen name="default_input_width">85dp</dimen>
+    <dimen name="small_input_width">50dp</dimen>
 </resources>

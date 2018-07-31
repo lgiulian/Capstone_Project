@@ -238,5 +238,19 @@
     <string name="don_not_apply_secondary_criteria_for_players_with_a_mms_equal_or_stronger_than">Don not apply secondary criteria for players with a MMS equal or stronger than:</string>
     <string name="for_players_with_at_least_nbrounds_2_wins">for players with at least nbRounds/2 wins</string>
     <string name="for_players_above_mcmahon_bar">for players above McMahon bar</string>
+    <string name="title_activity_games_settings">Games Options</string>
+
+    <!-- Games settings screen -->
+    <string name="goban_size">Goban size</string>
+    <string name="komi">Komi</string>
+    <string name="thinking_time">Thinking time</string>
+    <string name="basic_time_minutes">Basic time (minutes)</string>
+    <string name="sudden_death">Sudden death</string>
+    <string name="time_seconds">Time (seconds)</string>
+    <string name="standard_byo_yomi">Standard Byo-yomi</string>
+    <string name="canadian_byo_yomi">Canadian Byo-yomi</string>
+    <string name="fischer">Fischer</string>
+    <string name="moves">moves</string>
+    <string name="bonus_time_seconds">Bonus time (seconds)</string>
 
 </resources>
