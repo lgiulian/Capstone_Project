@@ -151,7 +151,7 @@
     <string name="tournament_result_error">Results publish failed</string>
     <string name="you_are_not_logged_in">Operation canceled. You are not logged in.</string>
     <string name="no_uid_available">Saving user information results in error</string>
-    <string name="tournament_send_message">The message was sent successfuly</string>
+    <string name="tournament_send_message">The message was sent successfully</string>
     <string name="tournament_send_message_error">An error occurred sending message</string>
 
     <!-- Send Message screen -->
@@ -253,4 +253,12 @@
     <string name="moves">moves</string>
     <string name="bonus_time_seconds">Bonus time (seconds)</string>
 
+    <!-- Widget screen -->
+    <string name="configure">Select the tournament to observe</string>
+    <string name="add_widget">Add widget</string>
+    <string name="tournament_results">Tournament results</string>
+
+    <!-- Misc -->
+    <string name="not_implemented_yet">Not implemented yet</string>
+    <string name="settings">Settings</string>
 </resources>

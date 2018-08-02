@@ -40,7 +40,11 @@ import com.crilu.gothandroid.model.firestore.Tournament;
 import com.crilu.gothandroid.sync.GothaSyncUtils;
 import com.crilu.gothandroid.utils.FileUtils;
 import com.crilu.gothandroid.utils.TournamentUtils;
+import com.crilu.opengotha.DPParameterSet;
+import com.crilu.opengotha.PairingParameterSet;
 import com.crilu.opengotha.TournamentInterface;
+import com.crilu.opengotha.TournamentParameterSet;
+import com.crilu.opengotha.model.Publish;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -380,11 +384,11 @@ public class MainActivity extends AppCompatActivity
         resultToSave.put(Tournament.RESULT_CONTENT, resultsHtml);
         FirebaseFirestore db = GothandroidApplication.getFirebaseFirestore();
         db.collection(TOURNAMENT_DOC_REF_PATH + "/" + tournamentIdentity + RESULT_DOC_REF_RELATIVE_PATH)
-                .document("resultDocId").set(resultToSave, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                .document(GothandroidApplication.RESULT_DOC_ID_HTML).set(resultToSave, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    Timber.d("Results were saved");
+                    Timber.d("Results were saved in format html");
                     Snackbar.make(mCoordinatorLayout, getString(R.string.tournament_result_published), Snackbar.LENGTH_LONG).show();
                 } else {
                     Timber.d(task.getException());
@@ -392,6 +396,22 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
+
+        resultToSave.clear();
+        String resultsH9 = getResultsH9(selectedTournament);
+        resultToSave.put(Tournament.RESULT_CONTENT, resultsH9);
+        db.collection(TOURNAMENT_DOC_REF_PATH + "/" + tournamentIdentity + RESULT_DOC_REF_RELATIVE_PATH)
+                .document(GothandroidApplication.RESULT_DOC_ID_H9).set(resultToSave, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Timber.d("Results were saved in format h9");
+                } else {
+                    Timber.d(task.getException());
+                }
+            }
+        });
+
     }
 
     private String getResultsHtml(Tournament tournament) {
@@ -402,10 +422,24 @@ public class MainActivity extends AppCompatActivity
         try {
             resultsHtml = FileUtils.getFileContents(file);
         } catch (IOException e) {
-            Timber.d("Failed to read tournament file");
+            Timber.d("Failed to read html file");
             e.printStackTrace();
         }
         return resultsHtml;
+    }
+
+    private String getResultsH9(Tournament tournament) {
+        String filename = tournament.getFullName() + "_Standings.h9";
+        File file = new File(getFilesDir(), filename);
+        GothandroidApplication.getPublishInstance().exportRLEGF(file);
+        String resultsH9 = null;
+        try {
+            resultsH9 = FileUtils.getFileContents(file, true);
+        } catch (IOException e) {
+            Timber.d("Failed to read h9 file");
+            e.printStackTrace();
+        }
+        return resultsH9;
     }
 
     private void observeTournament(Tournament selectedTournament) {
@@ -464,16 +498,17 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void deleteTournament(Tournament selectedTournament) {
-
+        Snackbar.make(mCoordinatorLayout, getString(R.string.not_implemented_yet), Snackbar.LENGTH_LONG).show();
     }
 
     private void editTournament(Tournament selectedTournament) {
-
+        tournamentSettings();
     }
 
     private void openTournament(Tournament selectedTournament) {
         String fileContents = selectedTournament.getContent();
         TournamentUtils.openTournament(this, fileContents, selectedTournament.getIdentity());
+        updateUI();
     }
 
     private void updateUI() {

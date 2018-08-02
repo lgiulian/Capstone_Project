@@ -177,7 +177,7 @@ public class Publish {
         ExternalDocument.generateAGAResultsFile(tournament, f);
     }//GEN-LAST:event_btnExportRLAGAActionPerformed
 
-    private void btnExportRLEGFActionPerformed(File f) {//GEN-FIRST:event_btnExportRLEGFActionPerformed
+    public void btnExportRLEGFActionPerformed(File f) {//GEN-FIRST:event_btnExportRLEGFActionPerformed
         if (tournament == null) {
             sendMessage("No currently open tournament");
             return;
@@ -190,6 +190,21 @@ public class Publish {
         Gotha.exportDirectory = f.getParentFile();
 
         ExternalDocument.generateH9File(tournament, f, false);
+    }//GEN-LAST:event_btnExportRLEGFActionPerformed
+
+    public void exportRLEGF(File f) {//GEN-FIRST:event_btnExportRLEGFActionPerformed
+        if (tournament == null) {
+            sendMessage("No currently open tournament");
+            return;
+        }
+
+        if (f == null) {
+            return;
+        }
+        // Keep tournamentDirectory
+        Gotha.exportDirectory = f.getParentFile();
+
+        ExternalDocument.generateH9ShortFile(tournament, f, false);
     }//GEN-LAST:event_btnExportRLEGFActionPerformed
 
     private void spnRoundNumberStateChanged() {//GEN-FIRST:event_spnRoundNumberStateChanged

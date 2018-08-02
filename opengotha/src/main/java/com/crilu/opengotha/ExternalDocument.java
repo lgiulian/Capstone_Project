@@ -1884,6 +1884,125 @@ public class ExternalDocument {
 
     }
 
+    public static void generateH9ShortFile(TournamentInterface tournament, File f, boolean bKeepByDefResults) {
+//        LogElements.incrementElement("export.egf", "");
+        TournamentParameterSet tps;
+        tps = tournament.getTournamentParameterSet();
+        GeneralParameterSet gps = tps.getGeneralParameterSet();
+        PlacementParameterSet pps = tps.getPlacementParameterSet();
+        HandicapParameterSet hps = tps.getHandicapParameterSet();
+
+        // Prepare tabCrit from pps
+        int[] tC = pps.getPlaCriteria();
+        int[] tabCrit = PlacementParameterSet.purgeUselessCriteria(tC);
+
+        Writer output = null;
+        try {
+            output = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(f), "ISO-8859-15"));
+        } catch (IOException ex) {
+            Logger.getLogger(ExternalDocument.class.getName()).log(Level.SEVERE, null, ex);
+            return;
+        }
+
+        // Headers
+        try {
+            output.write("Pl Name                            ");
+            for (int c = 0; c < tabCrit.length; c++) {
+                String strCritName = PlacementParameterSet.criterionShortName(tabCrit[c]);
+                // Make strings with exactly 4 characters
+                strCritName = strCritName.trim();
+                if (strCritName.length() > 5) {
+                    strCritName = strCritName.substring(0, 5);
+                }
+                while (strCritName.length() < 5) {
+                    strCritName = " " + strCritName;
+                }
+
+                output.write(strCritName);
+            }
+
+        } catch (IOException ex) {
+            Logger.getLogger(ExternalDocument.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        // Contents
+        ArrayList<ScoredPlayer> alOrderedScoredPlayers = null;
+        int roundNumber = gps.getNumberOfRounds() - 1;
+        alOrderedScoredPlayers = tournament.orderedScoredPlayersList(roundNumber, pps);
+        // Eliminate non-players
+        for (Iterator<ScoredPlayer> it = alOrderedScoredPlayers.iterator(); it.hasNext();) {
+            ScoredPlayer sP = it.next();
+            if (!tournament.isPlayerImplied(sP)) {
+                it.remove();
+            }
+        }
+
+        boolean bFull = false;
+        String[][] hG = ScoredPlayer.halfGamesStrings(alOrderedScoredPlayers, roundNumber, tps, bFull);
+        String[] strPlace = ScoredPlayer.positionStrings(alOrderedScoredPlayers, roundNumber, tps);
+        for (int iSP = 0; iSP < alOrderedScoredPlayers.size(); iSP++) {
+            ScoredPlayer sP = alOrderedScoredPlayers.get(iSP);
+
+            String strLine = "";
+
+            String strPl = "    " + strPlace[iSP];
+            strPl = strPl.substring(strPl.length() - 4);
+            strLine += strPl;
+
+            String strNF = sP.fullUnblankedName() + "                             ";
+            strNF = strNF.substring(0, 20) + " ";
+            strLine += " " + strNF;
+
+            for (int c = 0; c < tabCrit.length; c++) {
+                String strCritValue = sP.formatScore(tabCrit[c], roundNumber);
+                // Make strings with exactly 4 characters
+                strCritValue = strCritValue.trim();
+                if (strCritValue.length() > 4) {
+                    strCritValue = strCritValue.substring(0, 4);
+                }
+                while (strCritValue.length() < 4) {
+                    strCritValue = " " + strCritValue;
+                }
+
+                strLine += " " + strCritValue;
+            }
+            // If tabCrit.length < 4, fill with dummy values
+            for (int c = tabCrit.length; c < 4; c++) {
+                strLine += " 0";
+            }
+
+            for (int r = 0; r <= roundNumber; r++) {
+                String strHG = hG[r][iSP];
+                strHG = "        " + strHG;
+                strHG = strHG.substring(strHG.length() - 4);
+                // Drop the game if by def and !bKeepByDefResults
+                if (strHG.indexOf("!") >= 0 && !bKeepByDefResults) {
+                    strHG = "  0=";
+                }
+                strLine += " " + strHG;
+
+            }
+
+            try {
+                output.write("\n" + strLine);
+            } catch (IOException ex) {
+                Logger.getLogger(ExternalDocument.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        try {
+            output.write("\n");
+        } catch (IOException ex) {
+            Logger.getLogger(ExternalDocument.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            output.close();
+        } catch (IOException ex) {
+            Logger.getLogger(ExternalDocument.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
     // This method added by Bart and adapted by Luc (Jan 2012)
     public static void generateAGAResultsFile(TournamentInterface tournament, File f) {
 //        LogElements.incrementElement("export.aga", "");

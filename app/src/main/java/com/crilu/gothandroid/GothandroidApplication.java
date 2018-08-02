@@ -35,6 +35,8 @@ public class GothandroidApplication extends Application implements GothaModel.Go
     public static final String SUBSCRIPTION_DOC_REF_RELATIVE_PATH = "/subscription";
     public static final String MESSAGE_DOC_REF_RELATIVE_PATH = "/message";
     public static final String RESULT_DOC_REF_RELATIVE_PATH = "/result";
+    public static final String RESULT_DOC_ID_HTML = "resultHtml";
+    public static final String RESULT_DOC_ID_H9 = "resultH9";
 
     public static final DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
 

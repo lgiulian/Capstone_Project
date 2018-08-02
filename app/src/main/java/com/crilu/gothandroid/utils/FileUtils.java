@@ -10,6 +10,10 @@ import java.io.InputStreamReader;
 public class FileUtils {
 
     public static String getFileContents(final File file) throws IOException {
+        return getFileContents(file, false);
+    }
+
+    public static String getFileContents(final File file, boolean appendBrAtEndOfLine) throws IOException {
         final InputStream inputStream = new FileInputStream(file);
         final BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
@@ -23,6 +27,9 @@ public class FileUtils {
 
             if (line != null) {
                 stringBuilder.append(line);
+                if (appendBrAtEndOfLine) {
+                    stringBuilder.append("<br>");
+                }
             }
         }
 
