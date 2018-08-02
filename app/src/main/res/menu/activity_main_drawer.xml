@@ -48,18 +48,6 @@
                 android:id="@+id/nav_message"
                 android:icon="@drawable/ic_menu_message"
                 android:title="@string/menu_drawer_message" />
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="@string/menu_drawer_share" />
-            <item
-                android:id="@+id/nav_publish"
-                android:icon="@drawable/ic_menu_send"
-                android:title="@string/menu_drawer_publish" />
-            <item
-                android:id="@+id/nav_publish_results"
-                android:icon="@drawable/ic_menu_send"
-                android:title="@string/menu_drawer_publish_results" />
         </menu>
     </item>
 

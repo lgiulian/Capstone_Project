@@ -196,9 +196,6 @@ public class MainActivity extends AppCompatActivity
             case R.id.edit:
                 editTournament(selectedTournament);
                 return true;
-            case R.id.delete:
-                deleteTournament(selectedTournament);
-                return true;
             case R.id.publish_results:
                 publishResultsOnFirestore(selectedTournament);
                 return true;
@@ -245,10 +242,6 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_new) {
             createNewTournament();
-        } else if (id == R.id.nav_open_unpublished) {
-
-        } else if (id == R.id.nav_save_locally) {
-
         } else if (id == R.id.nav_players_manager) {
             managePlayers();
         } else if (id == R.id.nav_pair) {
@@ -263,11 +256,6 @@ public class MainActivity extends AppCompatActivity
             myAccount();
         } else if (id == R.id.nav_message) {
             startActivity(new Intent(this, MessageActivity.class));
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_publish) {
-
-        } else if (id == R.id.nav_publish_results) {
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -495,10 +483,6 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
-    }
-
-    private void deleteTournament(Tournament selectedTournament) {
-        Snackbar.make(mCoordinatorLayout, getString(R.string.not_implemented_yet), Snackbar.LENGTH_LONG).show();
     }
 
     private void editTournament(Tournament selectedTournament) {

@@ -118,7 +118,6 @@ public class TournamentPublishedListAdapter extends RecyclerView.Adapter<Tournam
             if (iAmOwner) {
                 menu.add(0, R.id.open, 0, v.getContext().getString(R.string.open));
                 menu.add(0, R.id.edit, 0, v.getContext().getString(R.string.edit));
-                menu.add(0, R.id.delete, 0, v.getContext().getString(R.string.delete));
             }
             if (iAmOwner && !published) {
                 menu.add(0, R.id.publish_tournament, 0, v.getContext().getString(R.string.publish_tournament));

@@ -8,9 +8,6 @@
         android:id="@+id/edit"
         android:title="@string/edit" />
     <item
-        android:id="@+id/delete"
-        android:title="@string/delete" />
-    <item
         android:id="@+id/publish_tournament"
         android:title="@string/publish_tournament" />
     <item
