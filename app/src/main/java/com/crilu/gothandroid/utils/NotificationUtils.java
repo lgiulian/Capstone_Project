@@ -92,7 +92,7 @@ public class NotificationUtils {
 
         String notificationText = String.format(notificationFormat,
                 name,
-                GothandroidApplication.dateFormat.format(new Date(startDate)),
+                GothandroidApplication.dateFormatPretty.format(new Date(startDate)),
                 location);
 
         return notificationText;

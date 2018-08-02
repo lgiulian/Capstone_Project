@@ -42,7 +42,7 @@ public class SendMessageActivity extends AppCompatActivity {
             String tournamentInfoFormat = getString(R.string.format_tournament_info);
             String tournamentInfo = String.format(tournamentInfoFormat,
                     mTournament.getFullName(),
-                    GothandroidApplication.dateFormat.format(mTournament.getBeginDate()),
+                    GothandroidApplication.dateFormatPretty.format(mTournament.getBeginDate()),
                     mTournament.getLocation());
             String tournamentParticipantsFormat = getString(R.string.format_tournament_participants);
             // FIXME: get the right number of participants

@@ -110,7 +110,7 @@
         <EditText
             android:id="@+id/tournament_begin_date"
             android:hint="@string/tournament_begin_date"
-            android:text="Aug 30, 2018"
+            android:text="20180830"
             app:layout_constraintEnd_toStartOf="@+id/begin_date_picker_btn"
             app:layout_constraintStart_toEndOf="@+id/barrier1"
             app:layout_constraintTop_toBottomOf="@+id/tournament_director"
@@ -119,7 +119,7 @@
         <EditText
             android:id="@+id/tournament_end_date"
             android:hint="@string/tournament_end_date"
-            android:text="Aug 31, 2018"
+            android:text="20180830"
             app:layout_constraintEnd_toStartOf="@+id/end_date_picker_btn"
             app:layout_constraintStart_toEndOf="@+id/barrier1"
             app:layout_constraintTop_toBottomOf="@+id/tournament_begin_date"

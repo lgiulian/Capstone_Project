@@ -54,7 +54,7 @@ public class TournamentPublishedListAdapter extends RecyclerView.Adapter<Tournam
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Tournament tournament = mData.get(position);
-        holder.beginDate.setText(GothandroidApplication.dateFormat.format(tournament.getBeginDate()));
+        holder.beginDate.setText(GothandroidApplication.dateFormatPretty.format(tournament.getBeginDate()));
         holder.fullName.setText(tournament.getFullName());
         holder.location.setText(tournament.getLocation());
         if (TournamentUtils.isMeOwner(tournament)) {

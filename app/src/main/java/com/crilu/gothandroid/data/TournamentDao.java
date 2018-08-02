@@ -51,7 +51,7 @@ public class TournamentDao {
                 null,
                 null,
                 null,
-                GothaContract.TournamentEntry.COLUMN_BEGIN_DATE);
+                GothaContract.TournamentEntry.COLUMN_BEGIN_DATE + " DESC");
         while (cursor.moveToNext()) {
             Tournament tournament = new Tournament();
             tournament.setId(cursor.getLong(cursor.getColumnIndex(GothaContract.TournamentEntry._ID)));

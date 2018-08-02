@@ -57,7 +57,7 @@ public class CreateTournamentActivity extends AppCompatActivity implements DateP
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         Calendar cal = new GregorianCalendar(year, month, dayOfMonth);
-        String dateStr = GothandroidApplication.dateFormat.format(cal.getTime());
+        String dateStr = GothandroidApplication.dateFormatPretty.format(cal.getTime());
         if (mCurrentDatePickerFieldId == R.id.begin_date_picker_btn) {
             mBinding.form.tournamentBeginDate.setText(dateStr);
         } else if (mCurrentDatePickerFieldId == R.id.end_date_picker_btn) {
@@ -78,12 +78,12 @@ public class CreateTournamentActivity extends AppCompatActivity implements DateP
         Date beginDate = null;
         Date endDate = null;
         try {
-            beginDate = GothandroidApplication.dateFormat.parse(mBinding.form.tournamentBeginDate.getText().toString());
+            beginDate = GothandroidApplication.dateFormatPretty.parse(mBinding.form.tournamentBeginDate.getText().toString());
         } catch (ParseException e) {
             Timber.d(e);
         }
         try {
-            endDate = GothandroidApplication.dateFormat.parse(mBinding.form.tournamentEndDate.getText().toString());
+            endDate = GothandroidApplication.dateFormatPretty.parse(mBinding.form.tournamentEndDate.getText().toString());
         } catch (ParseException e) {
             Timber.d(e);
         }
