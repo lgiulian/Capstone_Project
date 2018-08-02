@@ -96,7 +96,7 @@ public class GothaModel {
     public void startTournament(String name, String shortName, String location, String director,
                                 Date startDate, Date endDate, int numberOfRounds, int numberOfCategories, int system) {
     	
-    	int nbRounds = 5;
+    	int nbRounds = numberOfRounds;
         if (numberOfRounds < 0) {
             nbRounds = 1;
         }
