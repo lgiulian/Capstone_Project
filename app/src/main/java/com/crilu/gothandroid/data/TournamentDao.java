@@ -133,9 +133,9 @@ public class TournamentDao {
         db.collection(TOURNAMENT_DOC_REF_PATH).whereGreaterThanOrEqualTo(Tournament.CREATION_DATE, fromDate).get().addOnCompleteListener(listener);
     }
 
-    public static void fetchTournamentByIdentity(String identity, OnCompleteListener<DocumentSnapshot> listener) {
+    public static void fetchTournamentResults(String tournamentIdentity, OnCompleteListener<DocumentSnapshot> listener) {
         FirebaseFirestore db = GothandroidApplication.getFirebaseFirestore();
-        db.collection(TOURNAMENT_DOC_REF_PATH + "/" + identity + RESULT_DOC_REF_RELATIVE_PATH)
+        db.collection(TOURNAMENT_DOC_REF_PATH + "/" + tournamentIdentity + RESULT_DOC_REF_RELATIVE_PATH)
                 .document(GothandroidApplication.RESULT_DOC_ID_H9).get().addOnCompleteListener(listener);
     }
 

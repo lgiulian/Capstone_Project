@@ -39,7 +39,7 @@ public class GothandroidWidget extends AppWidgetProvider {
         Tournament tournament = TournamentDao.getTournamentByFullName(context, tournamentName);
         String tournamentIdentity = tournament.getIdentity();
         if (tournament != null && !TextUtils.isEmpty(tournamentIdentity)) {
-            TournamentDao.fetchTournamentByIdentity(tournamentIdentity, new OnCompleteListener<DocumentSnapshot>() {
+            TournamentDao.fetchTournamentResults(tournamentIdentity, new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
