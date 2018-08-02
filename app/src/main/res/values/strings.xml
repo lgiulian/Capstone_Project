@@ -153,6 +153,10 @@
     <string name="no_uid_available">Saving user information results in error</string>
     <string name="tournament_send_message">The message was sent successfully</string>
     <string name="tournament_send_message_error">An error occurred sending message</string>
+    <string name="opened_for_registration_or_observation">Opened for registration or observation</string>
+    <string name="observed_tournament">Observed tournament</string>
+    <string name="registered_in_tournament">Registered in tournament</string>
+    <string name="you_are_the_owner_of_the_tournament">You are the owner of the tournament</string>
 
     <!-- Send Message screen -->
     <string name="send_message_title">Send Message</string>
