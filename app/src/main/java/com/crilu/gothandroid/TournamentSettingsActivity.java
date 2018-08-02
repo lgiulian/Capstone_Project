@@ -49,6 +49,8 @@ import java.util.Vector;
 
 import timber.log.Timber;
 
+import static com.crilu.gothandroid.utils.DateUtils.convertDateFormat2NewDateFormat;
+
 public class TournamentSettingsActivity extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
@@ -196,8 +198,8 @@ public class TournamentSettingsActivity extends AppCompatActivity {
             mBinding.tournamentShortName.setText(tournamentOptions.txfShortName);
             mBinding.tournamentLocation.setText(tournamentOptions.txfLocation);
             mBinding.tournamentDirector.setText(tournamentOptions.txfDirector);
-            mBinding.tournamentBeginDate.setText(tournamentOptions.txfBeginDate);
-            mBinding.tournamentEndDate.setText(tournamentOptions.txfEndDate);
+            mBinding.tournamentBeginDate.setText(convertDateFormat2NewDateFormat(tournamentOptions.txfBeginDate, GothandroidApplication.dateFormat, GothandroidApplication.dateFormatPretty));
+            mBinding.tournamentEndDate.setText(convertDateFormat2NewDateFormat(tournamentOptions.txfEndDate, GothandroidApplication.dateFormat, GothandroidApplication.dateFormatPretty));
             int roundNumber = 1;
             try {
                 roundNumber = Integer.valueOf(tournamentOptions.txfNumberOfRounds);
@@ -253,16 +255,16 @@ public class TournamentSettingsActivity extends AppCompatActivity {
         @Override
         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
             Calendar cal = new GregorianCalendar(year, month, dayOfMonth);
-            String dateStr = GothandroidApplication.dateFormat.format(cal.getTime());
+            String dateStr = GothandroidApplication.dateFormatPretty.format(cal.getTime());
             if (mCurrentDatePickerFieldId == R.id.begin_date_picker_btn) {
                 mBinding.tournamentBeginDate.setText(dateStr);
                 TournamentOptions tournamentOptions = mTournamentOptionViewModel.getTournamentOptions();
-                tournamentOptions.txfBeginDate = dateStr;
+                tournamentOptions.txfBeginDate = convertDateFormat2NewDateFormat(dateStr, GothandroidApplication.dateFormatPretty, GothandroidApplication.dateFormat);
                 tournamentOptions.txfBeginDateFocusLost();
             } else if (mCurrentDatePickerFieldId == R.id.end_date_picker_btn) {
                 mBinding.tournamentEndDate.setText(dateStr);
                 TournamentOptions tournamentOptions = mTournamentOptionViewModel.getTournamentOptions();
-                tournamentOptions.txfEndDate = dateStr;
+                tournamentOptions.txfEndDate = convertDateFormat2NewDateFormat(dateStr, GothandroidApplication.dateFormatPretty, GothandroidApplication.dateFormat);
                 tournamentOptions.txfEndDateFocusLost();
             }
 

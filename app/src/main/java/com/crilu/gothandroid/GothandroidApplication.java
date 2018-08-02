@@ -38,8 +38,8 @@ public class GothandroidApplication extends Application implements GothaModel.Go
     public static final String RESULT_DOC_ID_HTML = "resultHtml";
     public static final String RESULT_DOC_ID_H9 = "resultH9";
 
-    public static final DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
-    public static final DateFormat dateFormatPretty = new SimpleDateFormat("yyyy-MM-dd");
+    public static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    public static final DateFormat dateFormatPretty = DateFormat.getDateInstance(DateFormat.MEDIUM);
 
     private static RatingList sRatingList;
     private static GothaModel sGothaModel;
