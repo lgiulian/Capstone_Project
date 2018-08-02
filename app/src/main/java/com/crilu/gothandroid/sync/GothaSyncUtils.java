@@ -150,7 +150,7 @@ public class GothaSyncUtils {
         values.put(GothaContract.SubscriptionEntry.COLUMN_TOURNAMENT_ID, subscription.getTournamentId());
         values.put(GothaContract.SubscriptionEntry.COLUMN_UID, subscription.getUid());
         values.put(GothaContract.SubscriptionEntry.COLUMN_STATE, subscription.getState());
-        values.put(GothaContract.SubscriptionEntry.COLUMN_INTENT, subscription.getState());
+        values.put(GothaContract.SubscriptionEntry.COLUMN_INTENT, subscription.getIntent());
         values.put(GothaContract.SubscriptionEntry.COLUMN_FFG_LIC, subscription.getFfgLic());
         values.put(GothaContract.SubscriptionEntry.COLUMN_EGF_PIN, subscription.getEgfPin());
         values.put(GothaContract.SubscriptionEntry.COLUMN_AGA_ID, subscription.getAgaId());
