@@ -7,7 +7,6 @@ import android.content.ContentValues;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.DatePicker;
 
@@ -29,7 +28,7 @@ import java.util.GregorianCalendar;
 
 import timber.log.Timber;
 
-public class CreateTournamentActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class CreateTournamentActivity extends AppCompatAdActivity implements DatePickerDialog.OnDateSetListener {
 
     private int mCurrentDatePickerFieldId;
 
@@ -100,6 +99,8 @@ public class CreateTournamentActivity extends AppCompatActivity implements DateP
 
         TournamentInterface tournament = GothandroidApplication.getGothaModelInstance().getTournament();
         saveTournament(tournament);
+
+        displayAds();
         finish();
     }
 

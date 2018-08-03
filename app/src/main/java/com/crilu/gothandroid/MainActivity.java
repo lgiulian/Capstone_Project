@@ -40,11 +40,7 @@ import com.crilu.gothandroid.model.firestore.Tournament;
 import com.crilu.gothandroid.sync.GothaSyncUtils;
 import com.crilu.gothandroid.utils.FileUtils;
 import com.crilu.gothandroid.utils.TournamentUtils;
-import com.crilu.opengotha.DPParameterSet;
-import com.crilu.opengotha.PairingParameterSet;
 import com.crilu.opengotha.TournamentInterface;
-import com.crilu.opengotha.TournamentParameterSet;
-import com.crilu.opengotha.model.Publish;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -71,7 +67,7 @@ import static com.crilu.gothandroid.GothandroidApplication.RESULT_DOC_REF_RELATI
 import static com.crilu.gothandroid.GothandroidApplication.SUBSCRIPTION_DOC_REF_RELATIVE_PATH;
 import static com.crilu.gothandroid.GothandroidApplication.TOURNAMENT_DOC_REF_PATH;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends AppCompatAdActivity
         implements NavigationView.OnNavigationItemSelectedListener, TournamentPublishedListAdapter.OnTournamentClickListener {
 
     private FirebaseAuth mAuth;
@@ -306,6 +302,7 @@ public class MainActivity extends AppCompatActivity
                                 null,
                                 null);
                         Snackbar.make(mCoordinatorLayout, getString(R.string.tournament_published), Snackbar.LENGTH_LONG).show();
+                        displayAds();
                     } else {
                         Timber.d(task.getException());
                         Snackbar.make(mCoordinatorLayout, getString(R.string.tournament_publish_error), Snackbar.LENGTH_LONG).show();
@@ -394,6 +391,7 @@ public class MainActivity extends AppCompatActivity
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
                     Timber.d("Results were saved in format h9");
+                    displayAds();
                 } else {
                     Timber.d(task.getException());
                 }
