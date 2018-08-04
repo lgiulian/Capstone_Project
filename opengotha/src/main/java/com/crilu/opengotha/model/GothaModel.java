@@ -232,21 +232,6 @@ public class GothaModel {
                         + "players have a Preliminary registering status");
     		}
         }
-        
-        // Aceess to opengotha.info
-        PublishParameterSet pubPS = tps.getPublishParameterSet();
-        GeneralParameterSet gps = tps.getGeneralParameterSet();
-        boolean bExportHFOG = pubPS.isExportHFToOGSite();
-        if (bExportHFOG) {
-            String dirName = new SimpleDateFormat("yyyyMMdd").format(gps.getBeginDate()) + tournament.getShortName() + "/";
-            String strURL = "http://opengotha.info/tournaments/" + dirName;
-            try {
-                // TODO: create QRCode
-            } catch (Exception ex) {
-                Logger.getLogger(GothaModel.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-        }
     }
 
     private void updateStandingsComponents() {
@@ -410,8 +395,6 @@ public class GothaModel {
     }
     
     private void updateDisplayCriteria() {
-    	// TODO: code deleted. Compare with original code if is needed
-
         PlacementParameterSet displayedPPS = null;
         if (tournament != null) {
             displayedPPS = tournament.getTournamentParameterSet().getPlacementParameterSet();

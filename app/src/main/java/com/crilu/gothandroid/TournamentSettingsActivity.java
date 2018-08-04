@@ -122,7 +122,6 @@ public class TournamentSettingsActivity extends AppCompatActivity {
     }
 
     private void exportTournament() {
-        // FIXME: here I should update user on firestore
     }
 
     public static class GeneralFragment extends Fragment implements DatePickerDialog.OnDateSetListener, View.OnClickListener, TournamentOptions.OnTournamentOptionsListener, RadioGroup.OnCheckedChangeListener, CompoundButton.OnCheckedChangeListener, View.OnFocusChangeListener {

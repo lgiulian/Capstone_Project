@@ -8,6 +8,10 @@ import android.view.View;
 import com.crilu.gothandroid.data.TournamentDao;
 import com.crilu.gothandroid.databinding.ActivitySendMessageBinding;
 import com.crilu.gothandroid.model.firestore.Tournament;
+import com.crilu.gothandroid.utils.TournamentUtils;
+import com.crilu.opengotha.Player;
+
+import java.util.List;
 
 public class SendMessageActivity extends AppCompatActivity {
 
@@ -41,8 +45,14 @@ public class SendMessageActivity extends AppCompatActivity {
                     GothandroidApplication.dateFormatPretty.format(mTournament.getBeginDate()),
                     mTournament.getLocation());
             String tournamentParticipantsFormat = getString(R.string.format_tournament_participants);
-            // FIXME: get the right number of participants
-            String tournamentParticipants = String.format(tournamentParticipantsFormat, "1");
+            String fileContents = mTournament.getContent();
+            TournamentUtils.openTournament(this, fileContents, mTournament.getIdentity());
+            List<Player> players = GothandroidApplication.getGothaModelInstance().getTournament().playersList();
+            int numPlayers = 0;
+            if (players != null) {
+                numPlayers = players.size();
+            }
+            String tournamentParticipants = String.format(tournamentParticipantsFormat, numPlayers);
 
             mBinding.tournamentTv.setText(tournamentInfo);
             mBinding.participantsTv.setText(tournamentParticipants);

@@ -12,8 +12,12 @@ import android.text.TextUtils;
 import com.crilu.gothandroid.GothandroidApplication;
 import com.crilu.gothandroid.MessageActivity;
 import com.crilu.gothandroid.R;
+import com.crilu.gothandroid.data.GothaPreferences;
 import com.crilu.gothandroid.data.MessageDao;
+import com.crilu.gothandroid.data.UserDao;
 import com.crilu.gothandroid.utils.TournamentUtils;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -91,7 +95,16 @@ public class GothaFirebaseMessageService extends FirebaseMessagingService {
     }
 
     private void sendRegistrationToServer(String refreshedToken) {
-        // FIXME: here I should update user on firestore
+        GothandroidApplication.setCurrentToken(refreshedToken);
+        String firstName = GothaPreferences.getUserFirstName(this);
+        String lastName = GothaPreferences.getUserLastName(this);
+        String egfPin = GothaPreferences.getUserEgfPin(this);
+        String agaId = GothaPreferences.getUserAgaId(this);
+        String ffgLic = GothaPreferences.getUserFfgLic(this);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            UserDao.saveOrUpdateUserOnFirebase(user.getUid(), firstName, lastName, egfPin, ffgLic, agaId);
+        }
     }
 
     private void processMessage(Map<String, String> data) {

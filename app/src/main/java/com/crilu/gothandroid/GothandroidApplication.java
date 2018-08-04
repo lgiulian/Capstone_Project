@@ -50,6 +50,8 @@ public class GothandroidApplication extends Application implements GothaModel.Go
     private static FirebaseFirestore sFirestore;
     private static String sCurrentToken;
 
+    private static GothandroidApplication sInstance;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -69,6 +71,7 @@ public class GothandroidApplication extends Application implements GothaModel.Go
         Intent parsePlayersIntent = new Intent(this, ParsePlayersIntentService.class);
         startService(parsePlayersIntent);
 
+        sInstance = this;
     }
 
     public static RatingList getRatingList() {

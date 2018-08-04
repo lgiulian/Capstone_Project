@@ -155,7 +155,7 @@
         Loc: <xliff:g id="location">%3$s</xliff:g>
     </string>
     <string name="format_tournament_participants">
-        Number of participants: <xliff:g id="name">%1$s</xliff:g>
+        Number of participants: <xliff:g id="name">%1$d</xliff:g>
     </string>
 
     <!-- Messages screen -->

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/open"
+        android:title="@string/open" />
+    <item
+        android:id="@+id/edit"
+        android:title="@string/edit" />
+    <item
+        android:id="@+id/publish_tournament"
+        android:title="@string/publish_tournament" />
+    <item
+        android:id="@+id/save_and_upload"
+        android:title="@string/save_and_upload_tournament" />
+    <item
+        android:id="@+id/publish_results"
+        android:title="@string/publish_results" />
+    <item
+        android:id="@+id/send_message_to_all"
+        android:title="@string/send_message_to_all" />
+    <item
+        android:id="@+id/register"
+        android:title="@string/register" />
+    <item
+        android:id="@+id/subscribe"
+        android:title="@string/subscribe" />
+</menu>

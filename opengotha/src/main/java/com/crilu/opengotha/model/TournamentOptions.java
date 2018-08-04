@@ -1485,9 +1485,6 @@ public class TournamentOptions {
         this.txfSeClubsGroup = "" + paiPS.getPaiSePreferMMSDiffRatherThanSameClubsGroup();
         this.txfSeClub = "" + paiPS.getPaiSePreferMMSDiffRatherThanSameClub();
         this.ckbSeMinimizeHandicap = paiPS.getPaiSeMinimizeHandicap() != 0;
-
-        // FIXME: check if is really necessary to call this method. Is throwing exception because the files are not found
-        //updateDlgClubsGroups();
     }
 
     private void updateDlgClubsGroups() {
