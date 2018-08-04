@@ -2,6 +2,7 @@ package com.crilu.gothandroid;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,54 +25,50 @@ public class TablesFragment extends Fragment {
 
     private PairViewModel mPairViewModel;
     private List<Vector<String>> mTables;
-    private TableView<Vector<String>> mTablesTable;
     private TableAdapter<Vector<String>> mTablesAdapter;
 
     public TablesFragment() {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_tables, container, false);
 
-        mPairViewModel = ViewModelProviders.of(getActivity()).get(PairViewModel.class);
-        mTables = mPairViewModel.getTables();
+        if (getActivity() != null) {
+            mPairViewModel = ViewModelProviders.of(getActivity()).get(PairViewModel.class);
+            mTables = mPairViewModel.getTables();
 
-        String[] tableHeaders = { getString(R.string.tables_header_table),
-                getString(R.string.tables_header_white),
-                getString(R.string.tables_header_black),
-                getString(R.string.tables_header_hd)};
-        mTablesTable = rootView.findViewById(R.id.tables_table);
-        mTablesTable.setHeaderAdapter(new SimpleTableHeaderAdapter(getContext(), tableHeaders));
-        mTablesAdapter = new TableAdapter<>(getContext(), mTables);
+            String[] tableHeaders = {getString(R.string.tables_header_table),
+                    getString(R.string.tables_header_white),
+                    getString(R.string.tables_header_black),
+                    getString(R.string.tables_header_hd)};
+            TableView<Vector<String>> mTablesTable = rootView.findViewById(R.id.tables_table);
+            mTablesTable.setHeaderAdapter(new SimpleTableHeaderAdapter(getContext(), tableHeaders));
+            mTablesAdapter = new TableAdapter<>(getContext(), mTables);
 
-        TableColumnWeightModel columnModel = new TableColumnWeightModel(4);
-        columnModel.setColumnWeight(1, 2);
-        columnModel.setColumnWeight(2, 2);
-        mTablesTable.setColumnModel(columnModel);
+            TableColumnWeightModel columnModel = new TableColumnWeightModel(4);
+            columnModel.setColumnWeight(1, 2);
+            columnModel.setColumnWeight(2, 2);
+            mTablesTable.setColumnModel(columnModel);
 
-        mTablesTable.setDataAdapter(mTablesAdapter);
-        mTablesTable.addDataLongClickListener(new TableLongClickListener());
-
+            mTablesTable.setDataAdapter(mTablesAdapter);
+            mTablesTable.addDataLongClickListener(new TableLongClickListener());
+        }
         return rootView;
     }
 
     private class TableLongClickListener implements TableDataLongClickListener<Vector<String>> {
         @Override
         public boolean onDataLongClicked(int rowIndex, Vector<String> clickedTable) {
-            // unpair selected game
-            Timber.d("unpair game %s at position %s", clickedTable.get(1), rowIndex);
+            // unpaired selected game
+            Timber.d("unpaired game %s at position %s", clickedTable.get(1), rowIndex);
             ArrayList<Integer> selectedTables = new ArrayList<>();
             int selectedTable = Integer.parseInt(clickedTable.get(0));
             selectedTables.add(selectedTable);
             mPairViewModel.getGamesPair().unpair(selectedTables);
             return true;
         }
-    }
-
-    public void setTables(List<Vector<String>> tables) {
-        this.mTables = tables;
     }
 
     public void updateTables() {

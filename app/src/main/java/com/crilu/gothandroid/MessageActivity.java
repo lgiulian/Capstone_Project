@@ -19,20 +19,19 @@ import java.util.List;
 
 public class MessageActivity extends AppCompatActivity {
 
-    private ActivityMessageBinding mBinding;
     private List<Message> mMessages = new ArrayList<>();
     private MessageListAdapter mAdapter;
-
-    private MessagesViewModel mModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_message);
+        ActivityMessageBinding mBinding = DataBindingUtil.setContentView(this, R.layout.activity_message);
 
         setSupportActionBar(mBinding.toolbar);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         setupViewModel();
 
@@ -46,7 +45,7 @@ public class MessageActivity extends AppCompatActivity {
     }
 
     private void setupViewModel() {
-        mModel = ViewModelProviders.of(this).get(MessagesViewModel.class);
+        MessagesViewModel mModel = ViewModelProviders.of(this).get(MessagesViewModel.class);
         final Observer<List<Message>> listObserver = new Observer<List<Message>>() {
             @Override
             public void onChanged(@Nullable final List<Message> newList) {

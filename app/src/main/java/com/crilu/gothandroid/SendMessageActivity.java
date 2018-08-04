@@ -1,19 +1,13 @@
 package com.crilu.gothandroid;
 
 import android.databinding.DataBindingUtil;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.crilu.gothandroid.data.TournamentDao;
 import com.crilu.gothandroid.databinding.ActivitySendMessageBinding;
 import com.crilu.gothandroid.model.firestore.Tournament;
-
-import java.util.Date;
-
-import timber.log.Timber;
 
 public class SendMessageActivity extends AppCompatActivity {
 
@@ -29,7 +23,9 @@ public class SendMessageActivity extends AppCompatActivity {
 
         setSupportActionBar(mBinding.toolbar);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         String tournamentIdentity = null;
         Bundle extras = getIntent().getExtras();

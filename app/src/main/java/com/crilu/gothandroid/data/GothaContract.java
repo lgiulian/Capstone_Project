@@ -7,7 +7,7 @@ public class GothaContract {
 
     public static final String AUTHORITY = "com.crilu.gothandroid";
 
-    public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + AUTHORITY);
+    private static final Uri BASE_CONTENT_URI = Uri.parse("content://" + AUTHORITY);
 
     public static final String PATH_TOURNAMENTS = "tournament";
     public static final String PATH_SUBSCRIPTION = "subscription";
@@ -29,12 +29,6 @@ public class GothaContract {
         public static final String COLUMN_CREATION_DATE = "creation_date";
         public static final String COLUMN_LAST_MODIFICATION_DATE = "last_modification_date";
         public static final String COLUMN_SUBSCRIPTION_TYPE = "subscription_type";
-
-        public static Uri buildTournamentUriWithDate(long date) {
-            return CONTENT_URI.buildUpon()
-                    .appendPath(Long.toString(date))
-                    .build();
-        }
     }
 
     public static final class SubscriptionEntry implements BaseColumns {

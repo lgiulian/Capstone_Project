@@ -1,5 +1,6 @@
 package com.crilu.gothandroid;
 
+import android.annotation.SuppressLint;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -31,7 +32,9 @@ public class GamesOptionsActivity extends AppCompatActivity implements GamesOpti
 
         setSupportActionBar(mBinding.toolbar);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         init();
         setUiListeners();
@@ -67,6 +70,7 @@ public class GamesOptionsActivity extends AppCompatActivity implements GamesOpti
         mBinding.radioGroupTimeSystem.setOnCheckedChangeListener(this);
     }
 
+    @SuppressLint("SetTextI18n")
     private void customInitComponents() {
         TournamentInterface tournament = mGameOptionViewModel.getGameOptions().getTournament();
         GeneralParameterSet gps = tournament.getTournamentParameterSet().getGeneralParameterSet();

@@ -29,7 +29,7 @@
             <TextView
                 android:id="@+id/inside_group_tv"
                 style="@style/RegularLabelStyle"
-                android:text="@string/inside_a_goup_use_a_seeding_system"
+                android:text="@string/inside_a_group_use_a_seeding_system"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/main_criteria_tv" />
 
@@ -47,8 +47,10 @@
                 style="@style/TextInputRegularStyle"
                 android:layout_width="@dimen/default_input_width"
                 android:minWidth="@dimen/default_input_width"
+                android:hint="@string/earlier_rounds_up_to_round"
                 app:layout_constraintStart_toEndOf="@+id/earlier_rounds_up_to_tv"
-                app:layout_constraintTop_toBottomOf="@+id/inside_group_tv" />
+                app:layout_constraintTop_toBottomOf="@+id/inside_group_tv"
+                android:inputType="text" />
 
             <TextView
                 android:id="@+id/earlier_rounds_tv"
@@ -157,7 +159,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/default_margin"
                 android:layout_marginStart="@dimen/default_margin"
-                android:text="@string/compesate_a_previous_draw_up_down_by_a_draw_down_up"
+                android:text="@string/compensate_a_previous_draw_up_down_by_a_draw_down_up"
                 app:layout_constraintStart_toStartOf="@+id/when_pairing_players_groups_necessary_tv"
                 app:layout_constraintTop_toBottomOf="@+id/avoid_drawing_ckb" />
 
@@ -319,6 +321,7 @@
             <EditText
                 android:id="@+id/do_not_apply"
                 style="@style/TextInputRegularStyle"
+                android:inputType="text"
                 android:minWidth="@dimen/default_input_width"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"

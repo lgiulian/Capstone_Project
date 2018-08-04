@@ -65,12 +65,18 @@ public class TournamentPublishedListAdapter extends RecyclerView.Adapter<Tournam
             holder.rootView.setBackgroundResource(R.drawable.list_color_selector);
         }
         String subscriptionType = TournamentUtils.getSubscriptionType(holder.getContext(), tournament);
-        if (Subscription.INTENT_OBSERVER.equals(subscriptionType)) {
-            holder.badge.setBackgroundResource(R.color.badge_observer);
-        } else if (Subscription.INTENT_PARTICIPANT.equals(subscriptionType)) {
-            holder.badge.setBackgroundResource(R.color.badge_participant);
-        } else {
-            holder.badge.setBackgroundResource(R.color.badge_opened);
+        if (subscriptionType != null) {
+            switch (subscriptionType) {
+                case Subscription.INTENT_OBSERVER:
+                    holder.badge.setBackgroundResource(R.color.badge_observer);
+                    break;
+                case Subscription.INTENT_PARTICIPANT:
+                    holder.badge.setBackgroundResource(R.color.badge_participant);
+                    break;
+                default:
+                    holder.badge.setBackgroundResource(R.color.badge_opened);
+                    break;
+            }
         }
     }
 
@@ -80,15 +86,15 @@ public class TournamentPublishedListAdapter extends RecyclerView.Adapter<Tournam
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener {
-        Context context;
-        TextView beginDate;
-        TextView fullName;
-        TextView location;
+        final Context context;
+        final TextView beginDate;
+        final TextView fullName;
+        final TextView location;
         TextView director;
-        View badge;
-        View rootView;
+        final View badge;
+        final View rootView;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             context = itemView.getContext();
             beginDate = itemView.findViewById(R.id.begin_date);
@@ -100,7 +106,7 @@ public class TournamentPublishedListAdapter extends RecyclerView.Adapter<Tournam
             itemView.setOnCreateContextMenuListener(this);
         }
 
-        public Context getContext() {
+        Context getContext() {
             return context;
         }
 

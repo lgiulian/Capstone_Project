@@ -2,6 +2,7 @@ package com.crilu.gothandroid;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,37 +25,37 @@ public class ResultsFragment extends Fragment {
 
     private ResultViewModel mResultViewModel;
     private List<Vector<String>> mGames;
-    private TableView<Vector<String>> mGamesTable;
     private TableAdapter<Vector<String>> mGamesAdapter;
 
     public ResultsFragment() {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_results, container, false);
 
-        mResultViewModel = ViewModelProviders.of(getActivity()).get(ResultViewModel.class);
-        mGames = mResultViewModel.getGames();
+        if (getActivity() != null) {
+            mResultViewModel = ViewModelProviders.of(getActivity()).get(ResultViewModel.class);
+            mGames = mResultViewModel.getGames();
 
-        String[] tableHeaders = { getString(R.string.games_header_table),
-                getString(R.string.games_header_white),
-                getString(R.string.games_header_black),
-                getString(R.string.games_header_hd),
-                getString(R.string.games_header_result)};
-        mGamesTable = rootView.findViewById(R.id.results_table);
-        mGamesTable.setHeaderAdapter(new SimpleTableHeaderAdapter(getContext(), tableHeaders));
-        mGamesAdapter = new TableAdapter<>(getContext(), mGames);
+            String[] tableHeaders = {getString(R.string.games_header_table),
+                    getString(R.string.games_header_white),
+                    getString(R.string.games_header_black),
+                    getString(R.string.games_header_hd),
+                    getString(R.string.games_header_result)};
+            TableView<Vector<String>> mGamesTable = rootView.findViewById(R.id.results_table);
+            mGamesTable.setHeaderAdapter(new SimpleTableHeaderAdapter(getContext(), tableHeaders));
+            mGamesAdapter = new TableAdapter<>(getContext(), mGames);
 
-        TableColumnWeightModel columnModel = new TableColumnWeightModel(5);
-        columnModel.setColumnWeight(1, 2);
-        columnModel.setColumnWeight(2, 2);
-        mGamesTable.setColumnModel(columnModel);
+            TableColumnWeightModel columnModel = new TableColumnWeightModel(5);
+            columnModel.setColumnWeight(1, 2);
+            columnModel.setColumnWeight(2, 2);
+            mGamesTable.setColumnModel(columnModel);
 
-        mGamesTable.setDataAdapter(mGamesAdapter);
-        mGamesTable.addDataClickListener(new TableClickListener());
-
+            mGamesTable.setDataAdapter(mGamesAdapter);
+            mGamesTable.addDataClickListener(new TableClickListener());
+        }
         return rootView;
     }
 
@@ -65,10 +66,6 @@ public class ResultsFragment extends Fragment {
             // mimic clicking on result column
             mResultViewModel.getGamesResults().tblGamesMousePressed(rowIndex, GamesResults.RESULT_COL);
         }
-    }
-
-    public void setTables(List<Vector<String>> games) {
-        this.mGames = games;
     }
 
     public void updateGames() {

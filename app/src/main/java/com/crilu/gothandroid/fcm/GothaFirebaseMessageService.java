@@ -10,7 +10,6 @@ import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 
 import com.crilu.gothandroid.GothandroidApplication;
-import com.crilu.gothandroid.MainActivity;
 import com.crilu.gothandroid.MessageActivity;
 import com.crilu.gothandroid.R;
 import com.crilu.gothandroid.data.MessageDao;
@@ -54,7 +53,6 @@ public class GothaFirebaseMessageService extends FirebaseMessagingService {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 
-        String command = data.get(JSON_KEY_COMMAND);
         String tournamentName = data.get(JSON_KEY_TOURNAMENT_NAME);
         String message = data.get(JSON_KEY_MESSAGE);
         String messageTrimmed = message;
@@ -78,7 +76,9 @@ public class GothaFirebaseMessageService extends FirebaseMessagingService {
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+        if (notificationManager != null) {
+            notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+        }
 
         MessageDao.insertMessage(getApplicationContext(), title, message);
     }

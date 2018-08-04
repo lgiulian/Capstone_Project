@@ -12,7 +12,7 @@ import java.util.Vector;
 
 public class ResultViewModel extends AndroidViewModel {
 
-    private GamesResults mGamesResults;
+    private final GamesResults mGamesResults;
 
     public ResultViewModel(@NonNull Application application) {
         super(application);

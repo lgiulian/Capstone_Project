@@ -4,8 +4,6 @@
     android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingEnd="@dimen/default_left_right_padding"
-    android:paddingRight="@dimen/default_left_right_padding"
     android:background="@drawable/list_color_selector">
 
     <View
@@ -16,7 +14,8 @@
         android:layout_alignBottom="@id/begin_date"
         android:layout_alignTop="@id/full_name"
         android:layout_centerHorizontal="true"
-        android:background="@color/badge_opened"/>
+        android:background="@color/badge_opened"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/full_name"
@@ -28,7 +27,9 @@
         android:layout_marginLeft="@dimen/default_margin"
         android:layout_toRightOf="@+id/badge_view"
         android:textSize="@dimen/item_list_text_size"
-        tools:text="Full name"/>
+        tools:text="Full name"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_toEndOf="@+id/badge_view" />
 
     <TextView
         android:id="@+id/begin_date"
@@ -39,7 +40,9 @@
         android:paddingBottom="@dimen/default_top_bottom_padding"
         android:layout_toRightOf="@+id/badge_view"
         android:textStyle="italic"
-        tools:text="2018 May 5"/>
+        tools:text="2018 May 5"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_toEndOf="@+id/badge_view" />
 
     <TextView
         android:id="@+id/location"

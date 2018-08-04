@@ -10,7 +10,6 @@
     <string name="twitter_consumer_secret" translatable="false">YOUR_CONSUMER_SECRET</string>
 
     <string name="save">Save</string>
-    <string name="publish">Publish</string>
     <string name="export">Export</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -24,12 +23,7 @@
     <string name="menu_drawer_tournament_options">Tournament Options</string>
     <string name="menu_drawer_game_options">Game Options</string>
     <string name="menu_drawer_save_locally">Save locally</string>
-    <string name="menu_drawer_import">Import</string>
-    <string name="menu_drawer_tools">Tools</string>
     <string name="menu_drawer_communicate">Communicate</string>
-    <string name="menu_drawer_share">Share</string>
-    <string name="menu_drawer_publish">Publish</string>
-    <string name="menu_drawer_my_tournaments">My Tournaments</string>
     <string name="menu_drawer_my_account">My Account</string>
     <string name="menu_drawer_players_manager">Player Registration</string>
     <string name="menu_drawer_pair">Pair</string>
@@ -82,7 +76,6 @@
 
     <!-- Message and Notification Strings -->
     <string name="notification_message">"%1$s update"</string>
-    <string name="menu_drawer_publish_results">Publish Results</string>
 
     <string name="title_activity_myAccount">My Account</string>
     <string name="ffg_lic_hint">FFG LIC</string>
@@ -96,7 +89,7 @@
     <string name="send_to_egd">Upload profile photo</string>
     <string name="login_to_gotha">Login to Gotha</string>
     <string name="you_are_logged_in_now">You are logged in now</string>
-    <string name="error_logging_in">Error loggin in. Please try again later.</string>
+    <string name="error_logging_in">Error logging in. Please try again later.</string>
     <string name="logout_from_gotha">Logout from Gotha</string>
     <string name="you_are_logged_out_now">Logged out successfully</string>
     <string name="no_currently_opened_tournament">No currently opened tournament</string>
@@ -113,9 +106,6 @@
 
     <!-- Strings related to Notification Enabled preference -->
     <string name="pref_enable_notifications_key" translatable="false">enable_notifications</string>
-    <string name="pref_enable_notifications_label">Tournament Notifications</string>
-    <string name="pref_enable_notifications_true">Enabled</string>
-    <string name="pref_enable_notifications_false">Not Enabled</string>
     <string name="pref_latest_known_published_tournament" translatable="false">latest_known_published_tournament</string>
     <string name="pref_user_first_name" translatable="false">user_first_name</string>
     <string name="pref_user_last_name" translatable="false">user_last_name</string>
@@ -127,7 +117,6 @@
     <string name="select_the_action">Select The Action</string>
     <string name="open">Open</string>
     <string name="edit">Edit</string>
-    <string name="delete">Delete</string>
     <string name="publish_tournament">Publish tournament</string>
     <string name="save_and_upload_tournament">Save and upload tournament</string>
     <string name="publish_results">Publish results</string>
@@ -138,7 +127,6 @@
     <!-- Main screen -->
     <string name="no_tournament_selected">No tournament selected</string>
     <string name="tournament_not_published">This tournament is not published yet</string>
-    <string name="subscription_you_are_not_loggedin">Subscription failed. You are not logged in.</string>
     <string name="tournament_published">The tournament was published</string>
     <string name="tournament_publish_error">Publishing failed</string>
     <string name="tournament_saved_and_uploaded">The tournament was saved and uploaded</string>
@@ -216,7 +204,7 @@
     <string name="criterion_3">Third by</string>
     <string name="criterion_4">Fourth by</string>
     <string name="main_criteria">Main criteria</string>
-    <string name="inside_a_goup_use_a_seeding_system">Inside a goup, use a seeding system</string>
+    <string name="inside_a_group_use_a_seeding_system">Inside a group, use a seeding system</string>
     <string name="earlier_rounds_up_to_round">Earlier rounds up to round</string>
     <string name="earlier_rounds">Earlier rounds</string>
     <string name="add_a_sorting_on_rating">Add a sorting on rating</string>
@@ -226,7 +214,7 @@
     <string name="later_rounds">Later rounds</string>
     <string name="when_pairing_players_from_different_groups_is_necessary">When pairing players from different groups is necessary:</string>
     <string name="avoid_drawing_up_down_a_player_twice_in_the_same_sense">Avoid drawing up/down a player twice in the same sense</string>
-    <string name="compesate_a_previous_draw_up_down_by_a_draw_down_up">Compesate a previous Draw up/down by a Draw down/up</string>
+    <string name="compensate_a_previous_draw_up_down_by_a_draw_down_up">Compensate a previous Draw up/down by a Draw down/up</string>
     <string name="then_preferably_choose">Then, preferably choose:</string>
     <string name="the_player_in_the_upper_group">the player in the upper group</string>
     <string name="in_the_top_of_the_group">in the top of the group</string>
@@ -263,6 +251,5 @@
     <string name="tournament_results">Tournament results</string>
 
     <!-- Misc -->
-    <string name="not_implemented_yet">Not implemented yet</string>
     <string name="settings">Settings</string>
 </resources>

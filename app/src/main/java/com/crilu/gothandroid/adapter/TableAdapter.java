@@ -11,17 +11,8 @@ import java.util.List;
 import java.util.Vector;
 
 import de.codecrafters.tableview.TableDataAdapter;
-import timber.log.Timber;
 
 public class TableAdapter<P> extends TableDataAdapter<Vector<String>> {
-
-    private int paddingLeft = 20;
-    private int paddingTop = 15;
-    private int paddingRight = 20;
-    private int paddingBottom = 15;
-    private int textSize = 14;
-    private int typeface = Typeface.NORMAL;
-    private int textColor = 0x99000000;
 
     public TableAdapter(Context context, List<Vector<String>> data) {
         super(context, data);
@@ -39,9 +30,16 @@ public class TableAdapter<P> extends TableDataAdapter<Vector<String>> {
     private View renderCell(String textToShow) {
         //Timber.d("textToShow = %s", textToShow);
         final TextView textView = new TextView(getContext());
+        int paddingBottom = 15;
+        int paddingRight = 20;
+        int paddingTop = 15;
+        int paddingLeft = 20;
         textView.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
+        int typeface = Typeface.NORMAL;
         textView.setTypeface(textView.getTypeface(), typeface);
+        int textSize = 14;
         textView.setTextSize(textSize);
+        int textColor = 0x99000000;
         textView.setTextColor(textColor);
         textView.setSingleLine();
         textView.setEllipsize(TextUtils.TruncateAt.END);

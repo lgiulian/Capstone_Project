@@ -48,11 +48,11 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        TextView messageDate;
-        TextView title;
-        TextView message;
+        final TextView messageDate;
+        final TextView title;
+        final TextView message;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             messageDate = itemView.findViewById(R.id.message_date);
             title = itemView.findViewById(R.id.title);

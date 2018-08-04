@@ -17,7 +17,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,7 +25,6 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -70,17 +68,12 @@ import static com.crilu.gothandroid.GothandroidApplication.TOURNAMENT_DOC_REF_PA
 public class MainActivity extends AppCompatAdActivity
         implements NavigationView.OnNavigationItemSelectedListener, TournamentPublishedListAdapter.OnTournamentClickListener {
 
-    private FirebaseAuth mAuth;
     private FirebaseUser mCurrentUser;
-
-    private TournamentsViewModel mModel;
 
     private CoordinatorLayout mCoordinatorLayout;
     private TextView mTournamentName;
-    private ImageView mProfilePhoto;
     private List<Tournament> mPublishedTournament = new ArrayList<>();
     private TournamentPublishedListAdapter mAdapter;
-    private RecyclerView mRecyclerView;
     private String mRefreshedToken;
 
     @Override
@@ -112,8 +105,7 @@ public class MainActivity extends AppCompatAdActivity
 
         mCoordinatorLayout = findViewById(R.id.coordinator_layout);
         mTournamentName = navigationView.getHeaderView(0).findViewById(R.id.tournament_name);
-        mProfilePhoto = navigationView.getHeaderView(0).findViewById(R.id.imageView);
-        mRecyclerView = findViewById(R.id.tournaments_list_view);
+        RecyclerView mRecyclerView = findViewById(R.id.tournaments_list_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(),
@@ -135,14 +127,14 @@ public class MainActivity extends AppCompatAdActivity
     }
 
     private void setupViewModel() {
-        mAuth = FirebaseAuth.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
         Timber.d("Getting mCurrentUser");
         mCurrentUser = mAuth.getCurrentUser();
         if (mCurrentUser != null) {
             Timber.d("Setting current user");
             GothandroidApplication.setCurrentUser(mCurrentUser.getUid());
         }
-        mModel = ViewModelProviders.of(this).get(TournamentsViewModel.class);
+        TournamentsViewModel mModel = ViewModelProviders.of(this).get(TournamentsViewModel.class);
         final Observer<List<Tournament>> listObserver = new Observer<List<Tournament>>() {
             @Override
             public void onChanged(@Nullable final List<Tournament> newList) {
@@ -165,7 +157,7 @@ public class MainActivity extends AppCompatAdActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -182,7 +174,6 @@ public class MainActivity extends AppCompatAdActivity
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         int position = mAdapter.getSelectedItemForContextMenu();
         Tournament selectedTournament = mPublishedTournament.get(position);
         switch (item.getItemId()) {
@@ -190,7 +181,7 @@ public class MainActivity extends AppCompatAdActivity
                 openTournament(selectedTournament);
                 return true;
             case R.id.edit:
-                editTournament(selectedTournament);
+                editTournament();
                 return true;
             case R.id.publish_results:
                 publishResultsOnFirestore(selectedTournament);
@@ -232,26 +223,35 @@ public class MainActivity extends AppCompatAdActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_new) {
-            createNewTournament();
-        } else if (id == R.id.nav_players_manager) {
-            managePlayers();
-        } else if (id == R.id.nav_pair) {
-            pair();
-        } else if (id == R.id.nav_results) {
-            startActivity(new Intent(this, ResultActivity.class));
-        } else if (id == R.id.nav_tournament_options) {
-            tournamentSettings();
-        } else if (id == R.id.nav_game_options) {
-            gamesSettings();
-        } else if (id == R.id.nav_my_account) {
-            myAccount();
-        } else if (id == R.id.nav_message) {
-            startActivity(new Intent(this, MessageActivity.class));
+        switch (id) {
+            case R.id.nav_new:
+                createNewTournament();
+                break;
+            case R.id.nav_players_manager:
+                managePlayers();
+                break;
+            case R.id.nav_pair:
+                pair();
+                break;
+            case R.id.nav_results:
+                startActivity(new Intent(this, ResultActivity.class));
+                break;
+            case R.id.nav_tournament_options:
+                tournamentSettings();
+                break;
+            case R.id.nav_game_options:
+                gamesSettings();
+                break;
+            case R.id.nav_my_account:
+                myAccount();
+                break;
+            case R.id.nav_message:
+                startActivity(new Intent(this, MessageActivity.class));
+                break;
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -483,7 +483,7 @@ public class MainActivity extends AppCompatAdActivity
         });
     }
 
-    private void editTournament(Tournament selectedTournament) {
+    private void editTournament() {
         tournamentSettings();
     }
 

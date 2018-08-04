@@ -21,7 +21,7 @@ public abstract class AppCompatAdActivity extends AppCompatActivity {
         initAds();
     }
 
-    public void initAds() {
+    private void initAds() {
         MobileAds.initialize(this, getString(R.string.admob_app_id));
         mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId(getString(R.string.banner_ad_unit_id));
@@ -36,7 +36,7 @@ public abstract class AppCompatAdActivity extends AppCompatActivity {
         });
     }
 
-    public void displayAds() {
+    void displayAds() {
         if (mInterstitialAd.isLoaded()) {
             mInterstitialAd.show();
         } else {

@@ -39,6 +39,7 @@
 
                 <AutoCompleteTextView
                     android:id="@+id/player_name"
+                    android:hint="@string/players_manager_player_label"
                     android:layout_width="match_parent"
                     style="@style/TextInputRegularStyle"/>
             </LinearLayout>

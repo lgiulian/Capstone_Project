@@ -1,5 +1,6 @@
 package com.crilu.gothandroid;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
@@ -53,10 +54,6 @@ import static com.crilu.gothandroid.utils.DateUtils.convertDateFormat2NewDateFor
 
 public class TournamentSettingsActivity extends AppCompatActivity {
 
-    private SectionsPagerAdapter mSectionsPagerAdapter;
-
-    private ViewPager mViewPager;
-
     private ActivityTournamentSettingsBinding mBinding;
     private TournamentOptionViewModel mTournamentOptionViewModel;
 
@@ -65,14 +62,16 @@ public class TournamentSettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_tournament_settings);
         setSupportActionBar(mBinding.toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = findViewById(R.id.container);
+        ViewPager mViewPager = findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         TabLayout tabLayout = findViewById(R.id.tabs);
@@ -123,7 +122,7 @@ public class TournamentSettingsActivity extends AppCompatActivity {
     }
 
     private void exportTournament() {
-
+        // FIXME: here I should update user on firestore
     }
 
     public static class GeneralFragment extends Fragment implements DatePickerDialog.OnDateSetListener, View.OnClickListener, TournamentOptions.OnTournamentOptionsListener, RadioGroup.OnCheckedChangeListener, CompoundButton.OnCheckedChangeListener, View.OnFocusChangeListener {
@@ -135,7 +134,7 @@ public class TournamentSettingsActivity extends AppCompatActivity {
         public GeneralFragment() {
         }
 
-        public static GeneralFragment newInstance() {
+        static GeneralFragment newInstance() {
             GeneralFragment fragment = new GeneralFragment();
             Bundle args = new Bundle();
             fragment.setArguments(args);
@@ -149,17 +148,16 @@ public class TournamentSettingsActivity extends AppCompatActivity {
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+        public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_tournament_settings_general, container, false);
 
             setUiListeners();
 
-            View rootView = mBinding.getRoot();
-            return rootView;
+            return mBinding.getRoot();
         }
 
-        public void setUiListeners() {
+        void setUiListeners() {
             customInitComponents();
             final TournamentOptions tournamentOptions = mTournamentOptionViewModel.getTournamentOptions();
             mBinding.tournamentName.setOnFocusChangeListener(this);
@@ -203,7 +201,7 @@ public class TournamentSettingsActivity extends AppCompatActivity {
             int roundNumber = 1;
             try {
                 roundNumber = Integer.valueOf(tournamentOptions.txfNumberOfRounds);
-            } catch (NumberFormatException ex) {}
+            } catch (NumberFormatException ignored) {}
             mBinding.numberOfRoundsSpinner.setSelection(roundNumber - 1);
 
             switch(gps.getGenMMS2ValueAbsent()){
@@ -237,7 +235,9 @@ public class TournamentSettingsActivity extends AppCompatActivity {
         }
 
         private void init() {
-            mTournamentOptionViewModel = ViewModelProviders.of(getActivity()).get(TournamentOptionViewModel.class);
+            if (getActivity() != null) {
+                mTournamentOptionViewModel = ViewModelProviders.of(getActivity()).get(TournamentOptionViewModel.class);
+            }
         }
 
         @Override
@@ -270,11 +270,13 @@ public class TournamentSettingsActivity extends AppCompatActivity {
 
         }
 
-        public void showDatePickerDialog(View view) {
+        void showDatePickerDialog(View view) {
             mCurrentDatePickerFieldId = view.getId();
             CreateTournamentActivity.DatePickerFragment newFragment = new CreateTournamentActivity.DatePickerFragment();
             newFragment.setCallback(this);
-            newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
+            if (getActivity() != null) {
+                newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
+            }
         }
 
         @Override
@@ -393,7 +395,7 @@ public class TournamentSettingsActivity extends AppCompatActivity {
         public HandicapFragment() {
         }
 
-        public static HandicapFragment newInstance() {
+        static HandicapFragment newInstance() {
             HandicapFragment fragment = new HandicapFragment();
             Bundle args = new Bundle();
             fragment.setArguments(args);
@@ -407,17 +409,16 @@ public class TournamentSettingsActivity extends AppCompatActivity {
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+        public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_tournament_settings_handicap, container, false);
 
             setUiListeners();
 
-            View rootView = mBinding.getRoot();
-            return rootView;
+            return mBinding.getRoot();
         }
 
-        public void setUiListeners() {
+        void setUiListeners() {
             customInitComponents();
             mBinding.noHandicap.setOnFocusChangeListener(this);
             mBinding.handicapCeiling.setOnFocusChangeListener(this);
@@ -427,6 +428,7 @@ public class TournamentSettingsActivity extends AppCompatActivity {
             mBinding.saveBtn.setOnClickListener(this);
         }
 
+        @SuppressLint("SetTextI18n")
         private void customInitComponents() {
             TournamentOptions tournamentOptions = mTournamentOptionViewModel.getTournamentOptions();
             HandicapParameterSet hps = tournamentOptions.getTournament().getTournamentParameterSet().getHandicapParameterSet();
@@ -447,7 +449,9 @@ public class TournamentSettingsActivity extends AppCompatActivity {
         }
 
         private void init() {
-            mTournamentOptionViewModel = ViewModelProviders.of(getActivity()).get(TournamentOptionViewModel.class);
+            if (getActivity() != null) {
+                mTournamentOptionViewModel = ViewModelProviders.of(getActivity()).get(TournamentOptionViewModel.class);
+            }
         }
 
         @Override
@@ -542,7 +546,7 @@ public class TournamentSettingsActivity extends AppCompatActivity {
         public PlacementFragment() {
         }
 
-        public static PlacementFragment newInstance() {
+        static PlacementFragment newInstance() {
             PlacementFragment fragment = new PlacementFragment();
             Bundle args = new Bundle();
             fragment.setArguments(args);
@@ -556,17 +560,16 @@ public class TournamentSettingsActivity extends AppCompatActivity {
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+        public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_tournament_settings_placement, container, false);
 
             setUiListeners();
 
-            View rootView = mBinding.getRoot();
-            return rootView;
+            return mBinding.getRoot();
         }
 
-        public void setUiListeners() {
+        void setUiListeners() {
             customInitComponents();
             mBinding.exportBtn.setOnClickListener(this);
             mBinding.saveBtn.setOnClickListener(this);
@@ -648,11 +651,13 @@ public class TournamentSettingsActivity extends AppCompatActivity {
             for (Vector<String> row: dataModel) {
                 values.add(row.get(0));
             }
-            return new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, values);
+            return new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_dropdown_item, values);
         }
 
         private void init() {
-            mTournamentOptionViewModel = ViewModelProviders.of(getActivity()).get(TournamentOptionViewModel.class);
+            if (getActivity() != null) {
+                mTournamentOptionViewModel = ViewModelProviders.of(getActivity()).get(TournamentOptionViewModel.class);
+            }
         }
 
         @Override
@@ -709,7 +714,7 @@ public class TournamentSettingsActivity extends AppCompatActivity {
         public PairingFragment() {
         }
 
-        public static PairingFragment newInstance() {
+        static PairingFragment newInstance() {
             PairingFragment fragment = new PairingFragment();
             Bundle args = new Bundle();
             fragment.setArguments(args);
@@ -723,17 +728,16 @@ public class TournamentSettingsActivity extends AppCompatActivity {
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+        public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_tournament_settings_pairing, container, false);
 
             setUiListeners();
 
-            View rootView = mBinding.getRoot();
-            return rootView;
+            return mBinding.getRoot();
         }
 
-        public void setUiListeners() {
+        void setUiListeners() {
             customInitComponents();
             mBinding.earlierRoundsUpTo.setOnFocusChangeListener(this);
             mBinding.addSortingRatingCkb.setOnCheckedChangeListener(this);
@@ -752,6 +756,7 @@ public class TournamentSettingsActivity extends AppCompatActivity {
             mBinding.saveBtn.setOnClickListener(this);
         }
 
+        @SuppressLint("SetTextI18n")
         private void customInitComponents() {
             TournamentOptions tournamentOptions = mTournamentOptionViewModel.getTournamentOptions();
             TournamentInterface tournament = tournamentOptions.getTournament();
@@ -805,7 +810,9 @@ public class TournamentSettingsActivity extends AppCompatActivity {
         }
 
         private void init() {
-            mTournamentOptionViewModel = ViewModelProviders.of(getActivity()).get(TournamentOptionViewModel.class);
+            if (getActivity() != null) {
+                mTournamentOptionViewModel = ViewModelProviders.of(getActivity()).get(TournamentOptionViewModel.class);
+            }
         }
 
         @Override
@@ -939,9 +946,9 @@ public class TournamentSettingsActivity extends AppCompatActivity {
         }
     }
 
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
+        SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 

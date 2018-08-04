@@ -9,7 +9,7 @@ import com.crilu.opengotha.model.TournamentOptions;
 
 public class TournamentOptionViewModel extends AndroidViewModel {
 
-    private TournamentOptions mTournamentOptions;
+    private final TournamentOptions mTournamentOptions;
 
     public TournamentOptionViewModel(@NonNull Application application) {
         super(application);

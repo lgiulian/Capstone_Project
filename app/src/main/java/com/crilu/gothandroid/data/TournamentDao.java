@@ -52,23 +52,25 @@ public class TournamentDao {
                 null,
                 null,
                 GothaContract.TournamentEntry.COLUMN_BEGIN_DATE + " DESC");
-        while (cursor.moveToNext()) {
-            Tournament tournament = new Tournament();
-            tournament.setId(cursor.getLong(cursor.getColumnIndex(GothaContract.TournamentEntry._ID)));
-            tournament.setIdentity(cursor.getString(cursor.getColumnIndex(GothaContract.TournamentEntry.COLUMN_IDENTITY)));
-            tournament.setBeginDate(new Date(cursor.getLong(cursor.getColumnIndex(GothaContract.TournamentEntry.COLUMN_BEGIN_DATE))));
-            tournament.setContent(cursor.getString(cursor.getColumnIndex(GothaContract.TournamentEntry.COLUMN_CONTENT)));
-            tournament.setCreator(cursor.getString(cursor.getColumnIndex(GothaContract.TournamentEntry.COLUMN_CREATOR)));
-            tournament.setDirector(cursor.getString(cursor.getColumnIndex(GothaContract.TournamentEntry.COLUMN_DIRECTOR)));
-            tournament.setFullName(cursor.getString(cursor.getColumnIndex(GothaContract.TournamentEntry.COLUMN_FULL_NAME)));
-            tournament.setLocation(cursor.getString(cursor.getColumnIndex(GothaContract.TournamentEntry.COLUMN_LOCATION)));
-            tournament.setShortName(cursor.getString(cursor.getColumnIndex(GothaContract.TournamentEntry.COLUMN_SHORT_NAME)));
-            tournament.setCreationDate(new Date(cursor.getLong(cursor.getColumnIndex(GothaContract.TournamentEntry.COLUMN_CREATION_DATE))));
-            tournament.setLastModificationDate(new Date(cursor.getLong(cursor.getColumnIndex(GothaContract.TournamentEntry.COLUMN_LAST_MODIFICATION_DATE))));
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                Tournament tournament = new Tournament();
+                tournament.setId(cursor.getLong(cursor.getColumnIndex(GothaContract.TournamentEntry._ID)));
+                tournament.setIdentity(cursor.getString(cursor.getColumnIndex(GothaContract.TournamentEntry.COLUMN_IDENTITY)));
+                tournament.setBeginDate(new Date(cursor.getLong(cursor.getColumnIndex(GothaContract.TournamentEntry.COLUMN_BEGIN_DATE))));
+                tournament.setContent(cursor.getString(cursor.getColumnIndex(GothaContract.TournamentEntry.COLUMN_CONTENT)));
+                tournament.setCreator(cursor.getString(cursor.getColumnIndex(GothaContract.TournamentEntry.COLUMN_CREATOR)));
+                tournament.setDirector(cursor.getString(cursor.getColumnIndex(GothaContract.TournamentEntry.COLUMN_DIRECTOR)));
+                tournament.setFullName(cursor.getString(cursor.getColumnIndex(GothaContract.TournamentEntry.COLUMN_FULL_NAME)));
+                tournament.setLocation(cursor.getString(cursor.getColumnIndex(GothaContract.TournamentEntry.COLUMN_LOCATION)));
+                tournament.setShortName(cursor.getString(cursor.getColumnIndex(GothaContract.TournamentEntry.COLUMN_SHORT_NAME)));
+                tournament.setCreationDate(new Date(cursor.getLong(cursor.getColumnIndex(GothaContract.TournamentEntry.COLUMN_CREATION_DATE))));
+                tournament.setLastModificationDate(new Date(cursor.getLong(cursor.getColumnIndex(GothaContract.TournamentEntry.COLUMN_LAST_MODIFICATION_DATE))));
 
-            tournaments.add(tournament);
+                tournaments.add(tournament);
+            }
+            cursor.close();
         }
-        cursor.close();
         return tournaments;
     }
 
@@ -105,7 +107,7 @@ public class TournamentDao {
     }
 
     @NonNull
-    public static Tournament getTournamentFromCursor(Cursor cursor) {
+    private static Tournament getTournamentFromCursor(Cursor cursor) {
         Tournament tournament;
         tournament = new Tournament();
         tournament.setId(cursor.getLong(cursor.getColumnIndex(GothaContract.TournamentEntry._ID)));

@@ -44,14 +44,11 @@ import timber.log.Timber;
 public class MyAccount extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private static final int RC_SIGN_IN = 4212;
-    private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int REQUEST_TAKE_PHOTO = 2;
 
     private ActivityMyAccountBinding mBinding;
     private ArrayAdapter<RatedPlayer> mAdapter;
-    private RatedPlayer mEgdPlayer;
     private String mCurrentPhotoPath;
-    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +57,9 @@ public class MyAccount extends AppCompatActivity implements AdapterView.OnItemCl
 
         setSupportActionBar(mBinding.toolbar);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         initComponents();
     }
@@ -72,7 +71,7 @@ public class MyAccount extends AppCompatActivity implements AdapterView.OnItemCl
     }
 
     private void updateUI() {
-        mAuth = FirebaseAuth.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
         if (mAuth != null && mAuth.getCurrentUser() != null) {
             mBinding.loginBtn.setEnabled(false);
             mBinding.logoutBtn.setEnabled(true);
@@ -85,7 +84,7 @@ public class MyAccount extends AppCompatActivity implements AdapterView.OnItemCl
     private void initComponents() {
         RatingList ratingList = GothandroidApplication.getRatingList();
         if (ratingList != null) {
-            mAdapter = new ArrayAdapter<RatedPlayer>(this,
+            mAdapter = new ArrayAdapter<>(this,
                     android.R.layout.simple_dropdown_item_1line, ratingList.getALRatedPlayers());
             mBinding.egfPlayer.setAdapter(mAdapter);
             mBinding.egfPlayer.setOnItemClickListener(this);
@@ -175,8 +174,10 @@ public class MyAccount extends AppCompatActivity implements AdapterView.OnItemCl
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        mEgdPlayer = mAdapter.getItem(position);
-        mBinding.egfPlayer.setText(mEgdPlayer.getEgfPin());
+        RatedPlayer mEgdPlayer = mAdapter.getItem(position);
+        if (mEgdPlayer != null) {
+            mBinding.egfPlayer.setText(mEgdPlayer.getEgfPin());
+        }
     }
 
     @Override
@@ -189,11 +190,13 @@ public class MyAccount extends AppCompatActivity implements AdapterView.OnItemCl
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                Timber.d("user=%s, uid=%s", user, user.getUid());
-                GothandroidApplication.setCurrentUser(user.getUid());
-                saveUserOnFirestore(user.getUid());
-                Snackbar.make(mBinding.coordinatorLayout, getString(R.string.you_are_logged_in_now), Snackbar.LENGTH_LONG).show();
-                updateUI();
+                if (user != null) {
+                    Timber.d("user=%s, uid=%s", user, user.getUid());
+                    GothandroidApplication.setCurrentUser(user.getUid());
+                    saveUserOnFirestore(user.getUid());
+                    Snackbar.make(mBinding.coordinatorLayout, getString(R.string.you_are_logged_in_now), Snackbar.LENGTH_LONG).show();
+                    updateUI();
+                }
             } else {
                 // Sign in failed. If response is null the user canceled the
                 // sign-in flow using the back button. Otherwise check
@@ -248,7 +251,7 @@ public class MyAccount extends AppCompatActivity implements AdapterView.OnItemCl
         "Thank you.");
         shareIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {"aldo.podavini@europeangodatabase.eu"});
 
-        ArrayList<Uri> uris = new ArrayList<Uri>();
+        ArrayList<Uri> uris = new ArrayList<>();
         File shareFile = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "profile_photo.png");
         storeImage(getPic(80, 115), shareFile);
         Uri contentUri = FileProvider.getUriForFile(this, "com.crilu.gothandroid.fileprovider", shareFile);

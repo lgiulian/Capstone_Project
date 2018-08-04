@@ -11,7 +11,6 @@ import com.crilu.gothandroid.data.GothaPreferences;
 import com.crilu.gothandroid.data.TournamentDao;
 import com.crilu.gothandroid.model.firestore.Subscription;
 import com.crilu.gothandroid.model.firestore.Tournament;
-import com.crilu.gothandroid.utils.NotificationUtils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -23,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 
 import timber.log.Timber;
 
-public class GothaSyncTask {
+class GothaSyncTask {
 
     /**
      * Performs the network request for future tournaments and
@@ -65,8 +64,11 @@ public class GothaSyncTask {
                         Uri uri = gothaContentResolver.insert(
                                 GothaContract.TournamentEntry.CONTENT_URI,
                                 cv);
-                        String id = uri.getPathSegments().get(1);
-                        fetchSubscriptions(context, Long.valueOf(id), tournamentIdentity, gothaContentResolver, tournamentSubscriptions);
+                        String id = null;
+                        if (uri != null) {
+                            id = uri.getPathSegments().get(1);
+                        }
+                        fetchSubscriptions(Long.valueOf(id), tournamentIdentity, gothaContentResolver, tournamentSubscriptions);
                     }
 
                     Timber.d("Tournaments sync with success");
@@ -78,7 +80,7 @@ public class GothaSyncTask {
         });
     }
 
-    private static void fetchSubscriptions(final Context context, final Long tournamentId, final String tournamentIdentity, final ContentResolver gothaContentResolver, final List<Subscription> tournamentSubscriptions) {
+    private static void fetchSubscriptions(final Long tournamentId, final String tournamentIdentity, final ContentResolver gothaContentResolver, final List<Subscription> tournamentSubscriptions) {
         TournamentDao.fetchSubscriptions(tournamentIdentity, new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {

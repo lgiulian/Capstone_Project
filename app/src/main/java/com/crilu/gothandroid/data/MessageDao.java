@@ -21,23 +21,25 @@ public class MessageDao {
                 null,
                 null,
                 GothaContract.MessageEntry.COLUMN_MESSAGE_DATE + " DESC");
-        while (cursor.moveToNext()) {
-            Message message = new Message();
-            message.setId(cursor.getLong(cursor.getColumnIndex(GothaContract.MessageEntry._ID)));
-            message.setTournamentIdentity(cursor.getString(cursor.getColumnIndex(GothaContract.MessageEntry.COLUMN_TOURNAMENT_IDENTITY)));
-            message.setMessageDate(new Date(cursor.getLong(cursor.getColumnIndex(GothaContract.MessageEntry.COLUMN_MESSAGE_DATE))));
-            message.setTitle(cursor.getString(cursor.getColumnIndex(GothaContract.MessageEntry.COLUMN_TITLE)));
-            message.setMessage(cursor.getString(cursor.getColumnIndex(GothaContract.MessageEntry.COLUMN_MESSAGE)));
-            message.setCommand(cursor.getString(cursor.getColumnIndex(GothaContract.MessageEntry.COLUMN_COMMAND)));
-            message.setEgfPin(cursor.getString(cursor.getColumnIndex(GothaContract.MessageEntry.COLUMN_EGF_PIN)));
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                Message message = new Message();
+                message.setId(cursor.getLong(cursor.getColumnIndex(GothaContract.MessageEntry._ID)));
+                message.setTournamentIdentity(cursor.getString(cursor.getColumnIndex(GothaContract.MessageEntry.COLUMN_TOURNAMENT_IDENTITY)));
+                message.setMessageDate(new Date(cursor.getLong(cursor.getColumnIndex(GothaContract.MessageEntry.COLUMN_MESSAGE_DATE))));
+                message.setTitle(cursor.getString(cursor.getColumnIndex(GothaContract.MessageEntry.COLUMN_TITLE)));
+                message.setMessage(cursor.getString(cursor.getColumnIndex(GothaContract.MessageEntry.COLUMN_MESSAGE)));
+                message.setCommand(cursor.getString(cursor.getColumnIndex(GothaContract.MessageEntry.COLUMN_COMMAND)));
+                message.setEgfPin(cursor.getString(cursor.getColumnIndex(GothaContract.MessageEntry.COLUMN_EGF_PIN)));
 
-            messages.add(message);
+                messages.add(message);
+            }
+            cursor.close();
         }
-        cursor.close();
         return messages;
     }
 
-    public static void insertMessage(Context context, Message message) {
+    private static void insertMessage(Context context, Message message) {
         ContentResolver gothaContentResolver = context.getContentResolver();
         ContentValues values = new ContentValues();
         values.put(GothaContract.MessageEntry.COLUMN_MESSAGE_DATE, message.getMessageDate().getTime());

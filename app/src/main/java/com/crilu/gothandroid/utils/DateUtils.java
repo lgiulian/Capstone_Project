@@ -7,7 +7,7 @@ import java.util.Date;
 public class DateUtils {
 
     public static String convertDateFormat2NewDateFormat(String origDate, DateFormat origDateFormat, DateFormat newDateFormat) {
-        String newDateStr = null;
+        String newDateStr;
         Date date = null;
         try {
             date = origDateFormat.parse(origDate);

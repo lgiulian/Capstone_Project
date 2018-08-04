@@ -22,7 +22,6 @@ import timber.log.Timber;
 public class PairActivity extends AppCompatActivity implements GamesPair.OnPairListener {
 
     private ActivityPairBinding mBinding;
-    private PairViewModel mPairViewModel;
     private GamesPair mGamesPair;
     private PairablePlayersFragment mPairablePlayersFragment;
     private TablesFragment mTablesFragment;
@@ -34,7 +33,9 @@ public class PairActivity extends AppCompatActivity implements GamesPair.OnPairL
 
         setSupportActionBar(mBinding.toolbar);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         init();
 
@@ -57,7 +58,7 @@ public class PairActivity extends AppCompatActivity implements GamesPair.OnPairL
     }
 
     private void init() {
-        mPairViewModel = ViewModelProviders.of(this).get(PairViewModel.class);
+        PairViewModel mPairViewModel = ViewModelProviders.of(this).get(PairViewModel.class);
         mGamesPair = mPairViewModel.getGamesPair();
 
         TournamentInterface tournament = GothandroidApplication.getGothaModelInstance().getTournament();

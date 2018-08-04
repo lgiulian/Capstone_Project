@@ -9,11 +9,9 @@
             android:icon="@drawable/ic_menu_add"
             android:title="@string/menu_drawer_new" />
         <item
-            android:id="@+id/nav_save_locally"
             android:icon="@drawable/ic_menu_save"
             android:title="@string/menu_drawer_save_locally" />
         <item
-            android:id="@+id/nav_open_unpublished"
             android:icon="@drawable/ic_menu_open"
             android:title="@string/menu_drawer_open_unpublished" />
         <item

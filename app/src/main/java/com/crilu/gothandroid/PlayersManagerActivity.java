@@ -5,7 +5,6 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -24,6 +23,7 @@ import java.util.Arrays;
 
 import de.codecrafters.tableview.model.TableColumnWeightModel;
 import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
+import timber.log.Timber;
 
 public class PlayersManagerActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, AdapterView.OnItemClickListener,
         Tournament.OnTournamentChangeListener, PlayersManager.OnPlayerRegistrationListener {
@@ -46,7 +46,9 @@ public class PlayersManagerActivity extends AppCompatActivity implements Adapter
 
         setSupportActionBar(mBinding.toolbar);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         init();
         initComponents();
@@ -73,7 +75,7 @@ public class PlayersManagerActivity extends AppCompatActivity implements Adapter
 
     private void initComponents() {
         RatingList ratingList = GothandroidApplication.getRatingList();
-        mAdapter = new ArrayAdapter<RatedPlayer>(this,
+        mAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_dropdown_item_1line, ratingList.getALRatedPlayers());
         mBinding.playerName.setAdapter(mAdapter);
         mBinding.playerName.setOnItemClickListener(this);
@@ -112,26 +114,28 @@ public class PlayersManagerActivity extends AppCompatActivity implements Adapter
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Log.d(TAG, "position " + position + " selected");
+        Timber.d("position " + position + " selected");
         RatedPlayer selectedPlayer = mAdapter.getItem(position);
         //int nbRounds = mPlayersManagerViewModel.getNumberOfRounds();
-        boolean[] participations = new boolean[Gotha.MAX_NUMBER_OF_ROUNDS];
-        Arrays.fill(participations, Boolean.TRUE);
-        mPlayersManager.register(selectedPlayer.getName(),
-                selectedPlayer.getFirstName(),
-                selectedPlayer.getCountry(),
-                selectedPlayer.getClub(),
-                selectedPlayer.getEgfPin(),
-                selectedPlayer.getFfgLicence(),
-                selectedPlayer.getFfgLicenceStatus(),
-                selectedPlayer.getAgaId(),
-                selectedPlayer.getAgaExpirationDate(),
-                selectedPlayer.getStrGrade(),
-                "FIN",
-                selectedPlayer.getStrRawRating(),
-                selectedPlayer.getStrRawRating(),
-                "0",
-                participations);
+        boolean[] participates = new boolean[Gotha.MAX_NUMBER_OF_ROUNDS];
+        Arrays.fill(participates, Boolean.TRUE);
+        if (selectedPlayer != null) {
+            mPlayersManager.register(selectedPlayer.getName(),
+                    selectedPlayer.getFirstName(),
+                    selectedPlayer.getCountry(),
+                    selectedPlayer.getClub(),
+                    selectedPlayer.getEgfPin(),
+                    selectedPlayer.getFfgLicence(),
+                    selectedPlayer.getFfgLicenceStatus(),
+                    selectedPlayer.getAgaId(),
+                    selectedPlayer.getAgaExpirationDate(),
+                    selectedPlayer.getStrGrade(),
+                    "FIN",
+                    selectedPlayer.getStrRawRating(),
+                    selectedPlayer.getStrRawRating(),
+                    "0",
+                    participates);
+        }
 
         mBinding.playerName.setText("");
     }

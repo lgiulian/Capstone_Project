@@ -6,6 +6,7 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.widget.DatePicker;
@@ -43,8 +44,9 @@ public class CreateTournamentActivity extends AppCompatAdActivity implements Dat
 
         setSupportActionBar(mBinding.toolbar);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         initComponents();
 
     }
@@ -139,6 +141,7 @@ public class CreateTournamentActivity extends AppCompatAdActivity implements Dat
 
         private DatePickerDialog.OnDateSetListener mCallback;
 
+        @NonNull
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             final Calendar c = Calendar.getInstance();
@@ -146,7 +149,7 @@ public class CreateTournamentActivity extends AppCompatAdActivity implements Dat
             int month = c.get(Calendar.MONTH);
             int day = c.get(Calendar.DAY_OF_MONTH);
 
-            return new DatePickerDialog(getContext(), mCallback, year, month, day);
+            return new DatePickerDialog(requireContext(), mCallback, year, month, day);
         }
 
         public void setCallback(DatePickerDialog.OnDateSetListener mCallback) {

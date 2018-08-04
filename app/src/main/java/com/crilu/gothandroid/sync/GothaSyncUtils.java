@@ -98,7 +98,9 @@ public class GothaSyncUtils {
                     startImmediateSync(context);
                 }
 
-                cursor.close();
+                if (cursor != null) {
+                    cursor.close();
+                }
             }
         });
     }
@@ -109,21 +111,9 @@ public class GothaSyncUtils {
      *
      * @param context The Context used to start the IntentService for the sync.
      */
-    public static void startImmediateSync(@NonNull final Context context) {
+    private static void startImmediateSync(@NonNull final Context context) {
         Intent intentToSyncImmediately = new Intent(context, GothaSyncIntentService.class);
         context.startService(intentToSyncImmediately);
-    }
-
-    public static ContentValues[] getTournamentValues(@NonNull List<Tournament> publishedTournament) {
-        ContentValues[] contentValues = new ContentValues[publishedTournament.size()];
-        int counter = 0;
-        for (Tournament tournament: publishedTournament) {
-            ContentValues values = getSingleTournamentContentValues(tournament);
-            contentValues[counter] = values;
-            counter++;
-        }
-
-        return contentValues;
     }
 
     @NonNull

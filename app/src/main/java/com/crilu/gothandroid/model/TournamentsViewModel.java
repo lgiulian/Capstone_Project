@@ -19,7 +19,7 @@ import timber.log.Timber;
 public class TournamentsViewModel extends AndroidViewModel {
 
     private MutableLiveData<List<Tournament>> mTournaments;
-    private ContentObserver mContentObserver;
+    private final ContentObserver mContentObserver;
 
     public TournamentsViewModel(@NonNull Application application) {
         super(application);
@@ -27,11 +27,6 @@ public class TournamentsViewModel extends AndroidViewModel {
         getTournaments().setValue(TournamentDao.getAllTournaments(application));
 
         mContentObserver = new ContentObserver(new Handler()) {
-            @Override
-            public boolean deliverSelfNotifications() {
-                return super.deliverSelfNotifications();
-            }
-
             @Override
             public void onChange(boolean selfChange) {
                 Timber.d("ContentObserver.onChange() called. Calling setValue on viewModel");

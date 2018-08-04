@@ -9,7 +9,7 @@ import com.crilu.opengotha.model.PlayersManager;
 import java.util.List;
 
 public class PlayersManagerViewModel extends ViewModel {
-    private PlayersManager mPlayersManager;
+    private final PlayersManager mPlayersManager;
 
     public PlayersManagerViewModel() {
         mPlayersManager = GothandroidApplication.getPlayersManagerInstance();
@@ -21,9 +21,5 @@ public class PlayersManagerViewModel extends ViewModel {
 
     public List<Player> getPlayersList() {
         return GothandroidApplication.getGothaModelInstance().getTournament().playersList();
-    }
-
-    public int getNumberOfRounds() {
-        return GothandroidApplication.getGothaModelInstance().getTournament().getTournamentParameterSet().getGeneralParameterSet().getNumberOfRounds();
     }
 }

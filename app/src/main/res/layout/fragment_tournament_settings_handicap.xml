@@ -39,14 +39,18 @@
                 android:layout_marginRight="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/no_handicap_tv"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:hint="@string/no_handicap_when_both_player_s_mms_above"
+                android:inputType="text" />
 
             <EditText
                 android:id="@+id/handicap_ceiling"
                 style="@style/TextInputRegularStyle"
                 android:layout_width="@dimen/default_input_width"
                 app:layout_constraintStart_toEndOf="@+id/handicap_ceiling_tv"
-                app:layout_constraintTop_toBottomOf="@+id/no_handicap" />
+                app:layout_constraintTop_toBottomOf="@+id/no_handicap"
+                android:hint="@string/handicap_ceiling"
+                android:inputType="text" />
 
             <TextView
                 android:id="@+id/handicap_based_on_tv"

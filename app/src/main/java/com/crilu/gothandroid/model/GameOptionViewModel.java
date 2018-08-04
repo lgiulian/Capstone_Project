@@ -9,7 +9,7 @@ import com.crilu.opengotha.model.GamesOptions;
 
 public class GameOptionViewModel extends AndroidViewModel {
 
-    private GamesOptions mGameOptions;
+    private final GamesOptions mGameOptions;
 
     public GameOptionViewModel(@NonNull Application application) {
         super(application);

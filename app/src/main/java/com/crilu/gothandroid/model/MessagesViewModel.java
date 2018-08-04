@@ -19,7 +19,7 @@ import timber.log.Timber;
 public class MessagesViewModel extends AndroidViewModel {
 
     private MutableLiveData<List<Message>> mMessages;
-    private ContentObserver mContentObserver;
+    private final ContentObserver mContentObserver;
 
     public MessagesViewModel(@NonNull Application application) {
         super(application);
@@ -27,11 +27,6 @@ public class MessagesViewModel extends AndroidViewModel {
         getMessages().setValue(MessageDao.getAllMessages(application));
 
         mContentObserver = new ContentObserver(new Handler()) {
-            @Override
-            public boolean deliverSelfNotifications() {
-                return super.deliverSelfNotifications();
-            }
-
             @Override
             public void onChange(boolean selfChange) {
                 Timber.d("ContentObserver.onChange() called. Calling setValue on viewModel");

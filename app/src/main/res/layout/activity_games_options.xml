@@ -62,6 +62,7 @@
                     style="@style/TextInputRegularStyle"
                     android:layout_width="@dimen/small_input_width"
                     android:hint="@string/goban_size"
+                    android:inputType="number"
                     app:layout_constraintStart_toEndOf="@+id/barrier1"
                     app:layout_constraintTop_toBottomOf="@+id/appBar" />
 
@@ -70,6 +71,7 @@
                     style="@style/TextInputRegularStyle"
                     android:layout_width="@dimen/small_input_width"
                     android:hint="@string/komi"
+                    android:inputType="numberDecimal"
                     app:layout_constraintStart_toEndOf="@+id/barrier1"
                     app:layout_constraintTop_toBottomOf="@+id/goban_size" />
 
@@ -100,6 +102,7 @@
                     style="@style/TextInputRegularStyle"
                     android:layout_width="@dimen/small_input_width"
                     android:hint="@string/basic_time_minutes"
+                    android:inputType="number"
                     app:layout_constraintStart_toEndOf="@+id/barrier2"
                     app:layout_constraintTop_toBottomOf="@+id/thinking_tv" />
 
@@ -147,7 +150,9 @@
                             android:layout_alignParentEnd="true"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:hint="@string/time_seconds" />
+                            android:hint="@string/time_seconds"
+                            android:inputType="number"
+                            />
                     </RelativeLayout>
 
                     <RadioButton
@@ -169,7 +174,9 @@
                             android:layout_alignParentLeft="true"
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
-                            android:hint="@string/time_seconds" />
+                            android:hint="@string/time_seconds"
+                            android:inputType="number"
+                            />
 
                         <TextView
                             android:id="@+id/canadian_moves_tv"
@@ -178,14 +185,16 @@
                             android:layout_centerVertical="true"
                             android:layout_toRightOf="@+id/canadian_moves"
                             android:text="@string/moves"
-                            android:layout_marginStart="0dp" />
+                            android:layout_marginStart="0dp"
+                            android:layout_toEndOf="@+id/canadian_moves" />
 
                         <TextView
                             android:id="@+id/canadian_time_seconds_tv"
                             style="@style/RegularLabelStyle"
                             android:layout_centerVertical="true"
                             android:layout_toLeftOf="@+id/canadian_time_seconds"
-                            android:text="@string/time_seconds" />
+                            android:text="@string/time_seconds"
+                            android:layout_toStartOf="@+id/canadian_time_seconds" />
 
                         <EditText
                             android:id="@+id/canadian_time_seconds"
@@ -194,7 +203,9 @@
                             android:layout_alignParentEnd="true"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:hint="@string/time_seconds" />
+                            android:hint="@string/time_seconds"
+                            android:inputType="number"
+                            />
                     </RelativeLayout>
 
                     <RadioButton
@@ -224,7 +235,9 @@
                             android:layout_alignParentEnd="true"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:hint="@string/bonus_time_seconds" />
+                            android:hint="@string/bonus_time_seconds"
+                            android:inputType="number"
+                            />
                     </RelativeLayout>
 
                 </RadioGroup>
@@ -232,7 +245,6 @@
                 <TextView
                     android:id="@+id/egf_class_tv"
                     style="@style/RegularLabelStyle"
-                    android:text="Clasa A"
                     android:textColor="@color/colorAccent"
                     android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                     app:layout_constraintEnd_toEndOf="parent"

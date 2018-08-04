@@ -76,6 +76,7 @@
                 android:id="@+id/tournament_name"
                 style="@style/TextInputRegularStyle"
                 android:hint="@string/tournament_name_label"
+                android:inputType="text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/barrier1"
                 app:layout_constraintTop_toBottomOf="@+id/tournament_details_tv" />
@@ -84,6 +85,7 @@
                 android:id="@+id/tournament_short_name"
                 style="@style/TextInputRegularStyle"
                 android:hint="@string/tournament_short_name_label"
+                android:inputType="text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/barrier1"
                 app:layout_constraintTop_toBottomOf="@+id/tournament_name" />
@@ -92,6 +94,7 @@
                 android:id="@+id/tournament_location"
                 style="@style/TextInputRegularStyle"
                 android:hint="@string/tournament_location"
+                android:inputType="text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/barrier1"
                 app:layout_constraintTop_toBottomOf="@+id/tournament_short_name" />
@@ -100,6 +103,7 @@
                 android:id="@+id/tournament_director"
                 style="@style/TextInputRegularStyle"
                 android:hint="@string/tournament_director"
+                android:inputType="text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/barrier1"
                 app:layout_constraintTop_toBottomOf="@+id/tournament_location" />
@@ -193,21 +197,24 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="0" />
+                    android:text="0"
+                    tools:ignore="HardcodedText" />
 
                 <RadioButton
                     android:id="@+id/nbwAbsentButton2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="½" />
+                    android:text="½"
+                    tools:ignore="HardcodedText"/>
 
                 <RadioButton
                     android:id="@+id/nbwAbsentButton3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="1" />
+                    android:text="1"
+                    tools:ignore="HardcodedText"/>
             </RadioGroup>
 
             <TextView
@@ -236,21 +243,24 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="0" />
+                    android:text="0"
+                    tools:ignore="HardcodedText"/>
 
                 <RadioButton
                     android:id="@+id/mmsAbsentButton2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="½" />
+                    android:text="½"
+                    tools:ignore="HardcodedText"/>
 
                 <RadioButton
                     android:id="@+id/mmsAbsentButton3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="1" />
+                    android:text="1"
+                    tools:ignore="HardcodedText"/>
             </RadioGroup>
 
             <TextView
@@ -279,21 +289,24 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="0" />
+                    android:text="0"
+                    tools:ignore="HardcodedText"/>
 
                 <RadioButton
                     android:id="@+id/nbwByeButton2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="½" />
+                    android:text="½"
+                    tools:ignore="HardcodedText"/>
 
                 <RadioButton
                     android:id="@+id/nbwByeButton3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="1" />
+                    android:text="1"
+                    tools:ignore="HardcodedText"/>
             </RadioGroup>
 
             <TextView
@@ -322,21 +335,24 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="0" />
+                    android:text="0"
+                    tools:ignore="HardcodedText"/>
 
                 <RadioButton
                     android:id="@+id/mmsByeButton2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="½" />
+                    android:text="½"
+                    tools:ignore="HardcodedText"/>
 
                 <RadioButton
                     android:id="@+id/mmsByeButton3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="1" />
+                    android:text="1"
+                    tools:ignore="HardcodedText" />
             </RadioGroup>
 
             <CheckBox
@@ -389,20 +405,26 @@
             <EditText
                 android:id="@+id/mcmahon_bar"
                 style="@style/TextInputRegularStyle"
+                android:hint="@string/mcmahon_bar_label"
                 app:layout_constraintStart_toEndOf="@+id/barrier2"
-                app:layout_constraintTop_toBottomOf="@+id/tournament_mcmahon_system_tv" />
+                app:layout_constraintTop_toBottomOf="@+id/tournament_mcmahon_system_tv"
+                android:inputType="text" />
 
             <EditText
                 android:id="@+id/mcmahon_floor"
                 style="@style/TextInputRegularStyle"
+                android:hint="@string/mcmahon_floor_label"
                 app:layout_constraintStart_toEndOf="@+id/barrier2"
-                app:layout_constraintTop_toBottomOf="@+id/mcmahon_bar" />
+                app:layout_constraintTop_toBottomOf="@+id/mcmahon_bar"
+                android:inputType="text"/>
 
             <EditText
                 android:id="@+id/mcmahon_zero"
                 style="@style/TextInputRegularStyle"
+                android:hint="@string/mcmahon_zero_label"
                 app:layout_constraintStart_toEndOf="@+id/barrier2"
-                app:layout_constraintTop_toBottomOf="@+id/mcmahon_floor" />
+                app:layout_constraintTop_toBottomOf="@+id/mcmahon_floor"
+                android:inputType="text"/>
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/save_btn"

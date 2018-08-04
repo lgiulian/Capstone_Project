@@ -33,7 +33,9 @@ public class ResultActivity extends AppCompatActivity implements GamesResults.Ga
 
         setSupportActionBar(mBinding.toolbar);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         init();
 

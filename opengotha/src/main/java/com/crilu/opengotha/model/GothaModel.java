@@ -32,7 +32,7 @@ public class GothaModel {
     public interface GothaListener {
 		void updateTitle();
 		void warnPreliminaryRegisteringStatus(String message);
-		void controlPannelModelUpdated();
+		void controlPanelModelUpdated();
 		void updateTime(String time);
 		void roundNumberChanged(int round);
         void onCurrentTournamentChanged();
@@ -204,7 +204,7 @@ public class GothaModel {
 
             controlPanelModel.add(row);
             for (GothaListener callback : mCallbacks) {
-    			callback.controlPannelModelUpdated();
+    			callback.controlPanelModelUpdated();
             }
         }
 

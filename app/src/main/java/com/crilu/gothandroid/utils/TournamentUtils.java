@@ -31,7 +31,7 @@ public class TournamentUtils {
         // First ensure the players are loaded and then make the registration
         FutureTask<RatingList> futureTask = new FutureTask<>(new Callable<RatingList>() {
             @Override
-            public RatingList call() throws Exception {
+            public RatingList call() {
                 RatingList ratingList = GothandroidApplication.getRatingList();
                 if (ratingList == null) {
                     ratingList = new RatingList(RatingList.TYPE_EGF, context.getResources().openRawResource(R.raw.egf_db));

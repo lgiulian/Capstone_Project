@@ -12,7 +12,7 @@ import java.util.Vector;
 
 public class PairViewModel extends AndroidViewModel {
 
-    private GamesPair mGamesPair;
+    private final GamesPair mGamesPair;
 
     public PairViewModel(@NonNull Application application) {
         super(application);

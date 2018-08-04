@@ -8,7 +8,6 @@ public class Subscription {
     public static final String INTENT_OBSERVER = "observer";
 
     public static final String STATE_ACTIVE = "active";
-    public static final String STATE_INACTIVE = "inactive";
 
     public static final String UID = "uid";
     public static final String EGF_PIN = "egfPin";

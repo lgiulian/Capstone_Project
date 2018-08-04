@@ -30,8 +30,7 @@ public class GothaPreferences {
     public static long getLatestKnownPublishedTournament(Context context) {
         String latestKnownPublishedTournamentKey = context.getString(R.string.pref_latest_known_published_tournament);
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        long latestKnownPublishedTournament = sp.getLong(latestKnownPublishedTournamentKey, 0);
-        return latestKnownPublishedTournament;
+        return sp.getLong(latestKnownPublishedTournamentKey, 0);
     }
 
     @NonNull

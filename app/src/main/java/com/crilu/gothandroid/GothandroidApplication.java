@@ -45,15 +45,10 @@ public class GothandroidApplication extends Application implements GothaModel.Go
     private static GothaModel sGothaModel;
     private static GamesPair sGamesPair;
     private static GamesResults sGamesResults;
-    private static TournamentOptions sTournamentOptions;
-    private static GamesOptions sGameOptions;
     private static PlayersManager sPlayersManager;
     private static String sCurrentUser;
     private static FirebaseFirestore sFirestore;
     private static String sCurrentToken;
-
-    private static GothandroidApplication sInstance;
-    private static Publish sPublish;
 
     @Override
     public void onCreate() {
@@ -74,7 +69,6 @@ public class GothandroidApplication extends Application implements GothaModel.Go
         Intent parsePlayersIntent = new Intent(this, ParsePlayersIntentService.class);
         startService(parsePlayersIntent);
 
-        sInstance = this;
     }
 
     public static RatingList getRatingList() {
@@ -83,10 +77,6 @@ public class GothandroidApplication extends Application implements GothaModel.Go
 
     public static void setRatingList(RatingList ratingList) {
         GothandroidApplication.sRatingList = ratingList;
-    }
-
-    public static GothandroidApplication getInstance() {
-        return sInstance;
     }
 
     public static GothaModel getGothaModelInstance() {
@@ -119,18 +109,15 @@ public class GothandroidApplication extends Application implements GothaModel.Go
     }
 
     public static TournamentOptions getTournamentOptionsInstance() {
-        sTournamentOptions = new TournamentOptions(sGothaModel.getTournament());
-        return sTournamentOptions;
+        return new TournamentOptions(sGothaModel.getTournament());
     }
 
     public static GamesOptions getGamesOptionsInstance() {
-        sGameOptions = new GamesOptions(sGothaModel.getTournament());
-        return sGameOptions;
+        return new GamesOptions(sGothaModel.getTournament());
     }
 
     public static Publish getPublishInstance() {
-        sPublish = new Publish(sGothaModel.getTournament());
-        return sPublish;
+        return new Publish(sGothaModel.getTournament());
     }
 
     public static String getCurrentUser() {
@@ -180,7 +167,9 @@ public class GothandroidApplication extends Application implements GothaModel.Go
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
+            if (notificationManager != null) {
+                notificationManager.createNotificationChannel(channel);
+            }
         }
     }
 
@@ -213,7 +202,7 @@ public class GothandroidApplication extends Application implements GothaModel.Go
     }
 
     @Override
-    public void controlPannelModelUpdated() {
+    public void controlPanelModelUpdated() {
 
     }
 

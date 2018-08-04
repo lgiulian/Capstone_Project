@@ -14,16 +14,16 @@ import android.support.annotation.Nullable;
 public class GothaContentProvider extends ContentProvider {
     private GothaDbHelper mDbHelper;
 
-    public static final int TOURNAMENTS = 100;
-    public static final int TOURNAMENT_WITH_ID = 101;
-    public static final int SUBSCRIPTIONS = 200;
-    public static final int SUBSCRIPTION_WITH_ID = 201;
-    public static final int MESSAGES = 300;
-    public static final int MESSAGE_WITH_ID = 301;
+    private static final int TOURNAMENTS = 100;
+    private static final int TOURNAMENT_WITH_ID = 101;
+    private static final int SUBSCRIPTIONS = 200;
+    private static final int SUBSCRIPTION_WITH_ID = 201;
+    private static final int MESSAGES = 300;
+    private static final int MESSAGE_WITH_ID = 301;
 
     private static final UriMatcher sUriMatcher = buildUriMatcher();
 
-    public static UriMatcher buildUriMatcher() {
+    private static UriMatcher buildUriMatcher() {
         UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         uriMatcher.addURI(GothaContract.AUTHORITY, GothaContract.PATH_TOURNAMENTS, TOURNAMENTS);
         uriMatcher.addURI(GothaContract.AUTHORITY, GothaContract.PATH_TOURNAMENTS + "/#", TOURNAMENT_WITH_ID);
@@ -121,7 +121,9 @@ public class GothaContentProvider extends ContentProvider {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
 
-        retCursor.setNotificationUri(getContext().getContentResolver(), uri);
+        if (getContext() != null) {
+            retCursor.setNotificationUri(getContext().getContentResolver(), uri);
+        }
 
         // Return the desired Cursor
         return retCursor;
@@ -165,7 +167,9 @@ public class GothaContentProvider extends ContentProvider {
         }
 
         // Notify the resolver if the uri has been changed, and return the newly inserted URI
-        getContext().getContentResolver().notifyChange(uri, null);
+        if (getContext() != null) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
 
         // Return constructed uri (this points to the newly inserted row of data)
         return returnUri;
@@ -192,7 +196,7 @@ public class GothaContentProvider extends ContentProvider {
                     db.endTransaction();
                 }
 
-                if (rowsInserted > 0) {
+                if (rowsInserted > 0 && getContext() != null) {
                     getContext().getContentResolver().notifyChange(uri, null);
                 }
 
@@ -213,7 +217,7 @@ public class GothaContentProvider extends ContentProvider {
                     db.endTransaction();
                 }
 
-                if (rowsInserted > 0) {
+                if (rowsInserted > 0 && getContext() != null) {
                     getContext().getContentResolver().notifyChange(uri, null);
                 }
 
@@ -234,7 +238,7 @@ public class GothaContentProvider extends ContentProvider {
                     db.endTransaction();
                 }
 
-                if (rowsInserted > 0) {
+                if (rowsInserted > 0 && getContext() != null) {
                     getContext().getContentResolver().notifyChange(uri, null);
                 }
 
@@ -281,7 +285,7 @@ public class GothaContentProvider extends ContentProvider {
         }
 
         // Notify the resolver of a change and return the number of items deleted
-        if (rowsDeleted != 0) {
+        if (rowsDeleted != 0 && getContext() != null) {
             // A row was deleted, set notification
             getContext().getContentResolver().notifyChange(uri, null);
         }
@@ -316,7 +320,7 @@ public class GothaContentProvider extends ContentProvider {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
 
-        if (rowsUpdated != 0) {
+        if (rowsUpdated != 0 && getContext() != null) {
             //set notifications if a row was updated
             getContext().getContentResolver().notifyChange(uri, null);
         }

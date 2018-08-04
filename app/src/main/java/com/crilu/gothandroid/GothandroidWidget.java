@@ -63,7 +63,7 @@ public class GothandroidWidget extends AppWidgetProvider {
         }
     }
 
-    public static PendingIntent actionPendingIntent(Context context, int appWidgetId) {
+    private static PendingIntent actionPendingIntent(Context context, int appWidgetId) {
         Intent intent = new Intent(context, GothandroidWidgetConfigureActivity.class);
         intent.setAction("android.appwidget.action.APPWIDGET_CONFIGURE");
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);

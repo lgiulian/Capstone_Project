@@ -2,6 +2,7 @@ package com.crilu.gothandroid;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,42 +20,37 @@ import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 
 public class PairablePlayersFragment extends Fragment {
 
-    private PairViewModel mPairViewModel;
     private List<Vector<String>> mPairablePlayers;
-    private TableView<Vector<String>> mPlayersTable;
     private PairablePlayerAdapter<Vector<String>> mPairablePlayersAdapter;
 
     public PairablePlayersFragment() {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_pairable_players, container, false);
 
-        mPairViewModel = ViewModelProviders.of(getActivity()).get(PairViewModel.class);
-        mPairablePlayers = mPairViewModel.getPairablePlayers();
+        if (getActivity() != null) {
+            PairViewModel mPairViewModel = ViewModelProviders.of(getActivity()).get(PairViewModel.class);
+            mPairablePlayers = mPairViewModel.getPairablePlayers();
 
-        String[] tableHeaders = { getString(R.string.pairable_players_header_name),
-                getString(R.string.pairable_players_header_rank),
-                getString(R.string.pairable_players_header_sco),
-                getString(R.string.pairable_players_header_co),
-                getString(R.string.pairable_players_header_club)};
-        mPlayersTable = rootView.findViewById(R.id.pairable_players_table);
-        mPlayersTable.setHeaderAdapter(new SimpleTableHeaderAdapter(getContext(), tableHeaders));
-        mPairablePlayersAdapter = new PairablePlayerAdapter<>(getContext(), mPairablePlayers);
+            String[] tableHeaders = {getString(R.string.pairable_players_header_name),
+                    getString(R.string.pairable_players_header_rank),
+                    getString(R.string.pairable_players_header_sco),
+                    getString(R.string.pairable_players_header_co),
+                    getString(R.string.pairable_players_header_club)};
+            TableView<Vector<String>> mPlayersTable = rootView.findViewById(R.id.pairable_players_table);
+            mPlayersTable.setHeaderAdapter(new SimpleTableHeaderAdapter(getContext(), tableHeaders));
+            mPairablePlayersAdapter = new PairablePlayerAdapter<>(getContext(), mPairablePlayers);
 
-        TableColumnWeightModel columnModel = new TableColumnWeightModel(5);
-        columnModel.setColumnWeight(0, 2);
-        mPlayersTable.setColumnModel(columnModel);
+            TableColumnWeightModel columnModel = new TableColumnWeightModel(5);
+            columnModel.setColumnWeight(0, 2);
+            mPlayersTable.setColumnModel(columnModel);
 
-        mPlayersTable.setDataAdapter(mPairablePlayersAdapter);
-
+            mPlayersTable.setDataAdapter(mPairablePlayersAdapter);
+        }
         return rootView;
-    }
-
-    public void setPairablePlayers(List<Vector<String>> pairablePlayers) {
-        this.mPairablePlayers = pairablePlayers;
     }
 
     public void updatePairablePlayers() {

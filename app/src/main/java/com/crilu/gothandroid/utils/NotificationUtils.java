@@ -23,7 +23,7 @@ public class NotificationUtils {
      * The columns of data that we are interested in displaying within our notification to let
      * the user know there is new tournament published.
      */
-    public static final String[] TOURNAMENT_NOTIFICATION_PROJECTION = {
+    private static final String[] TOURNAMENT_NOTIFICATION_PROJECTION = {
             GothaContract.TournamentEntry.COLUMN_FULL_NAME,
             GothaContract.TournamentEntry.COLUMN_BEGIN_DATE,
             GothaContract.TournamentEntry.COLUMN_LOCATION,
@@ -74,7 +74,9 @@ public class NotificationUtils {
             NotificationManager notificationManager = (NotificationManager)
                     context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-            notificationManager.notify(TOURNAMENT_NOTIFICATION_ID, notificationBuilder.build());
+            if (notificationManager != null) {
+                notificationManager.notify(TOURNAMENT_NOTIFICATION_ID, notificationBuilder.build());
+            }
 
             /*
              * Since we just showed a notification, save the latest published tournament. That way, we can check

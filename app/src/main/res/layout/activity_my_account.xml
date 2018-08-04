@@ -72,6 +72,8 @@
 
             <EditText
                 android:id="@+id/first_name"
+                android:inputType="text"
+                android:hint="@string/first_name_label"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/barrier1"
                 app:layout_constraintTop_toBottomOf="@+id/appbar"
@@ -79,6 +81,8 @@
 
             <EditText
                 android:id="@+id/last_name"
+                android:inputType="text"
+                android:hint="@string/last_name_label"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/barrier1"
                 app:layout_constraintTop_toBottomOf="@+id/first_name"
@@ -86,6 +90,8 @@
 
             <AutoCompleteTextView
                 android:id="@+id/egf_player"
+                android:hint="@string/egf_pin_label"
+                android:inputType="text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/barrier1"
                 app:layout_constraintTop_toBottomOf="@+id/last_name"
@@ -93,6 +99,8 @@
 
             <EditText
                 android:id="@+id/ffg_lic"
+                android:hint="@string/ffg_lic_hint"
+                android:inputType="text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/barrier1"
                 app:layout_constraintTop_toBottomOf="@+id/egf_player"
@@ -100,6 +108,8 @@
 
             <EditText
                 android:id="@+id/aga_id"
+                android:hint="@string/aga_id_label"
+                android:inputType="text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/barrier1"
                 app:layout_constraintTop_toBottomOf="@+id/ffg_lic"

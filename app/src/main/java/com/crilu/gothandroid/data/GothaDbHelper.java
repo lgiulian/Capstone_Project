@@ -8,7 +8,7 @@ import com.crilu.gothandroid.data.GothaContract.MessageEntry;
 import com.crilu.gothandroid.data.GothaContract.SubscriptionEntry;
 import com.crilu.gothandroid.data.GothaContract.TournamentEntry;
 
-public class GothaDbHelper extends SQLiteOpenHelper {
+class GothaDbHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "gotha.db";
     private static final int DATABASE_VERSION = 8;

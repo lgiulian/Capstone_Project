@@ -3,7 +3,6 @@ package com.crilu.gothandroid.adapter;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -14,27 +13,11 @@ import java.util.List;
 
 import de.codecrafters.tableview.TableDataAdapter;
 import de.codecrafters.tableview.model.TableColumnModel;
-import timber.log.Timber;
 
 public class PlayerAdapter<R> extends TableDataAdapter<Player> {
-    private int paddingLeft = 20;
-    private int paddingTop = 15;
-    private int paddingRight = 20;
-    private int paddingBottom = 15;
-    private int textSize = 14;
-    private int typeface = Typeface.NORMAL;
-    private int textColor = 0x99000000;
-
-    public PlayerAdapter(Context context, Player[] data) {
-        super(context, data);
-    }
 
     public PlayerAdapter(Context context, List<Player> data) {
         super(context, data);
-    }
-
-    protected PlayerAdapter(Context context, int columnCount, List<Player> data) {
-        super(context, columnCount, data);
     }
 
     protected PlayerAdapter(Context context, TableColumnModel columnModel, List<Player> data) {
@@ -76,9 +59,16 @@ public class PlayerAdapter<R> extends TableDataAdapter<Player> {
     private View renderCell(String textToShow) {
         //Timber.d("textToShow = %s", textToShow);
         final TextView textView = new TextView(getContext());
+        int paddingBottom = 15;
+        int paddingRight = 20;
+        int paddingTop = 15;
+        int paddingLeft = 20;
         textView.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
+        int typeface = Typeface.NORMAL;
         textView.setTypeface(textView.getTypeface(), typeface);
+        int textSize = 14;
         textView.setTextSize(textSize);
+        int textColor = 0x99000000;
         textView.setTextColor(textColor);
         textView.setSingleLine();
         textView.setEllipsize(TextUtils.TruncateAt.END);

@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -26,11 +25,11 @@ public class GothandroidWidgetConfigureActivity extends Activity {
 
     private static final String PREFS_NAME = "com.crilu.gothandroid.GothandroidWidget";
     private static final String PREF_PREFIX_KEY = "tournamentName_";
-    int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
+    private int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     private Spinner mTournamentSpinner;
     private String mCurrentSelectedTournament;
 
-    View.OnClickListener mOnClickListener = new View.OnClickListener() {
+    private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
         public void onClick(View v) {
             final Context context = GothandroidWidgetConfigureActivity.this;
 
@@ -54,7 +53,7 @@ public class GothandroidWidgetConfigureActivity extends Activity {
     }
 
     // Write the prefix to the SharedPreferences object for this widget
-    static void saveTournamentPref(Context context, int appWidgetId, String text) {
+    private static void saveTournamentPref(Context context, int appWidgetId, String text) {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
         prefs.putString(PREF_PREFIX_KEY + appWidgetId, text);
         prefs.apply();
@@ -64,8 +63,7 @@ public class GothandroidWidgetConfigureActivity extends Activity {
     // If there is no preference saved, get the default from a resource
     static String loadTournamentPref(Context context, int appWidgetId) {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
-        String tournamentValue = prefs.getString(PREF_PREFIX_KEY + appWidgetId, null);
-        return tournamentValue;
+        return prefs.getString(PREF_PREFIX_KEY + appWidgetId, null);
     }
 
     static void deleteTournamentPref(Context context, int appWidgetId) {
@@ -88,9 +86,12 @@ public class GothandroidWidgetConfigureActivity extends Activity {
         Cursor cursor = cr.query(GothaContract.TournamentEntry.CONTENT_URI, null,
                 null, null, GothaContract.TournamentEntry.COLUMN_BEGIN_DATE + " DESC");
         List<String> values = new ArrayList<>();
-        while (cursor.moveToNext()) {
-            String name = cursor.getString(cursor.getColumnIndex(GothaContract.TournamentEntry.COLUMN_FULL_NAME));
-            values.add(name);
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                String name = cursor.getString(cursor.getColumnIndex(GothaContract.TournamentEntry.COLUMN_FULL_NAME));
+                values.add(name);
+            }
+            cursor.close();
         }
         mTournamentSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, values));
         mTournamentSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
