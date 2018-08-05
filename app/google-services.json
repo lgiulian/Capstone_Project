@@ -1,0 +1,115 @@
+{
+  "project_info": {
+    "project_number": "347593858464",
+    "firebase_url": "https://gothandroid-d65c4.firebaseio.com",
+    "project_id": "gothandroid-d65c4",
+    "storage_bucket": "gothandroid-d65c4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:347593858464:android:853c587e5764a1af",
+        "android_client_info": {
+          "package_name": "com.crilu.gothandroid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "347593858464-niu8dhevsco3kq9roft35vu0529f92ks.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.crilu.gothandroid",
+            "certificate_hash": "4e510ad0e4fd765942c1e3c6a5360de0f5fe6e22"
+          }
+        },
+        {
+          "client_id": "347593858464-n9bdu1gbgfqfctcg23s60ip62mr4922u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.crilu.gothandroid",
+            "certificate_hash": "b31964a1edccc4ff125b91b737c4f68ccc449db3"
+          }
+        },
+        {
+          "client_id": "347593858464-bg0dmhqm3msnboj4vm8nac17cg117ec8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4DFWZOFbIPi71ZD6Y1oRDBnc8vL7t16Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "347593858464-bg0dmhqm3msnboj4vm8nac17cg117ec8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:347593858464:android:32242a930be94836",
+        "android_client_info": {
+          "package_name": "com.crilu.gothandroid.free"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "347593858464-lfr7m2lra82o77tg3h1lm9v7pmuq18kt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.crilu.gothandroid.free",
+            "certificate_hash": "4e510ad0e4fd765942c1e3c6a5360de0f5fe6e22"
+          }
+        },
+        {
+          "client_id": "347593858464-3rk87f84bu16lm0c68p2qofe25muku12.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.crilu.gothandroid.free",
+            "certificate_hash": "b31964a1edccc4ff125b91b737c4f68ccc449db3"
+          }
+        },
+        {
+          "client_id": "347593858464-bg0dmhqm3msnboj4vm8nac17cg117ec8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4DFWZOFbIPi71ZD6Y1oRDBnc8vL7t16Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "347593858464-bg0dmhqm3msnboj4vm8nac17cg117ec8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
