@@ -1,5 +1,6 @@
 package com.crilu.gothandroid;
 
+import android.app.ActivityOptions;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.ContentResolver;
@@ -25,7 +26,6 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.crilu.gothandroid.adapter.TournamentPublishedListAdapter;
@@ -37,6 +37,7 @@ import com.crilu.gothandroid.model.firestore.Subscription;
 import com.crilu.gothandroid.model.firestore.Tournament;
 import com.crilu.gothandroid.sync.GothaSyncUtils;
 import com.crilu.gothandroid.utils.FileUtils;
+import com.crilu.gothandroid.utils.ParsePlayersIntentService;
 import com.crilu.gothandroid.utils.TournamentUtils;
 import com.crilu.opengotha.TournamentInterface;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -100,6 +101,7 @@ public class MainActivity extends AppCompatAdActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        initialize();
         setupViewModel();
         GothaSyncUtils.initialize(this);
 
@@ -124,6 +126,11 @@ public class MainActivity extends AppCompatAdActivity
         });
 
         //fetchTournaments();
+    }
+
+    private void initialize() {
+        Intent parsePlayersIntent = new Intent(this, ParsePlayersIntentService.class);
+        startService(parsePlayersIntent);
     }
 
     private void setupViewModel() {
@@ -238,7 +245,7 @@ public class MainActivity extends AppCompatAdActivity
                 pair();
                 break;
             case R.id.nav_results:
-                startActivity(new Intent(this, ResultActivity.class));
+                displayResults();
                 break;
             case R.id.nav_tournament_options:
                 tournamentSettings();
@@ -250,7 +257,7 @@ public class MainActivity extends AppCompatAdActivity
                 myAccount();
                 break;
             case R.id.nav_message:
-                startActivity(new Intent(this, MessageActivity.class));
+                displayMessageScreen();
                 break;
         }
 
@@ -261,7 +268,7 @@ public class MainActivity extends AppCompatAdActivity
 
     private void myAccount() {
         Intent intent = new Intent(this, MyAccount.class);
-        startActivity(intent);
+        startNewActivity(intent);
     }
 
     private void createLocalFileAndPublishOnFirestore(final Tournament selectedTournament) {
@@ -337,7 +344,7 @@ public class MainActivity extends AppCompatAdActivity
             Timber.d("sending message to tournament %s", selectedTournament.getIdentity());
             Intent intent = new Intent(this, SendMessageActivity.class);
             intent.putExtra(SendMessageActivity.TOURNAMENT_KEY, selectedTournament.getIdentity());
-            startActivity(intent);
+            startNewActivity(intent);
         }
     }
 
@@ -521,14 +528,14 @@ public class MainActivity extends AppCompatAdActivity
         if (tournament == null) return;
 
         Intent intent = new Intent(this, PlayersManagerActivity.class);
-        startActivity(intent);
+        startNewActivity(intent);
     }
 
     private void createNewTournament() {
         String UID = checkUserLoggedIn();
         if (TextUtils.isEmpty(UID)) return;
         Intent intent = new Intent(this, CreateTournamentActivity.class);
-        startActivity(intent);
+        startNewActivity(intent);
     }
 
     private void pair() {
@@ -536,7 +543,11 @@ public class MainActivity extends AppCompatAdActivity
         if (tournament == null) return;
 
         Intent intent = new Intent(this, PairActivity.class);
-        startActivity(intent);
+        startNewActivity(intent);
+    }
+
+    private void displayResults() {
+        startNewActivity(new Intent(this, ResultActivity.class));
     }
 
     private void tournamentSettings() {
@@ -544,7 +555,7 @@ public class MainActivity extends AppCompatAdActivity
         if (tournament == null) return;
 
         Intent intent = new Intent(this, TournamentSettingsActivity.class);
-        startActivity(intent);
+        startNewActivity(intent);
     }
 
     private void gamesSettings() {
@@ -552,7 +563,20 @@ public class MainActivity extends AppCompatAdActivity
         if (tournament == null) return;
 
         Intent intent = new Intent(this, GamesOptionsActivity.class);
-        startActivity(intent);
+        startNewActivity(intent);
+    }
+
+    public void displayMessageScreen() {
+        startNewActivity(new Intent(this, MessageActivity.class));
+    }
+
+    private void startNewActivity(Intent intent) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle();
+            startActivity(intent, bundle);
+        } else {
+            startActivity(intent);
+        }
     }
 
     @Override

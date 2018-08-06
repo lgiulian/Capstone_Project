@@ -3,13 +3,11 @@ package com.crilu.gothandroid;
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.crilu.gothandroid.utils.NotificationUtils;
-import com.crilu.gothandroid.utils.ParsePlayersIntentService;
 import com.crilu.opengotha.RatingList;
 import com.crilu.opengotha.model.GamesOptions;
 import com.crilu.opengotha.model.GamesPair;
@@ -67,9 +65,6 @@ public class GothandroidApplication extends Application implements GothaModel.Go
         createNotificationChannel();
 
         FirebaseApp.initializeApp(this);
-
-        Intent parsePlayersIntent = new Intent(this, ParsePlayersIntentService.class);
-        startService(parsePlayersIntent);
 
         sInstance = this;
     }
