@@ -109,6 +109,58 @@
           "status": 2
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:347593858464:android:8d446dc064b9d054",
+        "android_client_info": {
+          "package_name": "com.crilu.gothandroid.paid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "347593858464-o9urbjjlf8k7991gjmcvuakp7nos2msq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.crilu.gothandroid.paid",
+            "certificate_hash": "4e510ad0e4fd765942c1e3c6a5360de0f5fe6e22"
+          }
+        },
+        {
+          "client_id": "347593858464-73o2r7pdfd0i95ar9rs0d36fgsrnqu7g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.crilu.gothandroid.paid",
+            "certificate_hash": "b31964a1edccc4ff125b91b737c4f68ccc449db3"
+          }
+        },
+        {
+          "client_id": "347593858464-bg0dmhqm3msnboj4vm8nac17cg117ec8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4DFWZOFbIPi71ZD6Y1oRDBnc8vL7t16Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "347593858464-bg0dmhqm3msnboj4vm8nac17cg117ec8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
     }
   ],
   "configuration_version": "1"
