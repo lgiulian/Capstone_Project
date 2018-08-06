@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'udacity'
+            keyPassword 'password'
+            storeFile file('mykeystore.jks')
+            storePassword 'password'
+        }
+    }
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.crilu.gothandroid"
@@ -17,6 +25,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
     dataBinding.enabled = true;
@@ -49,6 +58,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.1'
     implementation 'com.google.firebase:firebase-auth:16.0.2'
     implementation 'com.google.firebase:firebase-firestore:17.0.4'
+    //implementation 'com.google.firebase:firebase-database:16.0.1'
     implementation 'com.firebaseui:firebase-ui-auth:4.0.0'
     implementation 'com.google.firebase:firebase-messaging:17.1.0'
     freeImplementation 'com.google.firebase:firebase-ads:15.0.1'
@@ -59,7 +69,7 @@ dependencies {
     implementation 'de.codecrafters.tableview:tableview:2.8.0'
     implementation 'com.jakewharton.timber:timber:4.7.0'
     // Schematic dependencies for ContentProvider
-    compile 'net.simonvt.schematic:schematic:0.7.0'
+    implementation 'net.simonvt.schematic:schematic:0.7.0'
     annotationProcessor 'net.simonvt.schematic:schematic-compiler:0.7.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
