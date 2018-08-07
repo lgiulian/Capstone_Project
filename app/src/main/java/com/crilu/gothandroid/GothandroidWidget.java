@@ -15,6 +15,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+
 import timber.log.Timber;
 
 /**
@@ -42,16 +44,19 @@ public class GothandroidWidget extends AppWidgetProvider {
             TournamentDao.fetchTournamentResults(tournamentIdentity, new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    String widgetText = (String) dataSnapshot.getValue();
-                    Timber.d("### results content: %s", widgetText);
-                    if (!TextUtils.isEmpty(widgetText)) {
-                        widgetText = widgetText.replace("<br>", "\n");
-                    }
-                    // Construct the RemoteViews object
-                    views.setTextViewText(R.id.appwidget_text, widgetText);
+                    HashMap map = (HashMap) dataSnapshot.getValue();
+                    if (map != null && map.containsKey(Tournament.RESULT_CONTENT)) {
+                        String widgetText = (String) map.get(Tournament.RESULT_CONTENT);
+                        Timber.d("### results content: %s", widgetText);
+                        if (!TextUtils.isEmpty(widgetText)) {
+                            widgetText = widgetText.replace("<br>", "\n");
+                        }
+                        // Construct the RemoteViews object
+                        views.setTextViewText(R.id.appwidget_text, widgetText);
 
-                    // Instruct the widget manager to update the widget
-                    appWidgetManager.updateAppWidget(appWidgetId, views);
+                        // Instruct the widget manager to update the widget
+                        appWidgetManager.updateAppWidget(appWidgetId, views);
+                    }
                 }
 
                 @Override
