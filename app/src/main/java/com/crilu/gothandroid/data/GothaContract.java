@@ -20,6 +20,7 @@ public class GothaContract {
         public static final String TABLE_NAME = "tournament";
         public static final String COLUMN_IDENTITY = "identity";
         public static final String COLUMN_BEGIN_DATE = "begin_date";
+        public static final String COLUMN_END_DATE = "end_date";
         public static final String COLUMN_FULL_NAME = "full_name";
         public static final String COLUMN_LOCATION = "location";
         public static final String COLUMN_SHORT_NAME = "short_name";

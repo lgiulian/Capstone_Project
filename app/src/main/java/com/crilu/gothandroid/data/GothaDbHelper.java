@@ -27,6 +27,7 @@ class GothaDbHelper extends SQLiteOpenHelper {
                 TournamentEntry.COLUMN_LOCATION + " TEXT, " +
                 TournamentEntry.COLUMN_DIRECTOR + " TEXT, " +
                 TournamentEntry.COLUMN_BEGIN_DATE + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP, " +
+                TournamentEntry.COLUMN_END_DATE + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP, " +
                 TournamentEntry.COLUMN_CREATOR + " TEXT NOT NULL, " +
                 TournamentEntry.COLUMN_CREATION_DATE + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP, " +
                 TournamentEntry.COLUMN_LAST_MODIFICATION_DATE + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP, " +

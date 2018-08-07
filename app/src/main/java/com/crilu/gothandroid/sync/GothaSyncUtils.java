@@ -152,6 +152,7 @@ public class GothaSyncUtils {
         long currentTime = System.currentTimeMillis();
         ContentValues values = new ContentValues();
         values.put(GothaContract.TournamentEntry.COLUMN_BEGIN_DATE, tournament.getTournamentParameterSet().getGeneralParameterSet().getBeginDate().getTime());
+        values.put(GothaContract.TournamentEntry.COLUMN_END_DATE, tournament.getTournamentParameterSet().getGeneralParameterSet().getEndDate().getTime());
         values.put(GothaContract.TournamentEntry.COLUMN_CREATION_DATE, currentTime);
         values.put(GothaContract.TournamentEntry.COLUMN_LAST_MODIFICATION_DATE, currentTime);
         values.put(GothaContract.TournamentEntry.COLUMN_CONTENT, tournamentContent);
