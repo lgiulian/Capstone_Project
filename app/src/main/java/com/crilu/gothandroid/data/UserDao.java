@@ -4,9 +4,9 @@ import android.support.annotation.NonNull;
 
 import com.crilu.gothandroid.GothandroidApplication;
 import com.crilu.gothandroid.model.firestore.User;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -28,17 +28,22 @@ public class UserDao {
         userToSave.put(User.FFG_LIC, ffgLic);
         userToSave.put(User.AGA_ID, agaId);
         userToSave.put(User.REGISTRATION_DATE, new Date(System.currentTimeMillis()));
-        FirebaseFirestore db = GothandroidApplication.getFirebaseFirestore();
-        db.collection(USER_DOC_REF_PATH).document(uid).set(userToSave).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Timber.d("User %s was saved or updated", uid);
-                } else {
-                    Timber.d(task.getException());
-                }
-            }
-        });
+        DatabaseReference db = GothandroidApplication.getFireDatabase();
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put(USER_DOC_REF_PATH + "/" + uid, userToSave);
+        db.updateChildren(childUpdates)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Timber.d("User %s was saved or updated", uid);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Timber.e(e);
+                    }
+                });
     }
 
 }

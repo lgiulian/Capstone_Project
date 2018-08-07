@@ -18,8 +18,8 @@ import com.crilu.opengotha.model.Publish;
 import com.crilu.opengotha.model.TournamentOptions;
 import com.facebook.stetho.Stetho;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreSettings;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -30,9 +30,9 @@ public class GothandroidApplication extends Application implements GothaModel.Go
 
     public static final String TOURNAMENT_DOC_REF_PATH = "tournament";
     public static final String USER_DOC_REF_PATH = "user";
-    public static final String SUBSCRIPTION_DOC_REF_RELATIVE_PATH = "/subscription";
-    public static final String MESSAGE_DOC_REF_RELATIVE_PATH = "/message";
-    public static final String RESULT_DOC_REF_RELATIVE_PATH = "/result";
+    public static final String SUBSCRIPTION_DOC_REF_PATH = "subscription";
+    public static final String MESSAGE_DOC_REF_PATH = "message";
+    public static final String RESULT_DOC_REF_PATH = "result";
     public static final String RESULT_DOC_ID_HTML = "resultHtml";
     public static final String RESULT_DOC_ID_H9 = "resultH9";
 
@@ -45,7 +45,7 @@ public class GothandroidApplication extends Application implements GothaModel.Go
     private static GamesResults sGamesResults;
     private static PlayersManager sPlayersManager;
     private static String sCurrentUser;
-    private static FirebaseFirestore sFirestore;
+    private static DatabaseReference sFireDatabase;
     private static String sCurrentToken;
 
     private static GothandroidApplication sInstance;
@@ -172,15 +172,11 @@ public class GothandroidApplication extends Application implements GothaModel.Go
     }
 
     @NonNull
-    public static FirebaseFirestore getFirebaseFirestore() {
-        if (sFirestore == null) {
-            sFirestore = FirebaseFirestore.getInstance();
-            FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
-                    .setTimestampsInSnapshotsEnabled(true)
-                    .build();
-            sFirestore.setFirestoreSettings(settings);
+    public static DatabaseReference getFireDatabase() {
+        if (sFireDatabase == null) {
+            sFireDatabase = FirebaseDatabase.getInstance().getReference();
         }
-        return sFirestore;
+        return sFireDatabase;
     }
 
     @Override

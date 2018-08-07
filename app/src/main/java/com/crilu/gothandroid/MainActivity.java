@@ -40,14 +40,11 @@ import com.crilu.gothandroid.utils.FileUtils;
 import com.crilu.gothandroid.utils.ParsePlayersIntentService;
 import com.crilu.gothandroid.utils.TournamentUtils;
 import com.crilu.opengotha.TournamentInterface;
-import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -62,8 +59,10 @@ import java.util.Map;
 
 import timber.log.Timber;
 
-import static com.crilu.gothandroid.GothandroidApplication.RESULT_DOC_REF_RELATIVE_PATH;
-import static com.crilu.gothandroid.GothandroidApplication.SUBSCRIPTION_DOC_REF_RELATIVE_PATH;
+import static com.crilu.gothandroid.GothandroidApplication.RESULT_DOC_ID_H9;
+import static com.crilu.gothandroid.GothandroidApplication.RESULT_DOC_ID_HTML;
+import static com.crilu.gothandroid.GothandroidApplication.RESULT_DOC_REF_PATH;
+import static com.crilu.gothandroid.GothandroidApplication.SUBSCRIPTION_DOC_REF_PATH;
 import static com.crilu.gothandroid.GothandroidApplication.TOURNAMENT_DOC_REF_PATH;
 
 public class MainActivity extends AppCompatAdActivity
@@ -293,29 +292,33 @@ public class MainActivity extends AppCompatAdActivity
             tournamentToSave.put(Tournament.CREATOR, UID);
             tournamentToSave.put(Tournament.CREATION_DATE, creationDate);
             tournamentToSave.put(Tournament.LAST_MODIFICATION_DATE, creationDate);
-            FirebaseFirestore db = GothandroidApplication.getFirebaseFirestore();
-            db.collection(TOURNAMENT_DOC_REF_PATH).add(tournamentToSave).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentReference> task) {
-                    if (task.isSuccessful()) {
-                        Timber.d("Tournament %s was saved", selectedTournament.getFullName());
-                        String givenId = task.getResult().getId();
-                        selectedTournament.setIdentity(givenId);
-                        ContentResolver gothaContentResolver = getContentResolver();
-                        ContentValues cv = GothaSyncUtils.getSingleTournamentContentValues(selectedTournament);
-                        gothaContentResolver.update(
-                                ContentUris.withAppendedId(GothaContract.TournamentEntry.CONTENT_URI, selectedTournament.getId()),
-                                cv,
-                                null,
-                                null);
-                        Snackbar.make(mCoordinatorLayout, getString(R.string.tournament_published), Snackbar.LENGTH_LONG).show();
-                        displayAds();
-                    } else {
-                        Timber.d(task.getException());
-                        Snackbar.make(mCoordinatorLayout, getString(R.string.tournament_publish_error), Snackbar.LENGTH_LONG).show();
-                    }
-                }
-            });
+            DatabaseReference db = GothandroidApplication.getFireDatabase();
+            DatabaseReference tournamentRef = db.child(TOURNAMENT_DOC_REF_PATH).push();
+            final String givenId = tournamentRef.getKey();
+            tournamentRef.setValue(selectedTournament)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Timber.d("Tournament %s was saved", selectedTournament.getFullName());
+                            selectedTournament.setIdentity(givenId);
+                            ContentResolver gothaContentResolver = getContentResolver();
+                            ContentValues cv = GothaSyncUtils.getSingleTournamentContentValues(selectedTournament);
+                            gothaContentResolver.update(
+                                    ContentUris.withAppendedId(GothaContract.TournamentEntry.CONTENT_URI, selectedTournament.getId()),
+                                    cv,
+                                    null,
+                                    null);
+                            Snackbar.make(mCoordinatorLayout, getString(R.string.tournament_published), Snackbar.LENGTH_LONG).show();
+                            displayAds();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Timber.d(e);
+                            Snackbar.make(mCoordinatorLayout, getString(R.string.tournament_publish_error), Snackbar.LENGTH_LONG).show();
+                        }
+                    });
         }
     }
 
@@ -374,37 +377,42 @@ public class MainActivity extends AppCompatAdActivity
         Map<String, Object> resultToSave = new HashMap<>();
         String resultsHtml = getResultsHtml(selectedTournament);
         resultToSave.put(Tournament.RESULT_CONTENT, resultsHtml);
-        FirebaseFirestore db = GothandroidApplication.getFirebaseFirestore();
-        db.collection(TOURNAMENT_DOC_REF_PATH + "/" + tournamentIdentity + RESULT_DOC_REF_RELATIVE_PATH)
-                .document(GothandroidApplication.RESULT_DOC_ID_HTML).set(resultToSave, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Timber.d("Results were saved in format html");
-                    Snackbar.make(mCoordinatorLayout, getString(R.string.tournament_result_published), Snackbar.LENGTH_LONG).show();
-                } else {
-                    Timber.d(task.getException());
-                    Snackbar.make(mCoordinatorLayout, getString(R.string.tournament_result_error), Snackbar.LENGTH_LONG).show();
-                }
-            }
-        });
+        DatabaseReference db = GothandroidApplication.getFireDatabase();
+        DatabaseReference resultsRef = db.child(RESULT_DOC_REF_PATH + "/" + tournamentIdentity + "/" + RESULT_DOC_ID_HTML + "/" + Tournament.RESULT_CONTENT);
+        resultsRef.setValue(resultsHtml)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Timber.d("Results were saved in format html");
+                        Snackbar.make(mCoordinatorLayout, getString(R.string.tournament_result_published), Snackbar.LENGTH_LONG).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Timber.d(e);
+                        Snackbar.make(mCoordinatorLayout, getString(R.string.tournament_result_error), Snackbar.LENGTH_LONG).show();
+                    }
+                });
 
         resultToSave.clear();
         String resultsH9 = getResultsH9(selectedTournament);
         resultToSave.put(Tournament.RESULT_CONTENT, resultsH9);
-        db.collection(TOURNAMENT_DOC_REF_PATH + "/" + tournamentIdentity + RESULT_DOC_REF_RELATIVE_PATH)
-                .document(GothandroidApplication.RESULT_DOC_ID_H9).set(resultToSave, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Timber.d("Results were saved in format h9");
-                    displayAds();
-                } else {
-                    Timber.d(task.getException());
-                }
-            }
-        });
-
+        resultsRef = db.child(RESULT_DOC_REF_PATH + "/" + tournamentIdentity + "/" + RESULT_DOC_ID_H9 + "/" + Tournament.RESULT_CONTENT);
+        resultsRef.setValue(resultsH9)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Timber.d("Results were saved in format h9");
+                        displayAds();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Timber.d(e);
+                    }
+                });
     }
 
     private String getResultsHtml(Tournament tournament) {
@@ -466,28 +474,30 @@ public class MainActivity extends AppCompatAdActivity
         subscriptionToSave.put(Subscription.STATE, subscription.getState());
         subscriptionToSave.put(Subscription.SUBSCRIPTION_DATE, subscription.getSubscriptionDate());
         subscriptionToSave.put(Subscription.UID, subscription.getUid());
-        FirebaseFirestore db = GothandroidApplication.getFirebaseFirestore();
-        db.collection(TOURNAMENT_DOC_REF_PATH + "/" + selectedTournament.getIdentity() + SUBSCRIPTION_DOC_REF_RELATIVE_PATH)
-                .add(subscriptionToSave)
-                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentReference> task) {
-                if (task.isSuccessful()) {
-                    Timber.d("Subscription for pin %s was saved", GothaPreferences.getUserEgfPin(MainActivity.this));
-                    String givenId = task.getResult().getId();
-                    subscription.setIdentity(givenId);
-                    ContentResolver gothaContentResolver = getContentResolver();
-                    ContentValues cv = GothaSyncUtils.getSingleSubscriptionContentValues(subscription);
-                    gothaContentResolver.insert(
-                            GothaContract.SubscriptionEntry.CONTENT_URI,
-                            cv);
-                    Snackbar.make(mCoordinatorLayout, getString(successMessage), Snackbar.LENGTH_LONG).show();
-                } else {
-                    Timber.d(task.getException());
-                    Snackbar.make(mCoordinatorLayout, getString(errorMessage), Snackbar.LENGTH_LONG).show();
-                }
-            }
-        });
+        DatabaseReference db = GothandroidApplication.getFireDatabase();
+        DatabaseReference subscriptionRef = db.child(SUBSCRIPTION_DOC_REF_PATH + "/" + selectedTournament.getIdentity()).push();
+        final String givenId = subscriptionRef.getKey();
+        subscriptionRef.setValue(subscription)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Timber.d("Subscription for pin %s was saved", GothaPreferences.getUserEgfPin(MainActivity.this));
+                        subscription.setIdentity(givenId);
+                        ContentResolver gothaContentResolver = getContentResolver();
+                        ContentValues cv = GothaSyncUtils.getSingleSubscriptionContentValues(subscription);
+                        gothaContentResolver.insert(
+                                GothaContract.SubscriptionEntry.CONTENT_URI,
+                                cv);
+                        Snackbar.make(mCoordinatorLayout, getString(successMessage), Snackbar.LENGTH_LONG).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Timber.d(e);
+                        Snackbar.make(mCoordinatorLayout, getString(errorMessage), Snackbar.LENGTH_LONG).show();
+                    }
+                });
     }
 
     private void editTournament() {

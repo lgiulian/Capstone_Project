@@ -11,9 +11,9 @@ import android.widget.RemoteViews;
 
 import com.crilu.gothandroid.data.TournamentDao;
 import com.crilu.gothandroid.model.firestore.Tournament;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 import timber.log.Timber;
 
@@ -39,25 +39,24 @@ public class GothandroidWidget extends AppWidgetProvider {
         Tournament tournament = TournamentDao.getTournamentByFullName(context, tournamentName);
         String tournamentIdentity = tournament.getIdentity();
         if (tournament != null && !TextUtils.isEmpty(tournamentIdentity)) {
-            TournamentDao.fetchTournamentResults(tournamentIdentity, new OnCompleteListener<DocumentSnapshot>() {
+            TournamentDao.fetchTournamentResults(tournamentIdentity, new ValueEventListener() {
                 @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        String widgetText = document.getString(Tournament.RESULT_CONTENT);
-                        Timber.d("### results content: %s", widgetText);
-                        if (!TextUtils.isEmpty(widgetText)) {
-                            widgetText = widgetText.replace("<br>", "\n");
-                        }
-                        // Construct the RemoteViews object
-                        views.setTextViewText(R.id.appwidget_text, widgetText);
-
-                        // Instruct the widget manager to update the widget
-                        appWidgetManager.updateAppWidget(appWidgetId, views);
-
-                    } else {
-                        Timber.d(task.getException());
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    String widgetText = (String) dataSnapshot.getValue();
+                    Timber.d("### results content: %s", widgetText);
+                    if (!TextUtils.isEmpty(widgetText)) {
+                        widgetText = widgetText.replace("<br>", "\n");
                     }
+                    // Construct the RemoteViews object
+                    views.setTextViewText(R.id.appwidget_text, widgetText);
+
+                    // Instruct the widget manager to update the widget
+                    appWidgetManager.updateAppWidget(appWidgetId, views);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Timber.d(databaseError.toException());
                 }
             });
         }

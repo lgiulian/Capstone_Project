@@ -1,7 +1,10 @@
 package com.crilu.gothandroid.model.firestore;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
 import java.util.Date;
 
+@IgnoreExtraProperties
 public class Message {
 
     public static final String TOKEN = "token";
@@ -16,6 +19,9 @@ public class Message {
     private String command;
     private String egfPin;
     private Date messageDate;
+
+    public Message() {
+    }
 
     public Long getId() {
         return id;

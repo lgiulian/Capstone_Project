@@ -120,6 +120,7 @@ public class GothaSyncUtils {
     public static ContentValues getSingleTournamentContentValues(Tournament tournament) {
         ContentValues values = new ContentValues();
         values.put(GothaContract.TournamentEntry.COLUMN_BEGIN_DATE, tournament.getBeginDate().getTime());
+        values.put(GothaContract.TournamentEntry.COLUMN_END_DATE, tournament.getEndDate().getTime());
         values.put(GothaContract.TournamentEntry.COLUMN_CREATION_DATE, tournament.getCreationDate().getTime());
         values.put(GothaContract.TournamentEntry.COLUMN_LAST_MODIFICATION_DATE, tournament.getLastModificationDate().getTime());
         values.put(GothaContract.TournamentEntry.COLUMN_CONTENT, tournament.getContent());

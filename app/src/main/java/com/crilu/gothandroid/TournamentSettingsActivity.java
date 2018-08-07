@@ -114,6 +114,7 @@ public class TournamentSettingsActivity extends AppCompatActivity {
             tournament.setDirector(tournamentOptions.txfDirector);
             try {
                 tournament.setBeginDate(GothandroidApplication.dateFormat.parse(tournamentOptions.txfBeginDate));
+                tournament.setEndDate(GothandroidApplication.dateFormat.parse(tournamentOptions.txfEndDate));
             } catch (ParseException e) {
                 e.printStackTrace();
             }

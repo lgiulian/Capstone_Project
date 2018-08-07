@@ -1,7 +1,10 @@
 package com.crilu.gothandroid.model.firestore;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
 import java.util.Date;
 
+@IgnoreExtraProperties
 public class Subscription {
 
     public static final String INTENT_PARTICIPANT = "participant";

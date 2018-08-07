@@ -1,13 +1,17 @@
 package com.crilu.gothandroid.model.firestore;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
 import java.util.Date;
 
+@IgnoreExtraProperties
 public class Tournament {
 
     public static final String FULL_NAME = "fullName";
     public static final String SHORT_NAME = "shortName";
     public static final String CONTENT = "content";
     public static final String BEGIN_DATE = "beginDate";
+    public static final String END_DATE = "endDate";
     public static final String LOCATION = "location";
     public static final String DIRECTOR = "director";
     public static final String RESULT_CONTENT = "content";
@@ -20,12 +24,16 @@ public class Tournament {
     private String fullName;
     private String shortName;
     private Date beginDate;
+    private Date endDate;
     private String location;
     private String director;
     private String content;
     private String creator;
     private Date creationDate;
     private Date lastModificationDate;
+
+    public Tournament() {
+    }
 
     public Long getId() {
         return id;
@@ -65,6 +73,14 @@ public class Tournament {
 
     public void setBeginDate(Date beginDate) {
         this.beginDate = beginDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
     public String getLocation() {
@@ -113,5 +129,23 @@ public class Tournament {
 
     public void setLastModificationDate(Date lastModificationDate) {
         this.lastModificationDate = lastModificationDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Tournament{" +
+                "id=" + id +
+                ", identity='" + identity + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", shortName='" + shortName + '\'' +
+                ", beginDate=" + beginDate +
+                ", endDate=" + endDate +
+                ", location='" + location + '\'' +
+                ", director='" + director + '\'' +
+                ", content='" + content + '\'' +
+                ", creator='" + creator + '\'' +
+                ", creationDate=" + creationDate +
+                ", lastModificationDate=" + lastModificationDate +
+                '}';
     }
 }

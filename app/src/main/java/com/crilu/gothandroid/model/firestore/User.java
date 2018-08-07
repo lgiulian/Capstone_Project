@@ -1,6 +1,12 @@
 package com.crilu.gothandroid.model.firestore;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
+@IgnoreExtraProperties
 public class User {
+
+    public User() {
+    }
 
     public static final String UID = "uId";
     public static final String TOKEN = "token";
