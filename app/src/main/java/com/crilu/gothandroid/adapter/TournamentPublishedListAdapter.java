@@ -3,7 +3,6 @@ package com.crilu.gothandroid.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +14,6 @@ import com.crilu.gothandroid.R;
 import com.crilu.gothandroid.model.firestore.Subscription;
 import com.crilu.gothandroid.model.firestore.Tournament;
 import com.crilu.gothandroid.utils.TournamentUtils;
-import com.crilu.opengotha.TournamentInterface;
 
 import java.util.List;
 
@@ -124,21 +122,14 @@ public class TournamentPublishedListAdapter extends RecyclerView.Adapter<Tournam
             boolean published = TournamentUtils.isPublished(selectedTournamentForContextMenu);
             boolean iAmOwner = TournamentUtils.isMeOwner(selectedTournamentForContextMenu);
 
-            boolean opened = false;
-            TournamentInterface currTournament = GothandroidApplication.getGothaModelInstance().getTournament();
-            if (currTournament != null && !TextUtils.isEmpty(selectedTournamentForContextMenu.getIdentity())
-                    && selectedTournamentForContextMenu.getIdentity().equals(currTournament.getTournamentIdentity())) {
-                opened = true;
-            }
-
             if (iAmOwner) {
                 menu.add(0, R.id.open, 0, v.getContext().getString(R.string.open));
                 menu.add(0, R.id.edit, 0, v.getContext().getString(R.string.edit));
             }
-            if (iAmOwner && !published && opened) {
+            if (iAmOwner && !published) {
                 menu.add(0, R.id.publish_tournament, 0, v.getContext().getString(R.string.publish_tournament));
             }
-            if (iAmOwner && published && opened) {
+            if (iAmOwner && published) {
                 menu.add(0, R.id.save_and_upload, 0, v.getContext().getString(R.string.save_and_upload_tournament));
                 menu.add(0, R.id.publish_results, 0, v.getContext().getString(R.string.publish_results));
                 menu.add(0, R.id.send_message_to_all, 0, v.getContext().getString(R.string.send_message_to_all));
