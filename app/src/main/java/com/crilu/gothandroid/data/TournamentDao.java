@@ -133,7 +133,7 @@ public class TournamentDao {
             fromDate = new Date();
         }
         DatabaseReference db = GothandroidApplication.getFireDatabase();
-        Query tournamentsQuery = db.child(TOURNAMENT_DOC_REF_PATH).child("creationDate/time").startAt(String.valueOf(fromDate.getTime()));
+        Query tournamentsQuery = db.child(TOURNAMENT_DOC_REF_PATH); //.child("beginDate/time").startAt(fromDate.getTime());
         tournamentsQuery.addListenerForSingleValueEvent(valueEventListener);
     }
 
@@ -155,6 +155,7 @@ public class TournamentDao {
         File file = TournamentUtils.getXmlFile(context, currentOpenedTournament);
         try {
             String tournamentContent = FileUtils.getFileContents(file);
+            Timber.d("tournament content +> %s", tournamentContent);
             tournamentModel.setContent(tournamentContent);
 
             String currUser = GothandroidApplication.getCurrentUser();
@@ -165,6 +166,7 @@ public class TournamentDao {
                 tournamentToSave.put(Tournament.SHORT_NAME, tournamentModel.getShortName());
                 tournamentToSave.put(Tournament.BEGIN_DATE, tournamentModel.getBeginDate());
                 tournamentToSave.put(Tournament.END_DATE, tournamentModel.getEndDate());
+                tournamentToSave.put(Tournament.CREATION_DATE, tournamentModel.getCreationDate());
                 tournamentToSave.put(Tournament.LOCATION, tournamentModel.getLocation());
                 tournamentToSave.put(Tournament.DIRECTOR, tournamentModel.getDirector());
                 tournamentToSave.put(Tournament.CONTENT, tournamentModel.getContent());

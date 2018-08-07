@@ -70,9 +70,9 @@ class GothaSyncTask {
                                 }
                                 fetchSubscriptions(Long.valueOf(id), tournamentIdentity, gothaContentResolver, tournamentSubscriptions);
                             }
-                            Timber.d("Tournaments sync with success");
-                            Timber.d("fetchTournaments took %s", (System.currentTimeMillis() - fetchTournamentsStartTime) / 1000);
                         }
+                        Timber.d("Tournaments sync with success");
+                        Timber.d("fetchTournaments took %s", (System.currentTimeMillis() - fetchTournamentsStartTime) / 1000);
                         NotificationUtils.notifyUserOfNewTournament(context, latestPublishedTournamentTime);
                     }
 
