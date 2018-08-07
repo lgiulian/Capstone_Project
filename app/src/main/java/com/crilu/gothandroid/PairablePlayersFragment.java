@@ -20,7 +20,6 @@ import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 
 public class PairablePlayersFragment extends Fragment {
 
-    private List<Vector<String>> mPairablePlayers;
     private PairablePlayerAdapter<Vector<String>> mPairablePlayersAdapter;
 
     public PairablePlayersFragment() {
@@ -33,7 +32,7 @@ public class PairablePlayersFragment extends Fragment {
 
         if (getActivity() != null) {
             PairViewModel mPairViewModel = ViewModelProviders.of(getActivity()).get(PairViewModel.class);
-            mPairablePlayers = mPairViewModel.getPairablePlayers();
+            List<Vector<String>> mPairablePlayers = mPairViewModel.getPairablePlayers();
 
             String[] tableHeaders = {getString(R.string.pairable_players_header_name),
                     getString(R.string.pairable_players_header_rank),

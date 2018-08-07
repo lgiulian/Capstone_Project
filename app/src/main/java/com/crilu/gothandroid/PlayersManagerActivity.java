@@ -28,8 +28,6 @@ import timber.log.Timber;
 public class PlayersManagerActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, AdapterView.OnItemClickListener,
         Tournament.OnTournamentChangeListener, PlayersManager.OnPlayerRegistrationListener {
 
-    private static final String TAG = PlayersManagerActivity.class.getSimpleName();
-
     private ActivityPlayersManagerBinding mBinding;
     private PlayersManagerViewModel mPlayersManagerViewModel;
 

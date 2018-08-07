@@ -24,7 +24,6 @@ import timber.log.Timber;
 public class TablesFragment extends Fragment {
 
     private PairViewModel mPairViewModel;
-    private List<Vector<String>> mTables;
     private TableAdapter<Vector<String>> mTablesAdapter;
 
     public TablesFragment() {
@@ -37,7 +36,7 @@ public class TablesFragment extends Fragment {
 
         if (getActivity() != null) {
             mPairViewModel = ViewModelProviders.of(getActivity()).get(PairViewModel.class);
-            mTables = mPairViewModel.getTables();
+            List<Vector<String>> mTables = mPairViewModel.getTables();
 
             String[] tableHeaders = {getString(R.string.tables_header_table),
                     getString(R.string.tables_header_white),

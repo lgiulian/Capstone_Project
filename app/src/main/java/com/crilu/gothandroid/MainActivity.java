@@ -53,9 +53,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import timber.log.Timber;
 
@@ -282,16 +280,6 @@ public class MainActivity extends AppCompatAdActivity
         Date creationDate = selectedTournament.getCreationDate() != null? selectedTournament.getCreationDate(): new Date();
         if (!TextUtils.isEmpty(currUser) && !TextUtils.isEmpty(selectedTournament.getContent())) {
             selectedTournament.setLastModificationDate(creationDate);
-            Map<String, Object> tournamentToSave = new HashMap<>();
-            tournamentToSave.put(Tournament.FULL_NAME, selectedTournament.getFullName());
-            tournamentToSave.put(Tournament.SHORT_NAME, selectedTournament.getShortName());
-            tournamentToSave.put(Tournament.BEGIN_DATE, selectedTournament.getBeginDate());
-            tournamentToSave.put(Tournament.LOCATION, selectedTournament.getLocation());
-            tournamentToSave.put(Tournament.DIRECTOR, selectedTournament.getDirector());
-            tournamentToSave.put(Tournament.CONTENT, selectedTournament.getContent());
-            tournamentToSave.put(Tournament.CREATOR, UID);
-            tournamentToSave.put(Tournament.CREATION_DATE, creationDate);
-            tournamentToSave.put(Tournament.LAST_MODIFICATION_DATE, creationDate);
             DatabaseReference db = GothandroidApplication.getFireDatabase();
             DatabaseReference tournamentRef = db.child(TOURNAMENT_DOC_REF_PATH).push();
             final String givenId = tournamentRef.getKey();
@@ -374,9 +362,7 @@ public class MainActivity extends AppCompatAdActivity
         String tournamentIdentity = selectedTournament.getIdentity();
         Timber.d("prepare to save results for tournament %s", tournamentIdentity);
 
-        Map<String, Object> resultToSave = new HashMap<>();
         String resultsHtml = getResultsHtml(selectedTournament);
-        resultToSave.put(Tournament.RESULT_CONTENT, resultsHtml);
         DatabaseReference db = GothandroidApplication.getFireDatabase();
         DatabaseReference resultsRef = db.child(RESULT_DOC_REF_PATH + "/" + tournamentIdentity + "/" + RESULT_DOC_ID_HTML + "/" + Tournament.RESULT_CONTENT);
         resultsRef.setValue(resultsHtml)
@@ -395,9 +381,7 @@ public class MainActivity extends AppCompatAdActivity
                     }
                 });
 
-        resultToSave.clear();
         String resultsH9 = getResultsH9(selectedTournament);
-        resultToSave.put(Tournament.RESULT_CONTENT, resultsH9);
         resultsRef = db.child(RESULT_DOC_REF_PATH + "/" + tournamentIdentity + "/" + RESULT_DOC_ID_H9 + "/" + Tournament.RESULT_CONTENT);
         resultsRef.setValue(resultsH9)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -466,14 +450,6 @@ public class MainActivity extends AppCompatAdActivity
                 GothaPreferences.getUserEgfPin(this), GothaPreferences.getUserFfgLic(this),
                 GothaPreferences.getUserAgaId(this), intention,
                 new Date(), Subscription.STATE_ACTIVE);
-        Map<String, Object> subscriptionToSave = new HashMap<>();
-        subscriptionToSave.put(Subscription.AGA_ID, subscription.getAgaId());
-        subscriptionToSave.put(Subscription.EGF_PIN, subscription.getEgfPin());
-        subscriptionToSave.put(Subscription.FFG_LIC, subscription.getFfgLic());
-        subscriptionToSave.put(Subscription.INTENT, subscription.getIntent());
-        subscriptionToSave.put(Subscription.STATE, subscription.getState());
-        subscriptionToSave.put(Subscription.SUBSCRIPTION_DATE, subscription.getSubscriptionDate());
-        subscriptionToSave.put(Subscription.UID, subscription.getUid());
         DatabaseReference db = GothandroidApplication.getFireDatabase();
         DatabaseReference subscriptionRef = db.child(SUBSCRIPTION_DOC_REF_PATH + "/" + selectedTournament.getIdentity()).push();
         final String givenId = subscriptionRef.getKey();
@@ -576,7 +552,7 @@ public class MainActivity extends AppCompatAdActivity
         startNewActivity(intent);
     }
 
-    public void displayMessageScreen() {
+    private void displayMessageScreen() {
         startNewActivity(new Intent(this, MessageActivity.class));
     }
 

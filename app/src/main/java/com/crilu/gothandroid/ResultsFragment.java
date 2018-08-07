@@ -24,7 +24,6 @@ import timber.log.Timber;
 public class ResultsFragment extends Fragment {
 
     private ResultViewModel mResultViewModel;
-    private List<Vector<String>> mGames;
     private TableAdapter<Vector<String>> mGamesAdapter;
 
     public ResultsFragment() {
@@ -37,7 +36,7 @@ public class ResultsFragment extends Fragment {
 
         if (getActivity() != null) {
             mResultViewModel = ViewModelProviders.of(getActivity()).get(ResultViewModel.class);
-            mGames = mResultViewModel.getGames();
+            List<Vector<String>> mGames = mResultViewModel.getGames();
 
             String[] tableHeaders = {getString(R.string.games_header_table),
                     getString(R.string.games_header_white),
