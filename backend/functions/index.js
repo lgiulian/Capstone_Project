@@ -18,31 +18,6 @@ exports.helloWorld = functions.https.onRequest((request, response) => {
  * Followers add a flag to `/tournament/{topic}/subscriber/{followerUid}`.
  * Users save their device notification tokens to `/user/{topic}/notificationTokens/{notificationToken}`.
  */
-exports.sendSubscriberNotification = functions.firestore
-    .document('/tournament/{topicId}/result/{docId}')
-    .onCreate((snap, context) => {
-      const topicId = context.params.topicId;
-      console.log('We have a new results published for tournament:', topicId);
-
-      var message = {
-        data: {
-          message: 'This is a notification with results published'
-        },
-        topic: topicId
-      };
-
-      // Send a message to devices subscribed to the provided topic.
-      return admin.messaging().send(message)
-        .then((response) => {
-          // Response is a message ID string.
-          console.log('Successfully sent message:', response);
-          return 0;
-        })
-        .catch((error) => {
-          console.log('Error sending message:', error);
-        });
-    });
-
 exports.sendSubscriberNotification_FDB = functions.database.ref('/result/{topicId}/{docId}')
     .onCreate((snap, context) => {
       const topicId = context.params.topicId;
@@ -66,54 +41,6 @@ exports.sendSubscriberNotification_FDB = functions.database.ref('/result/{topicI
           console.log('Error sending message:', error);
         });
     });
-
-exports.sendRegistrationNotification = functions.firestore
-    .document('/tournament/{topicId}/subscription/{docId}')
-    .onCreate((snap, context) => {
-      const newValue = snap.data();
-      const topicId = context.params.topicId;
-
-      if (newValue.intent !== 'participant') {
-        return 0;
-      }
-      console.log('We have a new registration for tournament:', topicId);
-
-      let creatorUid;
-      let creatorToken;
-      return admin.firestore()
-        .collection('tournament')
-        .doc(topicId)
-        .get()
-        .then(doc => {
-            creatorUid = doc.data().creator;
-            console.log('Got creator uid: ' + creatorUid);
-            return admin.firestore().collection('user').doc(creatorUid).get().then(snap => {
-              creatorToken = snap.data().token;
-              console.log('Got creator token: ' + creatorToken);
-              var message = {
-                data: {
-                  command: 'registration',
-                  tournament_name: doc.data().fullName,
-                  tournament_id: topicId,
-                  egf_pin: newValue.egfPin,
-                  message: 'This is a notification for a new registration'
-                },
-                token: creatorToken
-              };
-
-              // Send a message to tournament creator device.
-              return admin.messaging().send(message)
-                .then((response) => {
-                  // Response is a message ID string.
-                  console.log('Successfully sent message:', response);
-                  return 0;
-                })
-                .catch((error) => {
-                  console.log('Error sending message:', error);
-                });
-              });
-            });
-        });
 
 exports.sendRegistrationNotification_FDB = functions.database.ref('/subscription/{topicId}/{docId}')
     .onCreate((snap, context) => {
@@ -161,33 +88,6 @@ exports.sendRegistrationNotification_FDB = functions.database.ref('/subscription
               });
             });
         });
-
-exports.sendTournamentMessage = functions.firestore
-    .document('/tournament/{topicId}/message/{docId}')
-    .onCreate((snap, context) => {
-      const topicId = context.params.topicId;
-      const newMessage = snap.data();
-      console.log('We have a new message to participant in tournament:', topicId);
-
-      var message = {
-        data: {
-          message: newMessage.message,
-          tournament_name: newMessage.from
-        },
-        topic: topicId
-      };
-
-      // Send a message to devices subscribed to the provided topic.
-      return admin.messaging().send(message)
-        .then((response) => {
-          // Response is a message ID string.
-          console.log('Successfully sent message:', response);
-          return 0;
-        })
-        .catch((error) => {
-          console.log('Error sending message:', error);
-        });
-    });
 
 exports.sendTournamentMessage_FDB = functions.database.ref('/message/{topicId}/{docId}')
     .onCreate((snap, context) => {

@@ -23,9 +23,3 @@
 # When using Firebase Authentication in your app along with ProGuard add the following flags to your proguard-rules.pro file to ensure that your app works correctly:
 -keepattributes Signature
 -keepattributes *Annotation*
-
-# This rule will properly ProGuard all the model classes in
-# the package com.crilu.gothandroid.model.firestore
--keepclassmembers class com.crilu.gothandroid.model.firestore.** {
-  *;
-}
