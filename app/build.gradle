@@ -45,16 +45,18 @@ android {
     }
 }
 
+ext.supportLibraryVersion = '27.1.1'
+ext.androidArchLibraryVersion = '1.1.1'
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support:design:27.1.1'
+    implementation "com.android.support:appcompat-v7:$supportLibraryVersion"
+    implementation "com.android.support:design:$supportLibraryVersion"
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'android.arch.lifecycle:common:1.1.1'
-    implementation 'android.arch.lifecycle:runtime:1.1.1'
-    implementation 'android.arch.lifecycle:extensions:1.1.1'
-    annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
+    implementation "android.arch.lifecycle:common:$androidArchLibraryVersion"
+    implementation "android.arch.lifecycle:runtime:$androidArchLibraryVersion"
+    implementation "android.arch.lifecycle:extensions:$androidArchLibraryVersion"
+    annotationProcessor "android.arch.lifecycle:compiler:$androidArchLibraryVersion"
     implementation 'com.firebase:firebase-jobdispatcher:0.5.2'
     implementation 'com.google.firebase:firebase-core:16.0.1'
     implementation 'com.google.firebase:firebase-auth:16.0.2'

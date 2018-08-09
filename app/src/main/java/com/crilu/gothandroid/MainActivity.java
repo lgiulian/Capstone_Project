@@ -126,11 +126,6 @@ public class MainActivity extends AppCompatAdActivity
     }
 
     private void initialize() {
-        Intent parsePlayersIntent = new Intent(this, ParsePlayersIntentService.class);
-        startService(parsePlayersIntent);
-    }
-
-    private void setupViewModel() {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         Timber.d("Getting mCurrentUser");
         mCurrentUser = mAuth.getCurrentUser();
@@ -138,6 +133,15 @@ public class MainActivity extends AppCompatAdActivity
             Timber.d("Setting current user");
             GothandroidApplication.setCurrentUser(mCurrentUser.getUid());
         }
+        Intent parsePlayersIntent = new Intent(this, ParsePlayersIntentService.class);
+        startService(parsePlayersIntent);
+    }
+
+    /**
+     * Initialize the viewModel associated with this activity consisting mainly in populating the
+     * tournaments list
+     */
+    private void setupViewModel() {
         TournamentsViewModel mModel = ViewModelProviders.of(this).get(TournamentsViewModel.class);
         final Observer<List<Tournament>> listObserver = new Observer<List<Tournament>>() {
             @Override
