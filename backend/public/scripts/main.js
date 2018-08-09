@@ -12,8 +12,8 @@ function loadTournaments() {
     displayTournament(snap.key, data.fullName, data.location, data.beginDate, data.endDate);
   };
 
-  firebase.database().ref('/tournament/').limitToLast(100).on('child_added', callback);
-  firebase.database().ref('/tournament/').limitToLast(100).on('child_changed', callback);
+  firebase.database().ref('/tournament/').orderByChild('negativeBeginDate').limitToLast(100).on('child_added', callback);
+  firebase.database().ref('/tournament/').orderByChild('negativeBeginDate').limitToLast(100).on('child_changed', callback);
 }
 
 
