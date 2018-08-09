@@ -56,7 +56,8 @@
                 android:layout_marginTop="@dimen/default_margin"
                 android:dropDownWidth="@dimen/default_criterion_dropdown_width"
                 app:layout_constraintStart_toEndOf="@+id/barrier1"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/criterion_1"/>
 
             <Spinner
                 android:id="@+id/criterion2_spinner"
@@ -67,7 +68,8 @@
                 android:layout_marginTop="@dimen/default_margin"
                 android:dropDownWidth="@dimen/default_criterion_dropdown_width"
                 app:layout_constraintStart_toEndOf="@+id/barrier1"
-                app:layout_constraintTop_toBottomOf="@+id/criterion1_spinner" />
+                app:layout_constraintTop_toBottomOf="@+id/criterion1_spinner"
+                android:contentDescription="@string/criterion_2"/>
 
             <Spinner
                 android:id="@+id/criterion3_spinner"
@@ -78,7 +80,8 @@
                 android:layout_marginTop="@dimen/default_margin"
                 android:dropDownWidth="@dimen/default_criterion_dropdown_width"
                 app:layout_constraintStart_toEndOf="@+id/barrier1"
-                app:layout_constraintTop_toBottomOf="@+id/criterion2_spinner" />
+                app:layout_constraintTop_toBottomOf="@+id/criterion2_spinner"
+                android:contentDescription="@string/criterion_3"/>
 
             <Spinner
                 android:id="@+id/criterion4_spinner"
@@ -89,7 +92,8 @@
                 android:layout_marginTop="@dimen/default_margin"
                 android:dropDownWidth="@dimen/default_criterion_dropdown_width"
                 app:layout_constraintStart_toEndOf="@+id/barrier1"
-                app:layout_constraintTop_toBottomOf="@+id/criterion3_spinner" />
+                app:layout_constraintTop_toBottomOf="@+id/criterion3_spinner"
+                android:contentDescription="@string/criterion_4"/>
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/save_btn"
@@ -100,7 +104,8 @@
                 app:layout_constraintEnd_toStartOf="@+id/export_btn"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/criterion4_spinner" />
+                app:layout_constraintTop_toBottomOf="@+id/criterion4_spinner"
+                android:contentDescription="@string/save"/>
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/export_btn"
@@ -111,7 +116,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/save_btn"
-                app:layout_constraintTop_toBottomOf="@+id/criterion4_spinner" />
+                app:layout_constraintTop_toBottomOf="@+id/criterion4_spinner"
+                android:contentDescription="@string/export"/>
 
             <android.support.constraint.Barrier
                 android:id="@+id/barrier1"

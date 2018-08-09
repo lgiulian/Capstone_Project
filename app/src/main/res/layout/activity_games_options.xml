@@ -116,19 +116,22 @@
                     android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/basic_time_tv"
-                    app:layout_constraintTop_toBottomOf="@+id/basic_time">
+                    app:layout_constraintTop_toBottomOf="@+id/basic_time"
+                    android:contentDescription="@string/games_options_time_system">
 
                     <RadioButton
                         android:id="@+id/rb_sudden_death"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/sudden_death" />
+                        android:text="@string/sudden_death"
+                        android:contentDescription="@string/sudden_death"/>
 
                     <RadioButton
                         android:id="@+id/rb_standard"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/standard_byo_yomi" />
+                        android:text="@string/standard_byo_yomi"
+                        android:contentDescription="@string/standard_byo_yomi"/>
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -160,7 +163,8 @@
                         android:id="@+id/rb_canadian"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/canadian_byo_yomi" />
+                        android:text="@string/canadian_byo_yomi"
+                        android:contentDescription="@string/canadian_byo_yomi"/>
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -213,7 +217,8 @@
                         android:id="@+id/rb_fischer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/fischer" />
+                        android:text="@string/fischer"
+                        android:contentDescription="@string/fischer"/>
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -261,7 +266,8 @@
                     app:layout_constraintEnd_toStartOf="@+id/export_btn"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/egf_class_tv" />
+                    app:layout_constraintTop_toBottomOf="@+id/egf_class_tv"
+                    android:contentDescription="@string/save"/>
 
                 <android.support.v7.widget.AppCompatButton
                     android:id="@+id/export_btn"
@@ -272,7 +278,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/save_btn"
-                    app:layout_constraintTop_toBottomOf="@+id/egf_class_tv" />
+                    app:layout_constraintTop_toBottomOf="@+id/egf_class_tv"
+                    android:contentDescription="@string/export"/>
 
             </android.support.constraint.ConstraintLayout>
         </android.support.v4.widget.NestedScrollView>

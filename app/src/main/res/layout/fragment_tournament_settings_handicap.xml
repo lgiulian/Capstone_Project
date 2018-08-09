@@ -68,19 +68,22 @@
                 android:layout_marginStart="@dimen/default_left_right_padding"
                 android:orientation="vertical"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/handicap_based_on_tv">
+                app:layout_constraintTop_toBottomOf="@+id/handicap_based_on_tv"
+                android:contentDescription="@string/handicap_based_on">
 
                 <RadioButton
                     android:id="@+id/mcmahon_rb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/mcmahon_score" />
+                    android:text="@string/mcmahon_score"
+                    android:contentDescription="@string/mcmahon_score"/>
 
                 <RadioButton
                     android:id="@+id/rank_rb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/rank" />
+                    android:text="@string/rank"
+                    android:contentDescription="@string/rank"/>
             </RadioGroup>
 
             <TextView
@@ -99,37 +102,43 @@
                 android:layout_marginStart="@dimen/default_left_right_padding"
                 android:orientation="vertical"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/handicap_correction_tv">
+                app:layout_constraintTop_toBottomOf="@+id/handicap_correction_tv"
+                android:contentDescription="@string/handicap_correction">
 
                 <RadioButton
                     android:id="@+id/hnd_correction_rb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/handicap_not_corrected" />
+                    android:text="@string/handicap_not_corrected"
+                    android:contentDescription="@string/handicap_not_corrected"/>
 
                 <RadioButton
                     android:id="@+id/hnd_correction1_rb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/handicap_1" />
+                    android:text="@string/handicap_1"
+                    android:contentDescription="@string/handicap_1"/>
 
                 <RadioButton
                     android:id="@+id/hnd_correction2_rb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/handicap_2" />
+                    android:text="@string/handicap_2"
+                    android:contentDescription="@string/handicap_2"/>
 
                 <RadioButton
                     android:id="@+id/hnd_correction3_rb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/handicap_3" />
+                    android:text="@string/handicap_3"
+                    android:contentDescription="@string/handicap_3"/>
 
                 <RadioButton
                     android:id="@+id/hnd_correction_plus1_rb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/handicap_plus_1" />
+                    android:text="@string/handicap_plus_1"
+                    android:contentDescription="@string/handicap_plus_1"/>
             </RadioGroup>
 
             <android.support.v7.widget.AppCompatButton
@@ -141,7 +150,8 @@
                 app:layout_constraintEnd_toStartOf="@+id/export_btn"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/radioGroup_handicap_correction" />
+                app:layout_constraintTop_toBottomOf="@+id/radioGroup_handicap_correction"
+                android:contentDescription="@string/save"/>
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/export_btn"
@@ -152,7 +162,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/save_btn"
-                app:layout_constraintTop_toBottomOf="@+id/radioGroup_handicap_correction" />
+                app:layout_constraintTop_toBottomOf="@+id/radioGroup_handicap_correction"
+                android:contentDescription="@string/export"/>
 
         </android.support.constraint.ConstraintLayout>
     </android.support.v4.widget.NestedScrollView>

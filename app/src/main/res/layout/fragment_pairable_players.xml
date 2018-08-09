@@ -33,5 +33,6 @@
         android:layout_alignParentBottom="true"
         android:layout_below="@id/players_table"
         android:onClick="onClickPair"
+        android:contentDescription="@string/pair_label"
         />
 </RelativeLayout>

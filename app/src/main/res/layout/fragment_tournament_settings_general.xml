@@ -130,7 +130,8 @@
                 app:layout_constraintBottom_toBottomOf="@+id/tournament_begin_date"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tournament_begin_date"
-                app:srcCompat="@drawable/ic_date" />
+                app:srcCompat="@drawable/ic_date"
+                android:contentDescription="@string/tournament_begin_date"/>
 
             <android.support.v7.widget.AppCompatImageButton
                 android:id="@+id/end_date_picker_btn"
@@ -138,7 +139,8 @@
                 app:layout_constraintBottom_toBottomOf="@+id/tournament_end_date"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tournament_end_date"
-                app:srcCompat="@drawable/ic_date" />
+                app:srcCompat="@drawable/ic_date"
+                android:contentDescription="@string/tournament_end_date"/>
 
             <TextView
                 android:id="@+id/tournament_number_of_rounds_tv"
@@ -190,7 +192,8 @@
                 android:orientation="horizontal"
                 android:weightSum="3"
                 app:layout_constraintLeft_toRightOf="@+id/tournament_nbw_absent_tv"
-                app:layout_constraintTop_toBottomOf="@+id/tournament_special_results_tv">
+                app:layout_constraintTop_toBottomOf="@+id/tournament_special_results_tv"
+                android:contentDescription="@string/tournament_nbw_absent">
 
                 <RadioButton
                     android:id="@+id/nbwAbsentButton1"
@@ -198,7 +201,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="0"
-                    tools:ignore="HardcodedText" />
+                    tools:ignore="HardcodedText"
+                    android:contentDescription="0"/>
 
                 <RadioButton
                     android:id="@+id/nbwAbsentButton2"
@@ -206,7 +210,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="½"
-                    tools:ignore="HardcodedText"/>
+                    tools:ignore="HardcodedText"
+                    android:contentDescription="@string/all_half_point"/>
 
                 <RadioButton
                     android:id="@+id/nbwAbsentButton3"
@@ -214,7 +219,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="1"
-                    tools:ignore="HardcodedText"/>
+                    tools:ignore="HardcodedText"
+                    android:contentDescription="1"/>
             </RadioGroup>
 
             <TextView
@@ -236,7 +242,8 @@
                 android:orientation="horizontal"
                 android:weightSum="3"
                 app:layout_constraintLeft_toRightOf="@+id/tournament_mms_absent_tv"
-                app:layout_constraintTop_toBottomOf="@+id/radioGroup_nbw_absent">
+                app:layout_constraintTop_toBottomOf="@+id/radioGroup_nbw_absent"
+                android:contentDescription="@string/tournament_mms_absent">
 
                 <RadioButton
                     android:id="@+id/mmsAbsentButton1"
@@ -244,7 +251,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="0"
-                    tools:ignore="HardcodedText"/>
+                    tools:ignore="HardcodedText"
+                    android:contentDescription="0"/>
 
                 <RadioButton
                     android:id="@+id/mmsAbsentButton2"
@@ -252,7 +260,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="½"
-                    tools:ignore="HardcodedText"/>
+                    tools:ignore="HardcodedText"
+                    android:contentDescription="@string/all_half_point"/>
 
                 <RadioButton
                     android:id="@+id/mmsAbsentButton3"
@@ -260,7 +269,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="1"
-                    tools:ignore="HardcodedText"/>
+                    tools:ignore="HardcodedText"
+                    android:contentDescription="1"/>
             </RadioGroup>
 
             <TextView
@@ -282,7 +292,8 @@
                 android:orientation="horizontal"
                 android:weightSum="3"
                 app:layout_constraintLeft_toRightOf="@+id/tournament_nbw_bye_tv"
-                app:layout_constraintTop_toBottomOf="@+id/radioGroup_mms_absent">
+                app:layout_constraintTop_toBottomOf="@+id/radioGroup_mms_absent"
+                android:contentDescription="@string/tournament_nbw_bye">
 
                 <RadioButton
                     android:id="@+id/nbwByeButton1"
@@ -290,7 +301,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="0"
-                    tools:ignore="HardcodedText"/>
+                    tools:ignore="HardcodedText"
+                    android:contentDescription="0"/>
 
                 <RadioButton
                     android:id="@+id/nbwByeButton2"
@@ -298,7 +310,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="½"
-                    tools:ignore="HardcodedText"/>
+                    tools:ignore="HardcodedText"
+                    android:contentDescription="@string/all_half_point"/>
 
                 <RadioButton
                     android:id="@+id/nbwByeButton3"
@@ -306,7 +319,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="1"
-                    tools:ignore="HardcodedText"/>
+                    tools:ignore="HardcodedText"
+                    android:contentDescription="1"/>
             </RadioGroup>
 
             <TextView
@@ -328,7 +342,8 @@
                 android:orientation="horizontal"
                 android:weightSum="3"
                 app:layout_constraintLeft_toRightOf="@+id/tournament_mms_bye_tv"
-                app:layout_constraintTop_toBottomOf="@+id/tournament_nbw_bye_tv">
+                app:layout_constraintTop_toBottomOf="@+id/tournament_nbw_bye_tv"
+                android:contentDescription="@string/tournament_mms_bye">
 
                 <RadioButton
                     android:id="@+id/mmsByeButton1"
@@ -336,7 +351,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="0"
-                    tools:ignore="HardcodedText"/>
+                    tools:ignore="HardcodedText"
+                    android:contentDescription="0"/>
 
                 <RadioButton
                     android:id="@+id/mmsByeButton2"
@@ -344,7 +360,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="½"
-                    tools:ignore="HardcodedText"/>
+                    tools:ignore="HardcodedText"
+                    android:contentDescription="@string/all_half_point"/>
 
                 <RadioButton
                     android:id="@+id/mmsByeButton3"
@@ -352,7 +369,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="1"
-                    tools:ignore="HardcodedText" />
+                    tools:ignore="HardcodedText"
+                    android:contentDescription="1"/>
             </RadioGroup>
 
             <CheckBox
@@ -363,7 +381,8 @@
                 android:layout_marginStart="@dimen/default_margin"
                 android:text="@string/round_down_nbw_and_mms_scores"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/radioGroup_mms_bye" />
+                app:layout_constraintTop_toBottomOf="@+id/radioGroup_mms_bye"
+                android:contentDescription="@string/round_down_nbw_and_mms_scores"/>
 
             <TextView
                 android:id="@+id/tournament_mcmahon_system_tv"
@@ -435,7 +454,8 @@
                 app:layout_constraintEnd_toStartOf="@+id/export_btn"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/mcmahon_zero" />
+                app:layout_constraintTop_toBottomOf="@+id/mcmahon_zero"
+                android:contentDescription="@string/save"/>
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/export_btn"
@@ -446,7 +466,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/save_btn"
-                app:layout_constraintTop_toBottomOf="@+id/mcmahon_zero" />
+                app:layout_constraintTop_toBottomOf="@+id/mcmahon_zero"
+                android:contentDescription="@string/export"/>
 
         </android.support.constraint.ConstraintLayout>
     </android.support.v4.widget.NestedScrollView>

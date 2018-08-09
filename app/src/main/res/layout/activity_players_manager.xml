@@ -52,7 +52,7 @@
                 android:layout_marginTop="@dimen/default_margin"
                 android:layout_centerHorizontal="true"
                 android:text="@string/players_manager_register_new"
-                 />
+                android:contentDescription="@string/players_manager_register_new" />
 
             <TextView
                 android:id="@+id/players_table_label"

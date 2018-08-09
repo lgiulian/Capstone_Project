@@ -14,13 +14,15 @@
     <Spinner
         android:id="@+id/tournaments_spinner"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/configure"/>
 
     <Button
         android:id="@+id/add_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_margin"
-        android:text="@string/add_widget" />
+        android:text="@string/add_widget"
+        android:contentDescription="@string/add_widget"/>
 
 </LinearLayout>

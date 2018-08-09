@@ -156,7 +156,8 @@
                 android:onClick="sendProfilePhoto"
                 app:layout_constraintBottom_toBottomOf="@+id/profile_btn"
                 app:layout_constraintStart_toEndOf="@+id/barrier1"
-                app:layout_constraintTop_toTopOf="@+id/profile_btn" />
+                app:layout_constraintTop_toTopOf="@+id/profile_btn"
+                android:contentDescription="@string/send_to_egd"/>
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/login_btn"
@@ -167,7 +168,8 @@
                 android:text="@string/login_to_gotha"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/profile_btn" />
+                app:layout_constraintTop_toBottomOf="@+id/profile_btn"
+                android:contentDescription="@string/login_to_gotha"/>
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/logout_btn"
@@ -178,7 +180,8 @@
                 android:text="@string/logout_from_gotha"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/login_btn" />
+                app:layout_constraintTop_toBottomOf="@+id/login_btn"
+                android:contentDescription="@string/logout_from_gotha"/>
 
         </android.support.constraint.ConstraintLayout>
     </android.support.design.widget.CoordinatorLayout>
