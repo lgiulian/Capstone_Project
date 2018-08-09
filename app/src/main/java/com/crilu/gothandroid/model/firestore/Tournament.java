@@ -11,6 +11,7 @@ public class Tournament {
     public static final String SHORT_NAME = "shortName";
     public static final String CONTENT = "content";
     public static final String BEGIN_DATE = "beginDate";
+    public static final String NEGATIVE_BEGIN_DATE = "negativeBeginDate";
     public static final String END_DATE = "endDate";
     public static final String LOCATION = "location";
     public static final String DIRECTOR = "director";
@@ -24,6 +25,7 @@ public class Tournament {
     private String fullName;
     private String shortName;
     private Date beginDate;
+    private Long negativeBeginDate;
     private Date endDate;
     private String location;
     private String director;
@@ -73,6 +75,14 @@ public class Tournament {
 
     public void setBeginDate(Date beginDate) {
         this.beginDate = beginDate;
+    }
+
+    public Long getNegativeBeginDate() {
+        return negativeBeginDate;
+    }
+
+    public void setNegativeBeginDate(Long negativeBeginDate) {
+        this.negativeBeginDate = negativeBeginDate;
     }
 
     public Date getEndDate() {

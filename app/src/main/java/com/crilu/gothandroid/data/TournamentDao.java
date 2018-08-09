@@ -165,6 +165,7 @@ public class TournamentDao {
                 tournamentToSave.put(Tournament.FULL_NAME, tournamentModel.getFullName());
                 tournamentToSave.put(Tournament.SHORT_NAME, tournamentModel.getShortName());
                 tournamentToSave.put(Tournament.BEGIN_DATE, tournamentModel.getBeginDate());
+                tournamentToSave.put(Tournament.NEGATIVE_BEGIN_DATE, tournamentModel.getBeginDate() != null? -tournamentModel.getBeginDate().getTime(): Long.MIN_VALUE);
                 tournamentToSave.put(Tournament.END_DATE, tournamentModel.getEndDate());
                 tournamentToSave.put(Tournament.CREATION_DATE, tournamentModel.getCreationDate());
                 tournamentToSave.put(Tournament.LOCATION, tournamentModel.getLocation());
