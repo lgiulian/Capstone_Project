@@ -73,8 +73,12 @@ public class PairActivity extends AppCompatActivity implements GamesPair.OnPairL
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String roundSelectedStr = mBinding.form.pairRoundNoSpinner.getItemAtPosition(position).toString();
-                Timber.d("selected round %s", roundSelectedStr);
-                mGamesPair.setSpnRoundNumber(Integer.valueOf(roundSelectedStr));
+                if (mGamesPair != null) {
+                    Timber.d("selected round %s", roundSelectedStr);
+                    mGamesPair.setSpnRoundNumber(Integer.valueOf(roundSelectedStr));
+                } else {
+                    Timber.e("GamesPair instance is null");
+                }
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) { }

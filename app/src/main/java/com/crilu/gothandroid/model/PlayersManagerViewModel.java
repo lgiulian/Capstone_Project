@@ -6,6 +6,7 @@ import com.crilu.gothandroid.GothandroidApplication;
 import com.crilu.opengotha.Player;
 import com.crilu.opengotha.model.PlayersManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PlayersManagerViewModel extends ViewModel {
@@ -20,6 +21,10 @@ public class PlayersManagerViewModel extends ViewModel {
     }
 
     public List<Player> getPlayersList() {
-        return GothandroidApplication.getGothaModelInstance().getTournament().playersList();
+        List<Player> players = new ArrayList<>();
+        if (GothandroidApplication.getGothaModelInstance() != null && GothandroidApplication.getGothaModelInstance().getTournament() != null) {
+            players = GothandroidApplication.getGothaModelInstance().getTournament().playersList();
+        }
+        return players;
     }
 }

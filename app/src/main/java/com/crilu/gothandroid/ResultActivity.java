@@ -58,8 +58,12 @@ public class ResultActivity extends AppCompatActivity implements GamesResults.Ga
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String roundSelectedStr = mBinding.roundNoSpinner.getItemAtPosition(position).toString();
-                Timber.d("selected round %s", roundSelectedStr);
-                mResultViewModel.getGamesResults().setSpnRoundNumber(Integer.valueOf(roundSelectedStr));
+                if (mResultViewModel.getGamesResults() != null) {
+                    Timber.d("selected round %s", roundSelectedStr);
+                    mResultViewModel.getGamesResults().setSpnRoundNumber(Integer.valueOf(roundSelectedStr));
+                } else {
+                    Timber.e("GamesResults instance is null");
+                }
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) { }
@@ -70,13 +74,21 @@ public class ResultActivity extends AppCompatActivity implements GamesResults.Ga
     @Override
     protected void onResume() {
         super.onResume();
-        mResultViewModel.getGamesResults().addGamesResultsListener(this);
+        if (mResultViewModel.getGamesResults() != null) {
+            mResultViewModel.getGamesResults().addGamesResultsListener(this);
+        } else {
+            Timber.e("GamesResults instance is null");
+        }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        mResultViewModel.getGamesResults().removeGamesResultsListener(this);
+        if (mResultViewModel.getGamesResults() != null) {
+            mResultViewModel.getGamesResults().removeGamesResultsListener(this);
+        } else {
+            Timber.e("GamesResults instance is null");
+        }
     }
 
     private void setupFragments() {

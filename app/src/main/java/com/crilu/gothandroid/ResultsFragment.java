@@ -63,7 +63,11 @@ public class ResultsFragment extends Fragment {
         public void onDataClicked(int rowIndex, Vector<String> clickedData) {
             Timber.d("game %s at position %s", clickedData.get(1), rowIndex);
             // mimic clicking on result column
-            mResultViewModel.getGamesResults().tblGamesMousePressed(rowIndex, GamesResults.RESULT_COL);
+            if (mResultViewModel.getGamesResults() != null) {
+                mResultViewModel.getGamesResults().tblGamesMousePressed(rowIndex, GamesResults.RESULT_COL);
+            } else {
+                Timber.e("GamesResults instance is null");
+            }
         }
     }
 

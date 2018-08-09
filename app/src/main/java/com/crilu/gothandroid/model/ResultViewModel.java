@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import com.crilu.gothandroid.GothandroidApplication;
 import com.crilu.opengotha.model.GamesResults;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -24,7 +25,11 @@ public class ResultViewModel extends AndroidViewModel {
     }
 
     public List<Vector<String>> getGames() {
-        return mGamesResults.getTblGames();
+        List<Vector<String>> games = new ArrayList<>();
+        if (mGamesResults != null) {
+            games = mGamesResults.getTblGames();
+        }
+        return games;
     }
 
 }

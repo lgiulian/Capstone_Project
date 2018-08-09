@@ -65,7 +65,11 @@ public class TablesFragment extends Fragment {
             ArrayList<Integer> selectedTables = new ArrayList<>();
             int selectedTable = Integer.parseInt(clickedTable.get(0));
             selectedTables.add(selectedTable);
-            mPairViewModel.getGamesPair().unpair(selectedTables);
+            if (mPairViewModel.getGamesPair() != null) {
+                mPairViewModel.getGamesPair().unpair(selectedTables);
+            } else {
+                Timber.e("GamesPair instance is null");
+            }
             return true;
         }
     }

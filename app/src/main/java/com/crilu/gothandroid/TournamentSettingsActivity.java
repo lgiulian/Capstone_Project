@@ -66,20 +66,24 @@ public class TournamentSettingsActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
-        // Set up the ViewPager with the sections adapter.
-        ViewPager mViewPager = findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-
-        TabLayout tabLayout = findViewById(R.id.tabs);
-
-        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
-
         init();
+
+        if (mTournamentOptionViewModel.getTournamentOptions() != null) {
+            // Create the adapter that will return a fragment for each of the three
+            // primary sections of the activity.
+            SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+            // Set up the ViewPager with the sections adapter.
+            ViewPager mViewPager = findViewById(R.id.container);
+            mViewPager.setAdapter(mSectionsPagerAdapter);
+
+            TabLayout tabLayout = findViewById(R.id.tabs);
+
+            mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+            tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+        } else {
+            Timber.e("TournamentOptions instance is null");
+        }
     }
 
     private void init() {
@@ -97,28 +101,32 @@ public class TournamentSettingsActivity extends AppCompatActivity {
 
     private void saveAndUploadOnFirestore() {
         TournamentOptions tournamentOptions = mTournamentOptionViewModel.getTournamentOptions();
-        TournamentInterface tournamentGotha = tournamentOptions.getTournament();
-        if (tournamentGotha == null) {
-            Snackbar.make(mBinding.mainContent, getString(R.string.no_tournament_selected), Snackbar.LENGTH_LONG).show();
-            return;
-        }
-        String UID = checkUserLoggedIn();
-        if (TextUtils.isEmpty(UID)) return;
-
-        if (!TextUtils.isEmpty(tournamentGotha.getTournamentIdentity())) {
-            Timber.d("saving tournament %s", tournamentGotha.getTournamentIdentity());
-            Tournament tournament = TournamentDao.getTournamentByIdentity(this, tournamentGotha.getTournamentIdentity());
-            tournament.setFullName(tournamentGotha.getFullName());
-            tournament.setShortName(tournamentGotha.getShortName());
-            tournament.setLocation(tournamentOptions.txfLocation);
-            tournament.setDirector(tournamentOptions.txfDirector);
-            try {
-                tournament.setBeginDate(GothandroidApplication.dateFormat.parse(tournamentOptions.txfBeginDate));
-                tournament.setEndDate(GothandroidApplication.dateFormat.parse(tournamentOptions.txfEndDate));
-            } catch (ParseException e) {
-                e.printStackTrace();
+        if (tournamentOptions != null) {
+            TournamentInterface tournamentGotha = tournamentOptions.getTournament();
+            if (tournamentGotha == null) {
+                Snackbar.make(mBinding.mainContent, getString(R.string.no_tournament_selected), Snackbar.LENGTH_LONG).show();
+                return;
             }
-            TournamentDao.saveCurrentTournamentAndUploadOnFirestore(this, tournament, UID, true, mBinding.mainContent);
+            String UID = checkUserLoggedIn();
+            if (TextUtils.isEmpty(UID)) return;
+
+            if (!TextUtils.isEmpty(tournamentGotha.getTournamentIdentity())) {
+                Timber.d("saving tournament %s", tournamentGotha.getTournamentIdentity());
+                Tournament tournament = TournamentDao.getTournamentByIdentity(this, tournamentGotha.getTournamentIdentity());
+                tournament.setFullName(tournamentGotha.getFullName());
+                tournament.setShortName(tournamentGotha.getShortName());
+                tournament.setLocation(tournamentOptions.txfLocation);
+                tournament.setDirector(tournamentOptions.txfDirector);
+                try {
+                    tournament.setBeginDate(GothandroidApplication.dateFormat.parse(tournamentOptions.txfBeginDate));
+                    tournament.setEndDate(GothandroidApplication.dateFormat.parse(tournamentOptions.txfEndDate));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                TournamentDao.saveCurrentTournamentAndUploadOnFirestore(this, tournament, UID, true, mBinding.mainContent);
+            }
+        } else {
+            Timber.e("TournamentOptions instance is null");
         }
     }
 

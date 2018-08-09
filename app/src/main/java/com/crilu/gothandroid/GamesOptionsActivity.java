@@ -43,13 +43,21 @@ public class GamesOptionsActivity extends AppCompatActivity implements GamesOpti
     @Override
     protected void onResume() {
         super.onResume();
-        mGameOptionViewModel.getGameOptions().addOnGamesOptionsListener(this);
+        if (mGameOptionViewModel.getGameOptions() != null) {
+            mGameOptionViewModel.getGameOptions().addOnGamesOptionsListener(this);
+        } else {
+            Timber.e("GamesOptions instance is null");
+        }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        mGameOptionViewModel.getGameOptions().removeOnGamesOptionsListener(this);
+        if (mGameOptionViewModel.getGameOptions() != null) {
+            mGameOptionViewModel.getGameOptions().removeOnGamesOptionsListener(this);
+        } else {
+            Timber.e("GamesOptions instance is null");
+        }
     }
 
     private void init() {
@@ -72,34 +80,38 @@ public class GamesOptionsActivity extends AppCompatActivity implements GamesOpti
 
     @SuppressLint("SetTextI18n")
     private void customInitComponents() {
-        TournamentInterface tournament = mGameOptionViewModel.getGameOptions().getTournament();
-        GeneralParameterSet gps = tournament.getTournamentParameterSet().getGeneralParameterSet();
-        mBinding.gobanSize.setText(gps.getStrSize());
-        mBinding.komi.setText(gps.getStrKomi());
+        if (mGameOptionViewModel.getGameOptions() != null) {
+            TournamentInterface tournament = mGameOptionViewModel.getGameOptions().getTournament();
+            GeneralParameterSet gps = tournament.getTournamentParameterSet().getGeneralParameterSet();
+            mBinding.gobanSize.setText(gps.getStrSize());
+            mBinding.komi.setText(gps.getStrKomi());
 
-        mBinding.basicTime.setText("" + gps.getBasicTime());
+            mBinding.basicTime.setText("" + gps.getBasicTime());
 
-        int complTimeSystem = gps.getComplementaryTimeSystem();
+            int complTimeSystem = gps.getComplementaryTimeSystem();
 
-        switch (complTimeSystem) {
-            case GeneralParameterSet.GEN_GP_CTS_SUDDENDEATH:
-                mBinding.rbSuddenDeath.setChecked(true);
-                break;
-            case GeneralParameterSet.GEN_GP_CTS_STDBYOYOMI:
-                mBinding.rbStandard.setChecked(true);
-                break;
-            case GeneralParameterSet.GEN_GP_CTS_CANBYOYOMI:
-                mBinding.rbCanadian.setChecked(true);
-                break;
-            case GeneralParameterSet.GEN_GP_CTS_FISCHER:
-                mBinding.rbFischer.setChecked(true);
-                break;
+            switch (complTimeSystem) {
+                case GeneralParameterSet.GEN_GP_CTS_SUDDENDEATH:
+                    mBinding.rbSuddenDeath.setChecked(true);
+                    break;
+                case GeneralParameterSet.GEN_GP_CTS_STDBYOYOMI:
+                    mBinding.rbStandard.setChecked(true);
+                    break;
+                case GeneralParameterSet.GEN_GP_CTS_CANBYOYOMI:
+                    mBinding.rbCanadian.setChecked(true);
+                    break;
+                case GeneralParameterSet.GEN_GP_CTS_FISCHER:
+                    mBinding.rbFischer.setChecked(true);
+                    break;
+            }
+
+            mBinding.standardTimeSeconds.setText("" + gps.getStdByoYomiTime());
+            mBinding.canadianMoves.setText("" + gps.getNbMovesCanTime());
+            mBinding.canadianTimeSeconds.setText("" + gps.getCanByoYomiTime());
+            mBinding.fisherBonusTime.setText("" + gps.getFischerTime());
+        } else {
+            Timber.e("GamesOptions instance is null");
         }
-
-        mBinding.standardTimeSeconds.setText("" + gps.getStdByoYomiTime());
-        mBinding.canadianMoves.setText("" + gps.getNbMovesCanTime());
-        mBinding.canadianTimeSeconds.setText("" + gps.getCanByoYomiTime());
-        mBinding.fisherBonusTime.setText("" + gps.getFischerTime());
     }
 
     private String checkUserLoggedIn() {
@@ -113,18 +125,22 @@ public class GamesOptionsActivity extends AppCompatActivity implements GamesOpti
 
     private void saveAndUploadOnFirestore() {
         GamesOptions gamesOptions = mGameOptionViewModel.getGameOptions();
-        TournamentInterface tournamentGotha = gamesOptions.getTournament();
-        if (tournamentGotha == null) {
-            Snackbar.make(mBinding.coordinatorLayout, getString(R.string.no_tournament_selected), Snackbar.LENGTH_LONG).show();
-            return;
-        }
-        String UID = checkUserLoggedIn();
-        if (TextUtils.isEmpty(UID)) return;
+        if (gamesOptions != null) {
+            TournamentInterface tournamentGotha = gamesOptions.getTournament();
+            if (tournamentGotha == null) {
+                Snackbar.make(mBinding.coordinatorLayout, getString(R.string.no_tournament_selected), Snackbar.LENGTH_LONG).show();
+                return;
+            }
+            String UID = checkUserLoggedIn();
+            if (TextUtils.isEmpty(UID)) return;
 
-        if (!TextUtils.isEmpty(tournamentGotha.getTournamentIdentity())) {
-            Timber.d("saving tournament %s", tournamentGotha.getTournamentIdentity());
-            Tournament tournament = TournamentDao.getTournamentByIdentity(this, tournamentGotha.getTournamentIdentity());
-            TournamentDao.saveCurrentTournamentAndUploadOnFirestore(this, tournament, UID, true, mBinding.coordinatorLayout);
+            if (!TextUtils.isEmpty(tournamentGotha.getTournamentIdentity())) {
+                Timber.d("saving tournament %s", tournamentGotha.getTournamentIdentity());
+                Tournament tournament = TournamentDao.getTournamentByIdentity(this, tournamentGotha.getTournamentIdentity());
+                TournamentDao.saveCurrentTournamentAndUploadOnFirestore(this, tournament, UID, true, mBinding.coordinatorLayout);
+            }
+        } else {
+            Timber.e("GamesOptions instance is null");
         }
     }
 
@@ -146,35 +162,39 @@ public class GamesOptionsActivity extends AppCompatActivity implements GamesOpti
     public void onFocusChange(View v, boolean hasFocus) {
         int id = v.getId();
         GamesOptions gamesOptions = mGameOptionViewModel.getGameOptions();
-        switch (id) {
-            case R.id.goban_size:
-                gamesOptions.txfSize = mBinding.gobanSize.getText().toString();
-                gamesOptions.txfSizeFocusLost();
-                break;
-            case R.id.komi:
-                gamesOptions.txfKomi = mBinding.komi.getText().toString();
-                gamesOptions.txfKomiFocusLost();
-                break;
-            case R.id.basic_time:
-                gamesOptions.txfBasicTime = mBinding.basicTime.getText().toString();
-                gamesOptions.txfBasicTimeFocusLost();
-                break;
-            case R.id.standard_time_seconds:
-                gamesOptions.txfStdTime = mBinding.standardTimeSeconds.getText().toString();
-                gamesOptions.txfStdTimeFocusLost();
-                break;
-            case R.id.canadian_moves:
-                gamesOptions.txfCanNbMoves = mBinding.canadianMoves.getText().toString();
-                gamesOptions.txfCanNbMovesFocusLost();
-                break;
-            case R.id.canadian_time_seconds:
-                gamesOptions.txfCanTime = mBinding.canadianTimeSeconds.getText().toString();
-                gamesOptions.txfCanTimeFocusLost();
-                break;
-            case R.id.fisher_bonus_time:
-                gamesOptions.txfFischerTime = mBinding.fisherBonusTime.getText().toString();
-                gamesOptions.txfFischerTimeFocusLost();
-                break;
+        if (gamesOptions != null) {
+            switch (id) {
+                case R.id.goban_size:
+                    gamesOptions.txfSize = mBinding.gobanSize.getText().toString();
+                    gamesOptions.txfSizeFocusLost();
+                    break;
+                case R.id.komi:
+                    gamesOptions.txfKomi = mBinding.komi.getText().toString();
+                    gamesOptions.txfKomiFocusLost();
+                    break;
+                case R.id.basic_time:
+                    gamesOptions.txfBasicTime = mBinding.basicTime.getText().toString();
+                    gamesOptions.txfBasicTimeFocusLost();
+                    break;
+                case R.id.standard_time_seconds:
+                    gamesOptions.txfStdTime = mBinding.standardTimeSeconds.getText().toString();
+                    gamesOptions.txfStdTimeFocusLost();
+                    break;
+                case R.id.canadian_moves:
+                    gamesOptions.txfCanNbMoves = mBinding.canadianMoves.getText().toString();
+                    gamesOptions.txfCanNbMovesFocusLost();
+                    break;
+                case R.id.canadian_time_seconds:
+                    gamesOptions.txfCanTime = mBinding.canadianTimeSeconds.getText().toString();
+                    gamesOptions.txfCanTimeFocusLost();
+                    break;
+                case R.id.fisher_bonus_time:
+                    gamesOptions.txfFischerTime = mBinding.fisherBonusTime.getText().toString();
+                    gamesOptions.txfFischerTimeFocusLost();
+                    break;
+            }
+        } else {
+            Timber.e("GamesOptions instance is null");
         }
     }
 
@@ -195,14 +215,18 @@ public class GamesOptionsActivity extends AppCompatActivity implements GamesOpti
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         int id = group.getId();
         GamesOptions gamesOptions = mGameOptionViewModel.getGameOptions();
-        switch (id) {
-            case R.id.radioGroup_time_system:
-                gamesOptions.rdbSuddenDeath = mBinding.rbSuddenDeath.isChecked();
-                gamesOptions.rdbStdByoYomi = mBinding.rbStandard.isChecked();
-                gamesOptions.rdbCanByoYomi = mBinding.rbCanadian.isChecked();
-                gamesOptions.rdbFischer = mBinding.rbFischer.isChecked();
-                gamesOptions.rdbComplTimeSystemActionPerformed();
-                break;
+        if (gamesOptions != null) {
+            switch (id) {
+                case R.id.radioGroup_time_system:
+                    gamesOptions.rdbSuddenDeath = mBinding.rbSuddenDeath.isChecked();
+                    gamesOptions.rdbStdByoYomi = mBinding.rbStandard.isChecked();
+                    gamesOptions.rdbCanByoYomi = mBinding.rbCanadian.isChecked();
+                    gamesOptions.rdbFischer = mBinding.rbFischer.isChecked();
+                    gamesOptions.rdbComplTimeSystemActionPerformed();
+                    break;
+            }
+        } else {
+            Timber.e("GamesOptions instance is null");
         }
     }
 }

@@ -537,6 +537,9 @@ public class MainActivity extends AppCompatAdActivity
     }
 
     private void displayResults() {
+        final TournamentInterface tournament = checkTournamentOpened();
+        if (tournament == null) return;
+
         startNewActivity(new Intent(this, ResultActivity.class));
     }
 

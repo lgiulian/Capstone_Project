@@ -55,15 +55,23 @@ public class PlayersManagerActivity extends AppCompatActivity implements Adapter
     @Override
     protected void onResume() {
         super.onResume();
-        mPlayersManager.setTournamentChangeListener(this);
-        mPlayersManager.setPlayerRegistrationListener(this);
+        if (mPlayersManager != null) {
+            mPlayersManager.setTournamentChangeListener(this);
+            mPlayersManager.setPlayerRegistrationListener(this);
+        } else {
+            Timber.e("PlayersManager instance is null");
+        }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        mPlayersManager.setTournamentChangeListener(null);
-        mPlayersManager.setPlayerRegistrationListener(null);
+        if (mPlayersManager != null) {
+            mPlayersManager.setTournamentChangeListener(null);
+            mPlayersManager.setPlayerRegistrationListener(null);
+        } else {
+            Timber.e("PlayersManager instance is null");
+        }
     }
 
     private void init() {
@@ -117,7 +125,7 @@ public class PlayersManagerActivity extends AppCompatActivity implements Adapter
         //int nbRounds = mPlayersManagerViewModel.getNumberOfRounds();
         boolean[] participates = new boolean[Gotha.MAX_NUMBER_OF_ROUNDS];
         Arrays.fill(participates, Boolean.TRUE);
-        if (selectedPlayer != null) {
+        if (selectedPlayer != null && mPlayersManager != null) {
             mPlayersManager.register(selectedPlayer.getName(),
                     selectedPlayer.getFirstName(),
                     selectedPlayer.getCountry(),

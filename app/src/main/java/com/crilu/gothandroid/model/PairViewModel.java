@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import com.crilu.gothandroid.GothandroidApplication;
 import com.crilu.opengotha.model.GamesPair;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -24,10 +25,18 @@ public class PairViewModel extends AndroidViewModel {
     }
 
     public List<Vector<String>> getTables() {
-        return mGamesPair.getTblGames();
+        List<Vector<String>> games = new ArrayList<>();
+        if (mGamesPair != null) {
+            games = mGamesPair.getTblGames();
+        }
+        return games;
     }
 
     public List<Vector<String>> getPairablePlayers() {
-        return mGamesPair.getTblPairablePlayers();
+        List<Vector<String>> players = new ArrayList<>();
+        if (mGamesPair != null) {
+            players = mGamesPair.getTblPairablePlayers();
+        }
+        return players;
     }
 }
