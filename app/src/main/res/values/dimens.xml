@@ -11,10 +11,14 @@
     <dimen name="default_dropdown_width">50dp</dimen>
     <dimen name="default_criterion_dropdown_width">150dp</dimen>
     <dimen name="item_list_text_size">16sp</dimen>
+    <dimen name="widget_text_size">6sp</dimen>
     <dimen name="badge_width">12dp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>
     <dimen name="default_input_width">85dp</dimen>
     <dimen name="small_input_width">50dp</dimen>
+    <dimen name="width_profile_img">100dp</dimen>
+    <dimen name="height_profile_img">100dp</dimen>
+    <dimen name="margin_larger">24dp</dimen>
 
     <!--
 Refer to App Widget Documentation for margin information

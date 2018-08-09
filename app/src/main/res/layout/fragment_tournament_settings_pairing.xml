@@ -18,8 +18,8 @@
             <TextView
                 android:id="@+id/main_criteria_tv"
                 style="@style/RegularLabelStyle"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
+                android:layout_marginEnd="@dimen/default_margin"
+                android:layout_marginRight="@dimen/default_margin"
                 android:text="@string/main_criteria"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -36,8 +36,8 @@
             <TextView
                 android:id="@+id/earlier_rounds_up_to_tv"
                 style="@style/RegularLabelStyle"
-                android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginLeft="@dimen/default_margin"
+                android:layout_marginStart="@dimen/default_margin"
                 android:text="@string/earlier_rounds_up_to_round"
                 app:layout_constraintBaseline_toBaselineOf="@+id/earlier_rounds_up_to"
                 app:layout_constraintStart_toStartOf="@+id/inside_group_tv" />
@@ -55,8 +55,8 @@
             <TextView
                 android:id="@+id/earlier_rounds_tv"
                 style="@style/RegularLabelStyle"
-                android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginLeft="@dimen/default_margin"
+                android:layout_marginStart="@dimen/default_margin"
                 android:text="@string/earlier_rounds"
                 app:layout_constraintStart_toStartOf="@+id/earlier_rounds_up_to_tv"
                 app:layout_constraintTop_toBottomOf="@+id/earlier_rounds_up_to"/>
@@ -101,8 +101,8 @@
             <TextView
                 android:id="@+id/later_rounds_tv"
                 style="@style/RegularLabelStyle"
-                android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginLeft="@dimen/default_margin"
+                android:layout_marginStart="@dimen/default_margin"
                 android:text="@string/later_rounds"
                 app:layout_constraintStart_toStartOf="@+id/earlier_rounds_up_to_tv"
                 app:layout_constraintTop_toBottomOf="@+id/radioGroup_earlier_rounds"/>
@@ -173,8 +173,8 @@
             <TextView
                 android:id="@+id/player_upper_group_tv"
                 style="@style/RegularLabelStyle"
-                android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginLeft="@dimen/default_margin"
+                android:layout_marginStart="@dimen/default_margin"
                 android:text="@string/the_player_in_the_upper_group"
                 app:layout_constraintStart_toStartOf="@+id/then_preferably_choose_tv"
                 app:layout_constraintTop_toBottomOf="@+id/then_preferably_choose_tv"/>
@@ -209,8 +209,8 @@
             <TextView
                 android:id="@+id/player_lower_group_tv"
                 style="@style/RegularLabelStyle"
-                android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginLeft="@dimen/default_margin"
+                android:layout_marginStart="@dimen/default_margin"
                 android:text="@string/the_player_in_the_lower_group"
                 app:layout_constraintStart_toStartOf="@+id/then_preferably_choose_tv"
                 app:layout_constraintTop_toBottomOf="@+id/radioGroup_player_upper_group"/>
@@ -245,9 +245,9 @@
             <TextView
                 android:id="@+id/base_criteria_tv"
                 style="@style/RegularLabelStyle"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginEnd="@dimen/default_margin"
+                android:layout_marginRight="@dimen/default_margin"
+                android:layout_marginTop="@dimen/default_margin"
                 android:text="@string/base_criteria"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -298,9 +298,9 @@
             <TextView
                 android:id="@+id/secondary_criteria_tv"
                 style="@style/RegularLabelStyle"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginEnd="@dimen/default_margin"
+                android:layout_marginRight="@dimen/default_margin"
+                android:layout_marginTop="@dimen/default_margin"
                 android:text="@string/secondary_criteria"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -310,9 +310,9 @@
             <TextView
                 android:id="@+id/do_not_apply_tv"
                 style="@style/RegularLabelStyle"
-                android:layout_width="280dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp"
+                android:layout_width="0dp"
+                android:layout_marginLeft="@dimen/default_margin"
+                android:layout_marginStart="@dimen/default_margin"
                 android:text="@string/don_not_apply_secondary_criteria_for_players_with_a_mms_equal_or_stronger_than"
                 app:layout_constraintEnd_toStartOf="@+id/do_not_apply"
                 app:layout_constraintStart_toStartOf="parent"
@@ -321,10 +321,11 @@
             <EditText
                 android:id="@+id/do_not_apply"
                 style="@style/TextInputRegularStyle"
+                android:layout_width="@dimen/default_input_width"
                 android:inputType="text"
                 android:minWidth="@dimen/default_input_width"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
+                android:layout_marginEnd="@dimen/default_margin"
+                android:layout_marginRight="@dimen/default_margin"
                 app:layout_constraintBottom_toBottomOf="@+id/do_not_apply_tv"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/do_not_apply_tv" />

@@ -31,12 +31,12 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/appwidget_title"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/default_margin"
         android:background="#09C"
         android:contentDescription="@string/tournament_results"
         android:fontFamily="monospace"
         android:textColor="#ffffff"
-        android:textSize="6sp"
+        android:textSize="@dimen/widget_text_size"
         tools:ignore="SmallSp" />
 
 </RelativeLayout>
