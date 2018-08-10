@@ -79,6 +79,8 @@
 
     <string name="title_activity_myAccount">My Account</string>
     <string name="myaccount_send_profile_photo_message" translatable="false">Hi,\n\nPlease upload my profile photo with the attached file. My EGF Pin is %1$s\n\nThank you.</string>
+    <string name="myaccount_no_profile_photo_available">No profile photo available. Click on avatar and take a selfie first</string>
+    <string name="myaccount_egfpin_mandatory">EGF Pin is mandatory. Login cancelled.</string>
     <string name="ffg_lic_hint">FFG LIC</string>
     <string name="egf_pin_label">EGF PIN *</string>
     <string name="first_name_label">First Name</string>

@@ -97,6 +97,10 @@ public class MyAccount extends AppCompatActivity implements AdapterView.OnItemCl
     }
 
     public void onClickLogin(View view) {
+        if (TextUtils.isEmpty(mBinding.egfPlayer.getText().toString())) {
+            Snackbar.make(mBinding.coordinatorLayout, getString(R.string.myaccount_egfpin_mandatory), Snackbar.LENGTH_LONG).show();
+            return;
+        }
         // Choose authentication providers
         List<AuthUI.IdpConfig> providers = Arrays.asList(
                 new AuthUI.IdpConfig.EmailBuilder().build(),
@@ -242,6 +246,10 @@ public class MyAccount extends AppCompatActivity implements AdapterView.OnItemCl
     }
 
     public void sendProfilePhoto(View view) {
+        if (TextUtils.isEmpty(mCurrentPhotoPath)) {
+            Snackbar.make(mBinding.coordinatorLayout, getString(R.string.myaccount_no_profile_photo_available), Snackbar.LENGTH_LONG).show();
+            return;
+        }
         Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND_MULTIPLE);
         shareIntent.setType("text/plain");
         shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Upload profile photo");
@@ -271,6 +279,8 @@ public class MyAccount extends AppCompatActivity implements AdapterView.OnItemCl
             Timber.e("File not found: %s", e.getMessage());
         } catch (IOException e) {
             Timber.e("Error accessing file: %s", e.getMessage());
+        } catch (Exception ex) {
+            Timber.e(ex);
         }
     }
 }
