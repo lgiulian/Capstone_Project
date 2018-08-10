@@ -224,6 +224,7 @@ public class MainActivity extends AppCompatAdActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Snackbar.make(mCoordinatorLayout, getString(R.string.not_implemented_yet), Snackbar.LENGTH_LONG).show();
             return true;
         }
 
