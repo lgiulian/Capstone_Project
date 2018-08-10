@@ -168,7 +168,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/mc_mahon_label"
-                android:onClick="onSystemButtonClicked"/>
+                android:onClick="onSystemButtonClicked"
+                android:checked="true"/>
 
             <RadioButton android:id="@+id/radio_swiss"
                 style="@style/RegularLabelStyle"
