@@ -46,11 +46,11 @@
                 android:id="@+id/earlier_rounds_up_to"
                 style="@style/TextInputRegularStyle"
                 android:layout_width="@dimen/default_input_width"
-                android:minWidth="@dimen/default_input_width"
                 android:hint="@string/earlier_rounds_up_to_round"
+                android:inputType="number"
+                android:minWidth="@dimen/default_input_width"
                 app:layout_constraintStart_toEndOf="@+id/earlier_rounds_up_to_tv"
-                app:layout_constraintTop_toBottomOf="@+id/inside_group_tv"
-                android:inputType="number" />
+                app:layout_constraintTop_toBottomOf="@+id/inside_group_tv" />
 
             <TextView
                 android:id="@+id/earlier_rounds_tv"
@@ -59,7 +59,7 @@
                 android:layout_marginStart="@dimen/default_margin"
                 android:text="@string/earlier_rounds"
                 app:layout_constraintStart_toStartOf="@+id/earlier_rounds_up_to_tv"
-                app:layout_constraintTop_toBottomOf="@+id/earlier_rounds_up_to"/>
+                app:layout_constraintTop_toBottomOf="@+id/earlier_rounds_up_to" />
 
             <CheckBox
                 android:id="@+id/add_sorting_rating_ckb"
@@ -67,40 +67,40 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/default_margin"
                 android:layout_marginStart="@dimen/default_margin"
+                android:contentDescription="@string/add_a_sorting_on_rating"
                 android:text="@string/add_a_sorting_on_rating"
                 app:layout_constraintStart_toStartOf="@+id/earlier_rounds_tv"
-                app:layout_constraintTop_toBottomOf="@+id/earlier_rounds_tv"
-                android:contentDescription="@string/add_a_sorting_on_rating"/>
+                app:layout_constraintTop_toBottomOf="@+id/earlier_rounds_tv" />
 
             <RadioGroup
                 android:id="@+id/radioGroup_earlier_rounds"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/earlier_rounds"
                 android:orientation="vertical"
                 app:layout_constraintStart_toStartOf="@+id/add_sorting_rating_ckb"
-                app:layout_constraintTop_toBottomOf="@+id/add_sorting_rating_ckb"
-                android:contentDescription="@string/earlier_rounds">
+                app:layout_constraintTop_toBottomOf="@+id/add_sorting_rating_ckb">
 
                 <RadioButton
                     android:id="@+id/earlier_rounds_rb1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/split_and_random"
-                    android:contentDescription="@string/split_and_random"/>
+                    android:contentDescription="@string/split_and_random"
+                    android:text="@string/split_and_random" />
 
                 <RadioButton
                     android:id="@+id/earlier_rounds_rb2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/split_and_fold"
-                    android:contentDescription="@string/split_and_fold"/>
+                    android:contentDescription="@string/split_and_fold"
+                    android:text="@string/split_and_fold" />
 
                 <RadioButton
                     android:id="@+id/earlier_rounds_rb3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/split_and_slip"
-                    android:contentDescription="@string/split_and_slip"/>
+                    android:contentDescription="@string/split_and_slip"
+                    android:text="@string/split_and_slip" />
             </RadioGroup>
 
             <TextView
@@ -110,46 +110,46 @@
                 android:layout_marginStart="@dimen/default_margin"
                 android:text="@string/later_rounds"
                 app:layout_constraintStart_toStartOf="@+id/earlier_rounds_up_to_tv"
-                app:layout_constraintTop_toBottomOf="@+id/radioGroup_earlier_rounds"/>
+                app:layout_constraintTop_toBottomOf="@+id/radioGroup_earlier_rounds" />
 
             <RadioGroup
                 android:id="@+id/radioGroup_later_rounds"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/later_rounds"
                 android:orientation="vertical"
                 app:layout_constraintStart_toStartOf="@+id/add_sorting_rating_ckb"
-                app:layout_constraintTop_toBottomOf="@+id/later_rounds_tv"
-                android:contentDescription="@string/later_rounds">
+                app:layout_constraintTop_toBottomOf="@+id/later_rounds_tv">
 
                 <RadioButton
                     android:id="@+id/later_rounds_rb1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/split_and_random"
-                    android:contentDescription="@string/split_and_random"/>
+                    android:contentDescription="@string/split_and_random"
+                    android:text="@string/split_and_random" />
 
                 <RadioButton
                     android:id="@+id/later_rounds_rb2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/split_and_fold"
-                    android:contentDescription="@string/split_and_fold"/>
+                    android:contentDescription="@string/split_and_fold"
+                    android:text="@string/split_and_fold" />
 
                 <RadioButton
                     android:id="@+id/later_rounds_rb3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/split_and_slip"
-                    android:contentDescription="@string/split_and_slip"/>
+                    android:contentDescription="@string/split_and_slip"
+                    android:text="@string/split_and_slip" />
             </RadioGroup>
 
             <TextView
                 android:id="@+id/when_pairing_players_groups_necessary_tv"
                 style="@style/RegularLabelStyle"
                 android:text="@string/when_pairing_players_from_different_groups_is_necessary"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/radioGroup_later_rounds"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintTop_toBottomOf="@+id/radioGroup_later_rounds" />
 
             <CheckBox
                 android:id="@+id/avoid_drawing_ckb"
@@ -157,11 +157,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/default_margin"
                 android:layout_marginStart="@dimen/default_margin"
+                android:contentDescription="@string/avoid_drawing_up_down_a_player_twice_in_the_same_sense"
                 android:enabled="false"
                 android:text="@string/avoid_drawing_up_down_a_player_twice_in_the_same_sense"
                 app:layout_constraintStart_toStartOf="@+id/when_pairing_players_groups_necessary_tv"
-                app:layout_constraintTop_toBottomOf="@+id/when_pairing_players_groups_necessary_tv"
-                android:contentDescription="@string/avoid_drawing_up_down_a_player_twice_in_the_same_sense"/>
+                app:layout_constraintTop_toBottomOf="@+id/when_pairing_players_groups_necessary_tv" />
 
             <CheckBox
                 android:id="@+id/compensate_draw_ckb"
@@ -169,17 +169,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/default_margin"
                 android:layout_marginStart="@dimen/default_margin"
+                android:contentDescription="@string/compensate_a_previous_draw_up_down_by_a_draw_down_up"
                 android:text="@string/compensate_a_previous_draw_up_down_by_a_draw_down_up"
                 app:layout_constraintStart_toStartOf="@+id/when_pairing_players_groups_necessary_tv"
-                app:layout_constraintTop_toBottomOf="@+id/avoid_drawing_ckb"
-                android:contentDescription="@string/compensate_a_previous_draw_up_down_by_a_draw_down_up"/>
+                app:layout_constraintTop_toBottomOf="@+id/avoid_drawing_ckb" />
 
             <TextView
                 android:id="@+id/then_preferably_choose_tv"
                 style="@style/RegularLabelStyle"
                 android:text="@string/then_preferably_choose"
                 app:layout_constraintStart_toStartOf="@+id/compensate_draw_ckb"
-                app:layout_constraintTop_toBottomOf="@+id/compensate_draw_ckb"/>
+                app:layout_constraintTop_toBottomOf="@+id/compensate_draw_ckb" />
 
             <TextView
                 android:id="@+id/player_upper_group_tv"
@@ -188,37 +188,37 @@
                 android:layout_marginStart="@dimen/default_margin"
                 android:text="@string/the_player_in_the_upper_group"
                 app:layout_constraintStart_toStartOf="@+id/then_preferably_choose_tv"
-                app:layout_constraintTop_toBottomOf="@+id/then_preferably_choose_tv"/>
+                app:layout_constraintTop_toBottomOf="@+id/then_preferably_choose_tv" />
 
             <RadioGroup
                 android:id="@+id/radioGroup_player_upper_group"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/then_preferably_choose"
                 android:orientation="vertical"
                 app:layout_constraintStart_toStartOf="@+id/player_upper_group_tv"
-                app:layout_constraintTop_toBottomOf="@+id/player_upper_group_tv"
-                android:contentDescription="@string/then_preferably_choose">
+                app:layout_constraintTop_toBottomOf="@+id/player_upper_group_tv">
 
                 <RadioButton
                     android:id="@+id/player_upper_group_rb1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/in_the_top_of_the_group"
-                    android:contentDescription="@string/in_the_top_of_the_group"/>
+                    android:contentDescription="@string/in_the_top_of_the_group"
+                    android:text="@string/in_the_top_of_the_group" />
 
                 <RadioButton
                     android:id="@+id/player_upper_group_rb2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/in_the_middle_of_the_group"
-                    android:contentDescription="@string/in_the_middle_of_the_group"/>
+                    android:contentDescription="@string/in_the_middle_of_the_group"
+                    android:text="@string/in_the_middle_of_the_group" />
 
                 <RadioButton
                     android:id="@+id/player_upper_group_rb3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/in_the_bottom_of_the_group"
-                    android:contentDescription="@string/in_the_bottom_of_the_group"/>
+                    android:contentDescription="@string/in_the_bottom_of_the_group"
+                    android:text="@string/in_the_bottom_of_the_group" />
             </RadioGroup>
 
             <TextView
@@ -228,16 +228,16 @@
                 android:layout_marginStart="@dimen/default_margin"
                 android:text="@string/the_player_in_the_lower_group"
                 app:layout_constraintStart_toStartOf="@+id/then_preferably_choose_tv"
-                app:layout_constraintTop_toBottomOf="@+id/radioGroup_player_upper_group"/>
+                app:layout_constraintTop_toBottomOf="@+id/radioGroup_player_upper_group" />
 
             <RadioGroup
                 android:id="@+id/radioGroup_player_lower_group"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/the_player_in_the_lower_group"
                 android:orientation="vertical"
                 app:layout_constraintStart_toStartOf="@+id/player_lower_group_tv"
-                app:layout_constraintTop_toBottomOf="@+id/player_lower_group_tv"
-                android:contentDescription="@string/the_player_in_the_lower_group">
+                app:layout_constraintTop_toBottomOf="@+id/player_lower_group_tv">
 
                 <RadioButton
                     android:id="@+id/player_lower_group_rb1"
@@ -249,15 +249,15 @@
                     android:id="@+id/player_lower_group_rb2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/in_the_middle_of_the_group"
-                    android:contentDescription="@string/in_the_middle_of_the_group"/>
+                    android:contentDescription="@string/in_the_middle_of_the_group"
+                    android:text="@string/in_the_middle_of_the_group" />
 
                 <RadioButton
                     android:id="@+id/player_lower_group_rb3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/in_the_bottom_of_the_group"
-                    android:contentDescription="@string/in_the_bottom_of_the_group"/>
+                    android:contentDescription="@string/in_the_bottom_of_the_group"
+                    android:text="@string/in_the_bottom_of_the_group" />
             </RadioGroup>
 
             <TextView
@@ -278,10 +278,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/default_margin"
                 android:layout_marginStart="@dimen/default_margin"
+                android:contentDescription="@string/avoid_pairing_same_pair_twice"
                 android:text="@string/avoid_pairing_same_pair_twice"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/base_criteria_tv"
-                android:contentDescription="@string/avoid_pairing_same_pair_twice"/>
+                app:layout_constraintTop_toBottomOf="@+id/base_criteria_tv" />
 
             <RadioGroup
                 android:id="@+id/radioGroup_base_criteria_pair"
@@ -295,15 +295,15 @@
                     android:id="@+id/base_criteria_pair_rb1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/no_random"
-                    android:contentDescription="@string/no_random"/>
+                    android:contentDescription="@string/no_random"
+                    android:text="@string/no_random" />
 
                 <RadioButton
                     android:id="@+id/base_criteria_pair_rb2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/accept_random"
-                    android:contentDescription="@string/accept_random"/>
+                    android:contentDescription="@string/accept_random"
+                    android:text="@string/accept_random" />
             </RadioGroup>
 
             <CheckBox
@@ -312,10 +312,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/default_margin"
                 android:layout_marginStart="@dimen/default_margin"
+                android:contentDescription="@string/balance_white_and_black"
                 android:text="@string/balance_white_and_black"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/radioGroup_base_criteria_pair"
-                android:contentDescription="@string/balance_white_and_black"/>
+                app:layout_constraintTop_toBottomOf="@+id/radioGroup_base_criteria_pair" />
 
             <TextView
                 android:id="@+id/secondary_criteria_tv"
@@ -338,20 +338,20 @@
                 android:text="@string/don_not_apply_secondary_criteria_for_players_with_a_mms_equal_or_stronger_than"
                 app:layout_constraintEnd_toStartOf="@+id/do_not_apply"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/secondary_criteria_tv"/>
+                app:layout_constraintTop_toBottomOf="@+id/secondary_criteria_tv" />
 
             <EditText
                 android:id="@+id/do_not_apply"
                 style="@style/TextInputRegularStyle"
                 android:layout_width="@dimen/default_input_width"
-                android:inputType="text"
-                android:minWidth="@dimen/default_input_width"
                 android:layout_marginEnd="@dimen/default_margin"
                 android:layout_marginRight="@dimen/default_margin"
+                android:hint="@string/don_not_apply_secondary_criteria_for_players_with_a_mms_equal_or_stronger_than"
+                android:inputType="text"
+                android:minWidth="@dimen/default_input_width"
                 app:layout_constraintBottom_toBottomOf="@+id/do_not_apply_tv"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/do_not_apply_tv"
-                android:hint="@string/don_not_apply_secondary_criteria_for_players_with_a_mms_equal_or_stronger_than"/>
+                app:layout_constraintStart_toEndOf="@+id/do_not_apply_tv" />
 
             <CheckBox
                 android:id="@+id/players_at_least_ckb"
@@ -359,10 +359,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/default_margin"
                 android:layout_marginStart="@dimen/default_margin"
+                android:contentDescription="@string/for_players_with_at_least_nbrounds_2_wins"
                 android:text="@string/for_players_with_at_least_nbrounds_2_wins"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/do_not_apply"
-                android:contentDescription="@string/for_players_with_at_least_nbrounds_2_wins"/>
+                app:layout_constraintTop_toBottomOf="@+id/do_not_apply" />
 
             <CheckBox
                 android:id="@+id/players_above_mcmahon_ckb"
@@ -370,34 +370,34 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/default_margin"
                 android:layout_marginStart="@dimen/default_margin"
+                android:contentDescription="@string/for_players_above_mcmahon_bar"
                 android:text="@string/for_players_above_mcmahon_bar"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/players_at_least_ckb"
-                android:contentDescription="@string/for_players_above_mcmahon_bar"/>
+                app:layout_constraintTop_toBottomOf="@+id/players_at_least_ckb" />
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/save_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
+                android:contentDescription="@string/save"
                 android:text="@string/save"
                 app:layout_constraintEnd_toStartOf="@+id/export_btn"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/players_above_mcmahon_ckb"
-                android:contentDescription="@string/save"/>
+                app:layout_constraintTop_toBottomOf="@+id/players_above_mcmahon_ckb" />
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/export_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
+                android:contentDescription="@string/export"
                 android:text="@string/export"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/save_btn"
-                app:layout_constraintTop_toBottomOf="@+id/players_above_mcmahon_ckb"
-                android:contentDescription="@string/export"/>
+                app:layout_constraintTop_toBottomOf="@+id/players_above_mcmahon_ckb" />
 
         </android.support.constraint.ConstraintLayout>
     </android.support.v4.widget.NestedScrollView>

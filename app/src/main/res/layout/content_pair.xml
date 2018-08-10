@@ -51,8 +51,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/default_margin"
+            android:contentDescription="@string/ok_label"
             android:onClick="onClickOk"
-            android:text="@string/pair_ok_label"
-            android:contentDescription="@string/ok_label"/>
+            android:text="@string/pair_ok_label" />
     </LinearLayout>
 </layout>

@@ -2,227 +2,231 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-<android.support.v4.widget.NestedScrollView
-    android:id="@+id/create_tournament_scroll_view"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:showIn="@layout/activity_create_tournament">
 
-    <android.support.constraint.ConstraintLayout
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/create_tournament_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.crilu.gothandroid.CreateTournamentActivity">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:showIn="@layout/activity_create_tournament">
 
-        <TextView
-            android:id="@+id/tournament_details_tv"
-            android:text="@string/tournament_details"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            style="@style/SectionLabelStyle"/>
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context="com.crilu.gothandroid.CreateTournamentActivity">
 
-        <TextView
-            android:id="@+id/tournament_name_tv"
-            android:text="@string/tournament_name_label"
-            app:layout_constraintBaseline_toBaselineOf="@+id/tournament_name"
-            app:layout_constraintStart_toStartOf="parent"
-            style="@style/RegularLabelStyle" />
+            <TextView
+                android:id="@+id/tournament_details_tv"
+                style="@style/SectionLabelStyle"
+                android:text="@string/tournament_details"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tournament_short_name_tv"
-            android:text="@string/tournament_short_name_label"
-            app:layout_constraintBaseline_toBaselineOf="@+id/tournament_short_name"
-            app:layout_constraintStart_toStartOf="parent"
-            style="@style/RegularLabelStyle" />
-
-        <TextView
-            android:id="@+id/tournament_location_tv"
-            android:text="@string/tournament_location"
-            app:layout_constraintBaseline_toBaselineOf="@+id/tournament_location"
-            app:layout_constraintStart_toStartOf="parent"
-            style="@style/RegularLabelStyle" />
-
-        <TextView
-            android:id="@+id/tournament_director_tv"
-            android:text="@string/tournament_director"
-            app:layout_constraintBaseline_toBaselineOf="@+id/tournament_director"
-            app:layout_constraintStart_toStartOf="parent"
-            style="@style/RegularLabelStyle" />
-
-        <TextView
-            android:id="@+id/tournament_begin_date_tv"
-            android:text="@string/tournament_begin_date"
-            app:layout_constraintBaseline_toBaselineOf="@+id/tournament_begin_date"
-            app:layout_constraintStart_toStartOf="parent"
-            style="@style/RegularLabelStyle" />
-
-        <TextView
-            android:id="@+id/tournament_end_date_tv"
-            android:text="@string/tournament_end_date"
-            app:layout_constraintBaseline_toBaselineOf="@+id/tournament_end_date"
-            app:layout_constraintStart_toStartOf="parent"
-            style="@style/RegularLabelStyle"/>
-
-        <android.support.constraint.Barrier
-            android:id="@+id/barrier1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:barrierDirection="end"
-            app:constraint_referenced_ids="tournament_end_date_tv,tournament_begin_date_tv,tournament_director_tv,tournament_location_tv,tournament_short_name_tv,tournament_name_tv" />
-
-        <EditText
-            android:id="@+id/tournament_name"
-            android:hint="@string/tournament_name_label"
-            android:inputType="text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/barrier1"
-            app:layout_constraintTop_toBottomOf="@+id/tournament_details_tv"
-            style="@style/TextInputRegularStyle" />
-
-        <EditText
-            android:id="@+id/tournament_short_name"
-            android:hint="@string/tournament_short_name_label"
-            android:inputType="text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/barrier1"
-            app:layout_constraintTop_toBottomOf="@+id/tournament_name"
-            style="@style/TextInputRegularStyle" />
-
-        <EditText
-            android:id="@+id/tournament_location"
-            android:hint="@string/tournament_location"
-            android:inputType="text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/barrier1"
-            app:layout_constraintTop_toBottomOf="@+id/tournament_short_name"
-            style="@style/TextInputRegularStyle" />
-
-        <EditText
-            android:id="@+id/tournament_director"
-            android:hint="@string/tournament_director"
-            android:inputType="text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/barrier1"
-            app:layout_constraintTop_toBottomOf="@+id/tournament_location"
-            style="@style/TextInputRegularStyle" />
-
-        <EditText
-            android:id="@+id/tournament_begin_date"
-            android:hint="@string/tournament_begin_date"
-            app:layout_constraintEnd_toStartOf="@+id/begin_date_picker_btn"
-            app:layout_constraintStart_toEndOf="@+id/barrier1"
-            app:layout_constraintTop_toBottomOf="@+id/tournament_director"
-            style="@style/InputDateStyle"/>
-
-        <EditText
-            android:id="@+id/tournament_end_date"
-            android:hint="@string/tournament_end_date"
-            app:layout_constraintEnd_toStartOf="@+id/end_date_picker_btn"
-            app:layout_constraintStart_toEndOf="@+id/barrier1"
-            app:layout_constraintTop_toBottomOf="@+id/tournament_begin_date"
-            style="@style/InputDateStyle" />
-
-        <View
-            android:id="@+id/divider1"
-            style="@style/Divider"
-            app:layout_constraintTop_toBottomOf="@+id/tournament_end_date" />
-
-        <android.support.v7.widget.AppCompatImageButton
-            android:id="@+id/begin_date_picker_btn"
-            android:onClick="showDatePickerDialog"
-            app:layout_constraintBottom_toBottomOf="@+id/tournament_begin_date"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tournament_begin_date"
-            app:srcCompat="@drawable/ic_date"
-            style="@style/DatePickerBtnStyle"/>
-
-        <android.support.v7.widget.AppCompatImageButton
-            android:id="@+id/end_date_picker_btn"
-            android:onClick="showDatePickerDialog"
-            app:layout_constraintBottom_toBottomOf="@+id/tournament_end_date"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tournament_end_date"
-            app:srcCompat="@drawable/ic_date"
-            style="@style/DatePickerBtnStyle" />
-
-        <TextView
-            android:id="@+id/tournament_system"
-            android:text="@string/tournament_system"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divider1"
-            style="@style/SectionLabelStyle" />
-
-        <RadioGroup
-            android:id="@+id/tournament_system_radio_group"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_margin"
-            android:orientation="vertical"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tournament_system">
-
-            <RadioButton android:id="@+id/radio_mcmahon"
+            <TextView
+                android:id="@+id/tournament_name_tv"
                 style="@style/RegularLabelStyle"
+                android:text="@string/tournament_name_label"
+                app:layout_constraintBaseline_toBaselineOf="@+id/tournament_name"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/tournament_short_name_tv"
+                style="@style/RegularLabelStyle"
+                android:text="@string/tournament_short_name_label"
+                app:layout_constraintBaseline_toBaselineOf="@+id/tournament_short_name"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/tournament_location_tv"
+                style="@style/RegularLabelStyle"
+                android:text="@string/tournament_location"
+                app:layout_constraintBaseline_toBaselineOf="@+id/tournament_location"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/tournament_director_tv"
+                style="@style/RegularLabelStyle"
+                android:text="@string/tournament_director"
+                app:layout_constraintBaseline_toBaselineOf="@+id/tournament_director"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/tournament_begin_date_tv"
+                style="@style/RegularLabelStyle"
+                android:text="@string/tournament_begin_date"
+                app:layout_constraintBaseline_toBaselineOf="@+id/tournament_begin_date"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/tournament_end_date_tv"
+                style="@style/RegularLabelStyle"
+                android:text="@string/tournament_end_date"
+                app:layout_constraintBaseline_toBaselineOf="@+id/tournament_end_date"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <android.support.constraint.Barrier
+                android:id="@+id/barrier1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/mc_mahon_label"
-                android:onClick="onSystemButtonClicked"
-                android:checked="true"/>
+                app:barrierDirection="end"
+                app:constraint_referenced_ids="tournament_end_date_tv,tournament_begin_date_tv,tournament_director_tv,tournament_location_tv,tournament_short_name_tv,tournament_name_tv" />
 
-            <RadioButton android:id="@+id/radio_swiss"
-                style="@style/RegularLabelStyle"
+            <EditText
+                android:id="@+id/tournament_name"
+                style="@style/TextInputRegularStyle"
+                android:hint="@string/tournament_name_label"
+                android:inputType="text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/barrier1"
+                app:layout_constraintTop_toBottomOf="@+id/tournament_details_tv" />
+
+            <EditText
+                android:id="@+id/tournament_short_name"
+                style="@style/TextInputRegularStyle"
+                android:hint="@string/tournament_short_name_label"
+                android:inputType="text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/barrier1"
+                app:layout_constraintTop_toBottomOf="@+id/tournament_name" />
+
+            <EditText
+                android:id="@+id/tournament_location"
+                style="@style/TextInputRegularStyle"
+                android:hint="@string/tournament_location"
+                android:inputType="text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/barrier1"
+                app:layout_constraintTop_toBottomOf="@+id/tournament_short_name" />
+
+            <EditText
+                android:id="@+id/tournament_director"
+                style="@style/TextInputRegularStyle"
+                android:hint="@string/tournament_director"
+                android:inputType="text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/barrier1"
+                app:layout_constraintTop_toBottomOf="@+id/tournament_location" />
+
+            <EditText
+                android:id="@+id/tournament_begin_date"
+                style="@style/InputDateStyle"
+                android:hint="@string/tournament_begin_date"
+                app:layout_constraintEnd_toStartOf="@+id/begin_date_picker_btn"
+                app:layout_constraintStart_toEndOf="@+id/barrier1"
+                app:layout_constraintTop_toBottomOf="@+id/tournament_director" />
+
+            <EditText
+                android:id="@+id/tournament_end_date"
+                style="@style/InputDateStyle"
+                android:hint="@string/tournament_end_date"
+                app:layout_constraintEnd_toStartOf="@+id/end_date_picker_btn"
+                app:layout_constraintStart_toEndOf="@+id/barrier1"
+                app:layout_constraintTop_toBottomOf="@+id/tournament_begin_date" />
+
+            <View
+                android:id="@+id/divider1"
+                style="@style/Divider"
+                app:layout_constraintTop_toBottomOf="@+id/tournament_end_date" />
+
+            <android.support.v7.widget.AppCompatImageButton
+                android:id="@+id/begin_date_picker_btn"
+                style="@style/DatePickerBtnStyle"
+                android:onClick="showDatePickerDialog"
+                app:layout_constraintBottom_toBottomOf="@+id/tournament_begin_date"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tournament_begin_date"
+                app:srcCompat="@drawable/ic_date" />
+
+            <android.support.v7.widget.AppCompatImageButton
+                android:id="@+id/end_date_picker_btn"
+                style="@style/DatePickerBtnStyle"
+                android:onClick="showDatePickerDialog"
+                app:layout_constraintBottom_toBottomOf="@+id/tournament_end_date"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tournament_end_date"
+                app:srcCompat="@drawable/ic_date" />
+
+            <TextView
+                android:id="@+id/tournament_system"
+                style="@style/SectionLabelStyle"
+                android:text="@string/tournament_system"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider1" />
+
+            <RadioGroup
+                android:id="@+id/tournament_system_radio_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/swiss_label"
-                android:onClick="onSystemButtonClicked" />
+                android:layout_marginTop="@dimen/default_margin"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tournament_system">
 
-            <RadioButton android:id="@+id/radio_swiss_categories"
+                <RadioButton
+                    android:id="@+id/radio_mcmahon"
+                    style="@style/RegularLabelStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:onClick="onSystemButtonClicked"
+                    android:text="@string/mc_mahon_label" />
+
+                <RadioButton
+                    android:id="@+id/radio_swiss"
+                    style="@style/RegularLabelStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onSystemButtonClicked"
+                    android:text="@string/swiss_label" />
+
+                <RadioButton
+                    android:id="@+id/radio_swiss_categories"
+                    style="@style/RegularLabelStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onSystemButtonClicked"
+                    android:text="@string/swiss_with_categories_label" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/tournament_number_of_rounds_tv"
                 style="@style/RegularLabelStyle"
+                android:text="@string/tournament_number_of_rounds"
+                app:layout_constraintBottom_toBottomOf="@+id/number_of_rounds_spinner"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/number_of_rounds_spinner" />
+
+            <Spinner
+                android:id="@+id/number_of_rounds_spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/swiss_with_categories_label"
-                android:onClick="onSystemButtonClicked" />
-        </RadioGroup>
+                android:layout_marginLeft="@dimen/default_margin"
+                android:layout_marginStart="@dimen/default_margin"
+                android:layout_marginTop="@dimen/default_margin"
+                android:dropDownWidth="@dimen/default_dropdown_width"
+                android:entries="@array/round_number_array"
+                app:layout_constraintStart_toEndOf="@+id/tournament_number_of_rounds_tv"
+                app:layout_constraintTop_toBottomOf="@+id/tournament_system_radio_group" />
 
-        <TextView
-            android:id="@+id/tournament_number_of_rounds_tv"
-            style="@style/RegularLabelStyle"
-            android:text="@string/tournament_number_of_rounds"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/number_of_rounds_spinner"
-            app:layout_constraintBottom_toBottomOf="@+id/number_of_rounds_spinner"/>
-
-        <Spinner
-            android:id="@+id/number_of_rounds_spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/default_margin"
-            android:layout_marginStart="@dimen/default_margin"
-            android:layout_marginTop="@dimen/default_margin"
-            android:dropDownWidth="@dimen/default_dropdown_width"
-            android:entries="@array/round_number_array"
-            app:layout_constraintStart_toEndOf="@+id/tournament_number_of_rounds_tv"
-            app:layout_constraintTop_toBottomOf="@+id/tournament_system_radio_group" />
-
-        <Button
-            android:id="@+id/ok_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/default_margin"
-            android:layout_marginEnd="@dimen/default_margin"
-            android:layout_marginLeft="@dimen/default_margin"
-            android:layout_marginRight="@dimen/default_margin"
-            android:layout_marginStart="@dimen/default_margin"
-            android:layout_marginTop="@dimen/default_margin"
-            android:text="@string/ok_label"
-            android:onClick="createTournament"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/number_of_rounds_spinner"
-            android:contentDescription="@string/ok_label"/>
-    </android.support.constraint.ConstraintLayout>
-</android.support.v4.widget.NestedScrollView>
+            <Button
+                android:id="@+id/ok_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/default_margin"
+                android:layout_marginEnd="@dimen/default_margin"
+                android:layout_marginLeft="@dimen/default_margin"
+                android:layout_marginRight="@dimen/default_margin"
+                android:layout_marginStart="@dimen/default_margin"
+                android:layout_marginTop="@dimen/default_margin"
+                android:contentDescription="@string/ok_label"
+                android:onClick="createTournament"
+                android:text="@string/ok_label"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/number_of_rounds_spinner" />
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v4.widget.NestedScrollView>
 </layout>

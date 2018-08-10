@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--suppress AndroidDomInspection -->
+<?xml version="1.0" encoding="utf-8"?><!--suppress AndroidDomInspection -->
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <android.support.design.widget.CoordinatorLayout android:id="@+id/coordinator_layout"
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/coordinator_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
@@ -113,25 +113,25 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/default_margin"
                     android:layout_marginRight="@dimen/default_margin"
+                    android:contentDescription="@string/games_options_time_system"
                     android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/basic_time_tv"
-                    app:layout_constraintTop_toBottomOf="@+id/basic_time"
-                    android:contentDescription="@string/games_options_time_system">
+                    app:layout_constraintTop_toBottomOf="@+id/basic_time">
 
                     <RadioButton
                         android:id="@+id/rb_sudden_death"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/sudden_death"
-                        android:contentDescription="@string/sudden_death"/>
+                        android:contentDescription="@string/sudden_death"
+                        android:text="@string/sudden_death" />
 
                     <RadioButton
                         android:id="@+id/rb_standard"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/standard_byo_yomi"
-                        android:contentDescription="@string/standard_byo_yomi"/>
+                        android:contentDescription="@string/standard_byo_yomi"
+                        android:text="@string/standard_byo_yomi" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -155,16 +155,15 @@
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
                             android:hint="@string/time_seconds"
-                            android:inputType="number"
-                            />
+                            android:inputType="number" />
                     </RelativeLayout>
 
                     <RadioButton
                         android:id="@+id/rb_canadian"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/canadian_byo_yomi"
-                        android:contentDescription="@string/canadian_byo_yomi"/>
+                        android:contentDescription="@string/canadian_byo_yomi"
+                        android:text="@string/canadian_byo_yomi" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -180,26 +179,25 @@
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
                             android:hint="@string/time_seconds"
-                            android:inputType="number"
-                            />
+                            android:inputType="number" />
 
                         <TextView
                             android:id="@+id/canadian_moves_tv"
                             style="@style/RegularLabelStyle"
-                            android:layout_marginLeft="0dp"
                             android:layout_centerVertical="true"
-                            android:layout_toRightOf="@+id/canadian_moves"
-                            android:text="@string/moves"
+                            android:layout_marginLeft="0dp"
                             android:layout_marginStart="0dp"
-                            android:layout_toEndOf="@+id/canadian_moves" />
+                            android:layout_toEndOf="@+id/canadian_moves"
+                            android:layout_toRightOf="@+id/canadian_moves"
+                            android:text="@string/moves" />
 
                         <TextView
                             android:id="@+id/canadian_time_seconds_tv"
                             style="@style/RegularLabelStyle"
                             android:layout_centerVertical="true"
                             android:layout_toLeftOf="@+id/canadian_time_seconds"
-                            android:text="@string/time_seconds"
-                            android:layout_toStartOf="@+id/canadian_time_seconds" />
+                            android:layout_toStartOf="@+id/canadian_time_seconds"
+                            android:text="@string/time_seconds" />
 
                         <EditText
                             android:id="@+id/canadian_time_seconds"
@@ -209,16 +207,15 @@
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
                             android:hint="@string/time_seconds"
-                            android:inputType="number"
-                            />
+                            android:inputType="number" />
                     </RelativeLayout>
 
                     <RadioButton
                         android:id="@+id/rb_fischer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/fischer"
-                        android:contentDescription="@string/fischer"/>
+                        android:contentDescription="@string/fischer"
+                        android:text="@string/fischer" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -242,8 +239,7 @@
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
                             android:hint="@string/bonus_time_seconds"
-                            android:inputType="number"
-                            />
+                            android:inputType="number" />
                     </RelativeLayout>
 
                 </RadioGroup>
@@ -251,8 +247,8 @@
                 <TextView
                     android:id="@+id/egf_class_tv"
                     style="@style/RegularLabelStyle"
-                    android:textColor="@color/colorAccent"
                     android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                    android:textColor="@color/colorAccent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/radioGroup_time_system" />
@@ -262,24 +258,24 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/default_margin"
+                    android:contentDescription="@string/save"
                     android:text="@string/save"
                     app:layout_constraintEnd_toStartOf="@+id/export_btn"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/egf_class_tv"
-                    android:contentDescription="@string/save"/>
+                    app:layout_constraintTop_toBottomOf="@+id/egf_class_tv" />
 
                 <android.support.v7.widget.AppCompatButton
                     android:id="@+id/export_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/default_margin"
+                    android:contentDescription="@string/export"
                     android:text="@string/export"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/save_btn"
-                    app:layout_constraintTop_toBottomOf="@+id/egf_class_tv"
-                    android:contentDescription="@string/export"/>
+                    app:layout_constraintTop_toBottomOf="@+id/egf_class_tv" />
 
             </android.support.constraint.ConstraintLayout>
         </android.support.v4.widget.NestedScrollView>

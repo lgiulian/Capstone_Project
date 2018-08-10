@@ -12,13 +12,12 @@
         android:id="@+id/tournaments_list_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:scrollbars="vertical"
         android:layout_marginBottom="@dimen/default_margin"
+        android:scrollbars="vertical"
         app:layout_constraintBottom_toTopOf="@+id/legend_observer_tv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
-    </android.support.v7.widget.RecyclerView>
+        app:layout_constraintTop_toTopOf="parent"></android.support.v7.widget.RecyclerView>
 
     <View
         android:id="@+id/legend_observer"
@@ -27,18 +26,19 @@
         android:layout_marginLeft="@dimen/default_margin"
         android:layout_marginStart="@dimen/default_margin"
         android:background="@color/badge_observer"
-        app:layout_constraintTop_toTopOf="@+id/legend_observer_tv"
         app:layout_constraintBottom_toBottomOf="@+id/legend_observer_tv"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/legend_observer_tv" />
 
-    <TextView android:id="@+id/legend_observer_tv"
+    <TextView
+        android:id="@+id/legend_observer_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginStart="@dimen/default_margin"
         android:text="@string/observed_tournament"
-        app:layout_constraintLeft_toRightOf="@+id/legend_observer"
         app:layout_constraintBottom_toTopOf="@+id/legend_participant_tv"
-        android:layout_marginStart="@dimen/default_margin" />
+        app:layout_constraintLeft_toRightOf="@+id/legend_observer" />
 
     <View
         android:id="@+id/legend_participant"
@@ -47,18 +47,19 @@
         android:layout_marginLeft="@dimen/default_margin"
         android:layout_marginStart="@dimen/default_margin"
         android:background="@color/badge_participant"
-        app:layout_constraintTop_toTopOf="@+id/legend_participant_tv"
         app:layout_constraintBottom_toBottomOf="@+id/legend_participant_tv"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/legend_participant_tv" />
 
-    <TextView android:id="@+id/legend_participant_tv"
+    <TextView
+        android:id="@+id/legend_participant_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginStart="@dimen/default_margin"
         android:text="@string/registered_in_tournament"
-        app:layout_constraintLeft_toRightOf="@+id/legend_participant"
         app:layout_constraintBottom_toTopOf="@+id/legend_owner_tv"
-        android:layout_marginStart="@dimen/default_margin" />
+        app:layout_constraintLeft_toRightOf="@+id/legend_participant" />
 
     <View
         android:id="@+id/legend_owner"
@@ -67,18 +68,19 @@
         android:layout_marginLeft="@dimen/default_margin"
         android:layout_marginStart="@dimen/default_margin"
         android:background="@color/badge_owner"
-        app:layout_constraintTop_toTopOf="@+id/legend_owner_tv"
         app:layout_constraintBottom_toBottomOf="@+id/legend_owner_tv"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/legend_owner_tv" />
 
-    <TextView android:id="@+id/legend_owner_tv"
+    <TextView
+        android:id="@+id/legend_owner_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginStart="@dimen/default_margin"
         android:text="@string/you_are_the_owner_of_the_tournament"
-        app:layout_constraintLeft_toRightOf="@+id/legend_owner"
         app:layout_constraintBottom_toTopOf="@+id/legend_opened_tv"
-        android:layout_marginStart="@dimen/default_margin" />
+        app:layout_constraintLeft_toRightOf="@+id/legend_owner" />
 
     <View
         android:id="@+id/legend_opened"
@@ -87,16 +89,17 @@
         android:layout_marginLeft="@dimen/default_margin"
         android:layout_marginStart="@dimen/default_margin"
         android:background="@color/badge_opened"
-        app:layout_constraintTop_toTopOf="@+id/legend_opened_tv"
         app:layout_constraintBottom_toBottomOf="@+id/legend_opened_tv"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/legend_opened_tv" />
 
-    <TextView android:id="@+id/legend_opened_tv"
+    <TextView
+        android:id="@+id/legend_opened_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginStart="@dimen/default_margin"
         android:text="@string/opened_for_registration_or_observation"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/legend_opened"
-        android:layout_marginStart="@dimen/default_margin" />
+        app:layout_constraintLeft_toRightOf="@+id/legend_opened" />
 </android.support.constraint.ConstraintLayout>

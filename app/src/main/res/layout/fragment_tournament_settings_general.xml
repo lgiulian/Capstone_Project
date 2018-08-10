@@ -127,20 +127,20 @@
             <android.support.v7.widget.AppCompatImageButton
                 android:id="@+id/begin_date_picker_btn"
                 style="@style/DatePickerBtnStyle"
+                android:contentDescription="@string/tournament_begin_date"
                 app:layout_constraintBottom_toBottomOf="@+id/tournament_begin_date"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tournament_begin_date"
-                app:srcCompat="@drawable/ic_date"
-                android:contentDescription="@string/tournament_begin_date"/>
+                app:srcCompat="@drawable/ic_date" />
 
             <android.support.v7.widget.AppCompatImageButton
                 android:id="@+id/end_date_picker_btn"
                 style="@style/DatePickerBtnStyle"
+                android:contentDescription="@string/tournament_end_date"
                 app:layout_constraintBottom_toBottomOf="@+id/tournament_end_date"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tournament_end_date"
-                app:srcCompat="@drawable/ic_date"
-                android:contentDescription="@string/tournament_end_date"/>
+                app:srcCompat="@drawable/ic_date" />
 
             <TextView
                 android:id="@+id/tournament_number_of_rounds_tv"
@@ -189,38 +189,38 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/default_left_right_padding"
                 android:layout_marginStart="@dimen/default_left_right_padding"
+                android:contentDescription="@string/tournament_nbw_absent"
                 android:orientation="horizontal"
                 android:weightSum="3"
                 app:layout_constraintLeft_toRightOf="@+id/tournament_nbw_absent_tv"
-                app:layout_constraintTop_toBottomOf="@+id/tournament_special_results_tv"
-                android:contentDescription="@string/tournament_nbw_absent">
+                app:layout_constraintTop_toBottomOf="@+id/tournament_special_results_tv">
 
                 <RadioButton
                     android:id="@+id/nbwAbsentButton1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:contentDescription="0"
                     android:text="0"
-                    tools:ignore="HardcodedText"
-                    android:contentDescription="0"/>
+                    tools:ignore="HardcodedText" />
 
                 <RadioButton
                     android:id="@+id/nbwAbsentButton2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:contentDescription="@string/all_half_point"
                     android:text="½"
-                    tools:ignore="HardcodedText"
-                    android:contentDescription="@string/all_half_point"/>
+                    tools:ignore="HardcodedText" />
 
                 <RadioButton
                     android:id="@+id/nbwAbsentButton3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:contentDescription="1"
                     android:text="1"
-                    tools:ignore="HardcodedText"
-                    android:contentDescription="1"/>
+                    tools:ignore="HardcodedText" />
             </RadioGroup>
 
             <TextView
@@ -239,38 +239,38 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/default_left_right_padding"
                 android:layout_marginStart="@dimen/default_left_right_padding"
+                android:contentDescription="@string/tournament_mms_absent"
                 android:orientation="horizontal"
                 android:weightSum="3"
                 app:layout_constraintLeft_toRightOf="@+id/tournament_mms_absent_tv"
-                app:layout_constraintTop_toBottomOf="@+id/radioGroup_nbw_absent"
-                android:contentDescription="@string/tournament_mms_absent">
+                app:layout_constraintTop_toBottomOf="@+id/radioGroup_nbw_absent">
 
                 <RadioButton
                     android:id="@+id/mmsAbsentButton1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:contentDescription="0"
                     android:text="0"
-                    tools:ignore="HardcodedText"
-                    android:contentDescription="0"/>
+                    tools:ignore="HardcodedText" />
 
                 <RadioButton
                     android:id="@+id/mmsAbsentButton2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:contentDescription="@string/all_half_point"
                     android:text="½"
-                    tools:ignore="HardcodedText"
-                    android:contentDescription="@string/all_half_point"/>
+                    tools:ignore="HardcodedText" />
 
                 <RadioButton
                     android:id="@+id/mmsAbsentButton3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:contentDescription="1"
                     android:text="1"
-                    tools:ignore="HardcodedText"
-                    android:contentDescription="1"/>
+                    tools:ignore="HardcodedText" />
             </RadioGroup>
 
             <TextView
@@ -289,38 +289,38 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/default_left_right_padding"
                 android:layout_marginStart="@dimen/default_left_right_padding"
+                android:contentDescription="@string/tournament_nbw_bye"
                 android:orientation="horizontal"
                 android:weightSum="3"
                 app:layout_constraintLeft_toRightOf="@+id/tournament_nbw_bye_tv"
-                app:layout_constraintTop_toBottomOf="@+id/radioGroup_mms_absent"
-                android:contentDescription="@string/tournament_nbw_bye">
+                app:layout_constraintTop_toBottomOf="@+id/radioGroup_mms_absent">
 
                 <RadioButton
                     android:id="@+id/nbwByeButton1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:contentDescription="0"
                     android:text="0"
-                    tools:ignore="HardcodedText"
-                    android:contentDescription="0"/>
+                    tools:ignore="HardcodedText" />
 
                 <RadioButton
                     android:id="@+id/nbwByeButton2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:contentDescription="@string/all_half_point"
                     android:text="½"
-                    tools:ignore="HardcodedText"
-                    android:contentDescription="@string/all_half_point"/>
+                    tools:ignore="HardcodedText" />
 
                 <RadioButton
                     android:id="@+id/nbwByeButton3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:contentDescription="1"
                     android:text="1"
-                    tools:ignore="HardcodedText"
-                    android:contentDescription="1"/>
+                    tools:ignore="HardcodedText" />
             </RadioGroup>
 
             <TextView
@@ -339,38 +339,38 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/default_left_right_padding"
                 android:layout_marginStart="@dimen/default_left_right_padding"
+                android:contentDescription="@string/tournament_mms_bye"
                 android:orientation="horizontal"
                 android:weightSum="3"
                 app:layout_constraintLeft_toRightOf="@+id/tournament_mms_bye_tv"
-                app:layout_constraintTop_toBottomOf="@+id/tournament_nbw_bye_tv"
-                android:contentDescription="@string/tournament_mms_bye">
+                app:layout_constraintTop_toBottomOf="@+id/tournament_nbw_bye_tv">
 
                 <RadioButton
                     android:id="@+id/mmsByeButton1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:contentDescription="0"
                     android:text="0"
-                    tools:ignore="HardcodedText"
-                    android:contentDescription="0"/>
+                    tools:ignore="HardcodedText" />
 
                 <RadioButton
                     android:id="@+id/mmsByeButton2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:contentDescription="@string/all_half_point"
                     android:text="½"
-                    tools:ignore="HardcodedText"
-                    android:contentDescription="@string/all_half_point"/>
+                    tools:ignore="HardcodedText" />
 
                 <RadioButton
                     android:id="@+id/mmsByeButton3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:contentDescription="1"
                     android:text="1"
-                    tools:ignore="HardcodedText"
-                    android:contentDescription="1"/>
+                    tools:ignore="HardcodedText" />
             </RadioGroup>
 
             <CheckBox
@@ -379,10 +379,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/default_margin"
                 android:layout_marginStart="@dimen/default_margin"
+                android:contentDescription="@string/round_down_nbw_and_mms_scores"
                 android:text="@string/round_down_nbw_and_mms_scores"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/radioGroup_mms_bye"
-                android:contentDescription="@string/round_down_nbw_and_mms_scores"/>
+                app:layout_constraintTop_toBottomOf="@+id/radioGroup_mms_bye" />
 
             <TextView
                 android:id="@+id/tournament_mcmahon_system_tv"
@@ -425,49 +425,49 @@
                 android:id="@+id/mcmahon_bar"
                 style="@style/TextInputRegularStyle"
                 android:hint="@string/mcmahon_bar_label"
+                android:inputType="text"
                 app:layout_constraintStart_toEndOf="@+id/barrier2"
-                app:layout_constraintTop_toBottomOf="@+id/tournament_mcmahon_system_tv"
-                android:inputType="text" />
+                app:layout_constraintTop_toBottomOf="@+id/tournament_mcmahon_system_tv" />
 
             <EditText
                 android:id="@+id/mcmahon_floor"
                 style="@style/TextInputRegularStyle"
                 android:hint="@string/mcmahon_floor_label"
+                android:inputType="text"
                 app:layout_constraintStart_toEndOf="@+id/barrier2"
-                app:layout_constraintTop_toBottomOf="@+id/mcmahon_bar"
-                android:inputType="text"/>
+                app:layout_constraintTop_toBottomOf="@+id/mcmahon_bar" />
 
             <EditText
                 android:id="@+id/mcmahon_zero"
                 style="@style/TextInputRegularStyle"
                 android:hint="@string/mcmahon_zero_label"
+                android:inputType="text"
                 app:layout_constraintStart_toEndOf="@+id/barrier2"
-                app:layout_constraintTop_toBottomOf="@+id/mcmahon_floor"
-                android:inputType="text"/>
+                app:layout_constraintTop_toBottomOf="@+id/mcmahon_floor" />
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/save_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
+                android:contentDescription="@string/save"
                 android:text="@string/save"
                 app:layout_constraintEnd_toStartOf="@+id/export_btn"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/mcmahon_zero"
-                android:contentDescription="@string/save"/>
+                app:layout_constraintTop_toBottomOf="@+id/mcmahon_zero" />
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/export_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
+                android:contentDescription="@string/export"
                 android:text="@string/export"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/save_btn"
-                app:layout_constraintTop_toBottomOf="@+id/mcmahon_zero"
-                android:contentDescription="@string/export"/>
+                app:layout_constraintTop_toBottomOf="@+id/mcmahon_zero" />
 
         </android.support.constraint.ConstraintLayout>
     </android.support.v4.widget.NestedScrollView>

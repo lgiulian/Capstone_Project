@@ -12,25 +12,26 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/default_margin"
         android:background="#09C"
-        android:textColor="#ffffff"/>
+        android:textColor="#ffffff" />
 
-    <ImageView android:id="@+id/settings_icon"
+    <ImageView
+        android:id="@+id/settings_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_margin"
-        android:layout_marginRight="@dimen/default_margin"
-        android:layout_marginEnd="@dimen/default_margin"
-        android:layout_alignParentRight="true"
-        android:src="@drawable/ic_settings"
         android:layout_alignParentEnd="true"
-        android:contentDescription="@string/settings" />
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="@dimen/default_margin"
+        android:layout_marginRight="@dimen/default_margin"
+        android:layout_marginTop="@dimen/default_margin"
+        android:contentDescription="@string/settings"
+        android:src="@drawable/ic_settings" />
 
     <TextView
         android:id="@+id/appwidget_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_below="@+id/appwidget_title"
+        android:layout_centerHorizontal="true"
         android:layout_margin="@dimen/default_margin"
         android:background="#09C"
         android:contentDescription="@string/tournament_results"

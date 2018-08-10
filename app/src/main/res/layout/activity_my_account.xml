@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout  xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <android.support.design.widget.CoordinatorLayout android:id="@+id/coordinator_layout"
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/coordinator_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.crilu.gothandroid.PlayersManagerActivity">
@@ -30,38 +31,38 @@
 
             <TextView
                 android:id="@+id/first_name_tv"
+                style="@style/RegularLabelStyle"
                 android:text="@string/first_name_label"
                 app:layout_constraintBaseline_toBaselineOf="@+id/first_name"
-                app:layout_constraintStart_toStartOf="parent"
-                style="@style/RegularLabelStyle" />
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/last_name_tv"
+                style="@style/RegularLabelStyle"
                 android:text="@string/last_name_label"
                 app:layout_constraintBaseline_toBaselineOf="@+id/last_name"
-                app:layout_constraintStart_toStartOf="parent"
-                style="@style/RegularLabelStyle" />
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/egf_pin_tv"
+                style="@style/RegularLabelStyle"
                 android:text="@string/egf_pin_label"
                 app:layout_constraintBaseline_toBaselineOf="@+id/egf_player"
-                app:layout_constraintStart_toStartOf="parent"
-                style="@style/RegularLabelStyle" />
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/ffg_lic_tv"
+                style="@style/RegularLabelStyle"
                 android:text="@string/ffg_lic_label"
                 app:layout_constraintBaseline_toBaselineOf="@+id/ffg_lic"
-                app:layout_constraintStart_toStartOf="parent"
-                style="@style/RegularLabelStyle" />
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/aga_id_tv"
+                style="@style/RegularLabelStyle"
                 android:text="@string/aga_id_label"
                 app:layout_constraintBaseline_toBaselineOf="@+id/aga_id"
-                app:layout_constraintStart_toStartOf="parent"
-                style="@style/RegularLabelStyle" />
+                app:layout_constraintStart_toStartOf="parent" />
 
             <android.support.constraint.Barrier
                 android:id="@+id/barrier1"
@@ -72,48 +73,48 @@
 
             <EditText
                 android:id="@+id/first_name"
-                android:inputType="text"
+                style="@style/TextInputRegularStyle"
                 android:hint="@string/first_name_label"
+                android:inputType="text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/barrier1"
-                app:layout_constraintTop_toBottomOf="@+id/appbar"
-                style="@style/TextInputRegularStyle" />
+                app:layout_constraintTop_toBottomOf="@+id/appbar" />
 
             <EditText
                 android:id="@+id/last_name"
-                android:inputType="text"
+                style="@style/TextInputRegularStyle"
                 android:hint="@string/last_name_label"
+                android:inputType="text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/barrier1"
-                app:layout_constraintTop_toBottomOf="@+id/first_name"
-                style="@style/TextInputRegularStyle" />
+                app:layout_constraintTop_toBottomOf="@+id/first_name" />
 
             <AutoCompleteTextView
                 android:id="@+id/egf_player"
+                style="@style/TextInputRegularStyle"
                 android:hint="@string/egf_pin_label"
                 android:inputType="text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/barrier1"
-                app:layout_constraintTop_toBottomOf="@+id/last_name"
-                style="@style/TextInputRegularStyle"/>
+                app:layout_constraintTop_toBottomOf="@+id/last_name" />
 
             <EditText
                 android:id="@+id/ffg_lic"
+                style="@style/TextInputRegularStyle"
                 android:hint="@string/ffg_lic_hint"
                 android:inputType="text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/barrier1"
-                app:layout_constraintTop_toBottomOf="@+id/egf_player"
-                style="@style/TextInputRegularStyle" />
+                app:layout_constraintTop_toBottomOf="@+id/egf_player" />
 
             <EditText
                 android:id="@+id/aga_id"
+                style="@style/TextInputRegularStyle"
                 android:hint="@string/aga_id_label"
                 android:inputType="text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/barrier1"
-                app:layout_constraintTop_toBottomOf="@+id/ffg_lic"
-                style="@style/TextInputRegularStyle" />
+                app:layout_constraintTop_toBottomOf="@+id/ffg_lic" />
 
             <TextView
                 android:id="@+id/explanatory_text_tv"
@@ -130,8 +131,8 @@
                 android:layout_height="@dimen/height_profile_img"
                 android:layout_marginTop="@dimen/default_margin"
                 android:background="@drawable/border"
-                android:scaleType="centerCrop"
                 android:onClick="onClickTakePhoto"
+                android:scaleType="centerCrop"
                 app:layout_constraintStart_toStartOf="@+id/aga_id_tv"
                 app:layout_constraintTop_toBottomOf="@+id/profile_photo_tv"
                 app:srcCompat="@drawable/ic_person" />
@@ -152,36 +153,36 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/default_margin"
                 android:layout_marginStart="@dimen/default_margin"
-                android:text="@string/send_to_egd"
+                android:contentDescription="@string/send_to_egd"
                 android:onClick="sendProfilePhoto"
+                android:text="@string/send_to_egd"
                 app:layout_constraintBottom_toBottomOf="@+id/profile_btn"
                 app:layout_constraintStart_toEndOf="@+id/barrier1"
-                app:layout_constraintTop_toTopOf="@+id/profile_btn"
-                android:contentDescription="@string/send_to_egd"/>
+                app:layout_constraintTop_toTopOf="@+id/profile_btn" />
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/login_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
+                android:contentDescription="@string/login_to_gotha"
                 android:onClick="onClickLogin"
                 android:text="@string/login_to_gotha"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/profile_btn"
-                android:contentDescription="@string/login_to_gotha"/>
+                app:layout_constraintTop_toBottomOf="@+id/profile_btn" />
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/logout_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
+                android:contentDescription="@string/logout_from_gotha"
                 android:onClick="onClickLogout"
                 android:text="@string/logout_from_gotha"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/login_btn"
-                android:contentDescription="@string/logout_from_gotha"/>
+                app:layout_constraintTop_toBottomOf="@+id/login_btn" />
 
         </android.support.constraint.ConstraintLayout>
     </android.support.design.widget.CoordinatorLayout>
