@@ -60,6 +60,7 @@ public class PlayersManagerActivity extends AppCompatActivity implements Adapter
             mPlayersManager.setPlayerRegistrationListener(this);
         } else {
             Timber.e("PlayersManager instance is null");
+            Snackbar.make(mBinding.coordinatorLayout, getString(R.string.all_something_went_wrong_initializing_model_data), Snackbar.LENGTH_LONG).show();
         }
     }
 
@@ -71,6 +72,7 @@ public class PlayersManagerActivity extends AppCompatActivity implements Adapter
             mPlayersManager.setPlayerRegistrationListener(null);
         } else {
             Timber.e("PlayersManager instance is null");
+            Snackbar.make(mBinding.coordinatorLayout, getString(R.string.all_something_went_wrong_initializing_model_data), Snackbar.LENGTH_LONG).show();
         }
     }
 

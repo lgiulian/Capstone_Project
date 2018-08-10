@@ -47,6 +47,7 @@ public class GamesOptionsActivity extends AppCompatActivity implements GamesOpti
             mGameOptionViewModel.getGameOptions().addOnGamesOptionsListener(this);
         } else {
             Timber.e("GamesOptions instance is null");
+            Snackbar.make(mBinding.coordinatorLayout, getString(R.string.all_something_went_wrong_initializing_model_data), Snackbar.LENGTH_LONG).show();
         }
     }
 
@@ -57,6 +58,7 @@ public class GamesOptionsActivity extends AppCompatActivity implements GamesOpti
             mGameOptionViewModel.getGameOptions().removeOnGamesOptionsListener(this);
         } else {
             Timber.e("GamesOptions instance is null");
+            Snackbar.make(mBinding.coordinatorLayout, getString(R.string.all_something_went_wrong_initializing_model_data), Snackbar.LENGTH_LONG).show();
         }
     }
 
@@ -111,6 +113,7 @@ public class GamesOptionsActivity extends AppCompatActivity implements GamesOpti
             mBinding.fisherBonusTime.setText("" + gps.getFischerTime());
         } else {
             Timber.e("GamesOptions instance is null");
+            Snackbar.make(mBinding.coordinatorLayout, getString(R.string.all_something_went_wrong_initializing_model_data), Snackbar.LENGTH_LONG).show();
         }
     }
 
@@ -141,6 +144,7 @@ public class GamesOptionsActivity extends AppCompatActivity implements GamesOpti
             }
         } else {
             Timber.e("GamesOptions instance is null");
+            Snackbar.make(mBinding.coordinatorLayout, getString(R.string.all_something_went_wrong_initializing_model_data), Snackbar.LENGTH_LONG).show();
         }
     }
 
@@ -195,6 +199,7 @@ public class GamesOptionsActivity extends AppCompatActivity implements GamesOpti
             }
         } else {
             Timber.e("GamesOptions instance is null");
+            Snackbar.make(mBinding.coordinatorLayout, getString(R.string.all_something_went_wrong_initializing_model_data), Snackbar.LENGTH_LONG).show();
         }
     }
 
@@ -227,6 +232,7 @@ public class GamesOptionsActivity extends AppCompatActivity implements GamesOpti
             }
         } else {
             Timber.e("GamesOptions instance is null");
+            Snackbar.make(mBinding.coordinatorLayout, getString(R.string.all_something_went_wrong_initializing_model_data), Snackbar.LENGTH_LONG).show();
         }
     }
 }

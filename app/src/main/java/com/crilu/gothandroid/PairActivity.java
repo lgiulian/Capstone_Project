@@ -3,6 +3,7 @@ package com.crilu.gothandroid;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -78,6 +79,7 @@ public class PairActivity extends AppCompatActivity implements GamesPair.OnPairL
                     mGamesPair.setSpnRoundNumber(Integer.valueOf(roundSelectedStr));
                 } else {
                     Timber.e("GamesPair instance is null");
+                    Snackbar.make(mBinding.coordinatorLayout, getString(R.string.all_something_went_wrong_initializing_model_data), Snackbar.LENGTH_LONG).show();
                 }
             }
             @Override

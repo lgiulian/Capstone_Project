@@ -63,6 +63,7 @@ public class ResultActivity extends AppCompatActivity implements GamesResults.Ga
                     mResultViewModel.getGamesResults().setSpnRoundNumber(Integer.valueOf(roundSelectedStr));
                 } else {
                     Timber.e("GamesResults instance is null");
+                    Snackbar.make(mBinding.coordinatorLayout, getString(R.string.all_something_went_wrong_initializing_model_data), Snackbar.LENGTH_LONG).show();
                 }
             }
             @Override
@@ -78,6 +79,7 @@ public class ResultActivity extends AppCompatActivity implements GamesResults.Ga
             mResultViewModel.getGamesResults().addGamesResultsListener(this);
         } else {
             Timber.e("GamesResults instance is null");
+            Snackbar.make(mBinding.coordinatorLayout, getString(R.string.all_something_went_wrong_initializing_model_data), Snackbar.LENGTH_LONG).show();
         }
     }
 
@@ -88,6 +90,7 @@ public class ResultActivity extends AppCompatActivity implements GamesResults.Ga
             mResultViewModel.getGamesResults().removeGamesResultsListener(this);
         } else {
             Timber.e("GamesResults instance is null");
+            Snackbar.make(mBinding.coordinatorLayout, getString(R.string.all_something_went_wrong_initializing_model_data), Snackbar.LENGTH_LONG).show();
         }
     }
 

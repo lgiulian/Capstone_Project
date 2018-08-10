@@ -83,6 +83,7 @@ public class TournamentSettingsActivity extends AppCompatActivity {
             tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
         } else {
             Timber.e("TournamentOptions instance is null");
+            Snackbar.make(mBinding.mainContent, getString(R.string.all_something_went_wrong_initializing_model_data), Snackbar.LENGTH_LONG).show();
         }
     }
 
@@ -127,6 +128,7 @@ public class TournamentSettingsActivity extends AppCompatActivity {
             }
         } else {
             Timber.e("TournamentOptions instance is null");
+            Snackbar.make(mBinding.mainContent, getString(R.string.all_something_went_wrong_initializing_model_data), Snackbar.LENGTH_LONG).show();
         }
     }
 

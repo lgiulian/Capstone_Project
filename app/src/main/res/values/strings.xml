@@ -254,4 +254,8 @@
     <string name="settings">Settings</string>
     <string name="all_half_point">half point</string>
     <string name="games_options_time_system">Time system</string>
+    <string name="all_invalid_begin_date">Begin Date is invalid. Operation dropped.</string>
+    <string name="all_invalid_end_date">End Date is invalid. Operation dropped.</string>
+    <string name="all_invalid_full_name">Please fill in Full Name. Operation dropped.</string>
+    <string name="all_something_went_wrong_initializing_model_data">Something went wrong initializing the data. Please try again or launch the app again.</string>
 </resources>
