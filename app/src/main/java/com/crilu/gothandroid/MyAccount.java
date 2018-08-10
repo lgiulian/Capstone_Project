@@ -266,7 +266,7 @@ public class MyAccount extends AppCompatActivity implements AdapterView.OnItemCl
         // Grant temporary read permission to the content URI
         shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
-        String msgStr = "Send profile picture to EGF";
+        String msgStr = getString(R.string.myaccount_profile_photo_chooser_message);
         startActivity(Intent.createChooser(shareIntent, msgStr));
     }
 

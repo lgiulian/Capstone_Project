@@ -81,6 +81,7 @@
     <string name="myaccount_send_profile_photo_message" translatable="false">Hi,\n\nPlease upload my profile photo with the attached file. My EGF Pin is %1$s\n\nThank you.</string>
     <string name="myaccount_no_profile_photo_available">No profile photo available. Click on avatar and take a selfie first</string>
     <string name="myaccount_egfpin_mandatory">EGF Pin is mandatory. Login cancelled.</string>
+    <string name="myaccount_profile_photo_chooser_message">Send profile picture to EGF</string>
     <string name="ffg_lic_hint">FFG LIC</string>
     <string name="egf_pin_label">EGF PIN *</string>
     <string name="first_name_label">First Name</string>
@@ -262,4 +263,5 @@
     <string name="all_invalid_end_date">End Date is invalid. Operation dropped.</string>
     <string name="all_invalid_full_name">Please fill in Full Name. Operation dropped.</string>
     <string name="all_something_went_wrong_initializing_model_data">Something went wrong initializing the data. Please try again or launch the app again.</string>
+    <string name="not_implemented_yet">all_not_implemented_yet</string>
 </resources>
