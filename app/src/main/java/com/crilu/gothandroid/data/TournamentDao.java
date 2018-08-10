@@ -150,11 +150,12 @@ public class TournamentDao {
         subscriptionsQuery.addListenerForSingleValueEvent(valueEventListener);
     }
 
-    public static void saveCurrentTournamentAndUploadOnFirestore(final Context context, final Tournament tournamentModel, String UID, final boolean displayFeedback, final CoordinatorLayout coordinatorLayout) {
+    public static String saveCurrentTournamentAndUploadOnFirestore(final Context context, final Tournament tournamentModel, String UID, final boolean displayFeedback, final CoordinatorLayout coordinatorLayout) {
         final TournamentInterface currentOpenedTournament = GothandroidApplication.getGothaModelInstance().getTournament();
+        String tournamentContent = null;
         File file = TournamentUtils.getXmlFile(context, currentOpenedTournament);
         try {
-            String tournamentContent = FileUtils.getFileContents(file);
+            tournamentContent = FileUtils.getFileContents(file);
             Timber.d("tournament content +> %s", tournamentContent);
             tournamentModel.setContent(tournamentContent);
 
@@ -204,6 +205,8 @@ public class TournamentDao {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return tournamentContent;
     }
 
     public static void sendMessageToAll(final Context context, final Tournament tournamentModel, final String message, final CoordinatorLayout coordinatorLayout) {

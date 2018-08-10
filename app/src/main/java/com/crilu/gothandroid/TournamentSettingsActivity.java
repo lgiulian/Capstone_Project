@@ -12,6 +12,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.ShareCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -100,16 +101,17 @@ public class TournamentSettingsActivity extends AppCompatActivity {
         return UID;
     }
 
-    private void saveAndUploadOnFirestore() {
+    private String saveAndUploadOnFirestore() {
         TournamentOptions tournamentOptions = mTournamentOptionViewModel.getTournamentOptions();
+        String tournamentContent = null;
         if (tournamentOptions != null) {
             TournamentInterface tournamentGotha = tournamentOptions.getTournament();
             if (tournamentGotha == null) {
                 Snackbar.make(mBinding.mainContent, getString(R.string.no_tournament_selected), Snackbar.LENGTH_LONG).show();
-                return;
+                return null;
             }
             String UID = checkUserLoggedIn();
-            if (TextUtils.isEmpty(UID)) return;
+            if (TextUtils.isEmpty(UID)) return null;
 
             if (!TextUtils.isEmpty(tournamentGotha.getTournamentIdentity())) {
                 Timber.d("saving tournament %s", tournamentGotha.getTournamentIdentity());
@@ -124,15 +126,25 @@ public class TournamentSettingsActivity extends AppCompatActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                TournamentDao.saveCurrentTournamentAndUploadOnFirestore(this, tournament, UID, true, mBinding.mainContent);
+                tournamentContent = TournamentDao.saveCurrentTournamentAndUploadOnFirestore(this, tournament, UID, true, mBinding.mainContent);
             }
         } else {
             Timber.e("TournamentOptions instance is null");
             Snackbar.make(mBinding.mainContent, getString(R.string.all_something_went_wrong_initializing_model_data), Snackbar.LENGTH_LONG).show();
         }
+        return tournamentContent;
     }
 
     private void exportTournament() {
+        String tournamentContent = saveAndUploadOnFirestore();
+        String mimeType = "text/plain";
+
+        ShareCompat.IntentBuilder
+                .from(this)
+                .setType(mimeType)
+                .setChooserTitle(getString(R.string.tournament_share_xml_title))
+                .setText(tournamentContent)
+                .startChooser();
     }
 
     public static class GeneralFragment extends Fragment implements DatePickerDialog.OnDateSetListener, View.OnClickListener, TournamentOptions.OnTournamentOptionsListener, RadioGroup.OnCheckedChangeListener, CompoundButton.OnCheckedChangeListener, View.OnFocusChangeListener {

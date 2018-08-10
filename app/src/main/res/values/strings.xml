@@ -234,6 +234,7 @@
     <string name="for_players_with_at_least_nbrounds_2_wins">for players with at least nbRounds/2 wins</string>
     <string name="for_players_above_mcmahon_bar">for players above McMahon bar</string>
     <string name="title_activity_games_settings">Games Options</string>
+    <string name="tournament_share_xml_title">Share tournament as XML</string>
 
     <!-- Games settings screen -->
     <string name="goban_size">Goban size</string>
