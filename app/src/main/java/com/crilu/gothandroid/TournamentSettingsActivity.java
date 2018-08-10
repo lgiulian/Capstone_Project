@@ -188,6 +188,9 @@ public class TournamentSettingsActivity extends AppCompatActivity {
             mBinding.tournamentDirector.setOnFocusChangeListener(this);
             mBinding.tournamentBeginDate.setOnFocusChangeListener(this);
             mBinding.tournamentEndDate.setOnFocusChangeListener(this);
+            mBinding.mcmahonZero.setOnFocusChangeListener(this);
+            mBinding.mcmahonFloor.setOnFocusChangeListener(this);
+            mBinding.mcmahonBar.setOnFocusChangeListener(this);
             mBinding.numberOfRoundsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -391,6 +394,18 @@ public class TournamentSettingsActivity extends AppCompatActivity {
                 case R.id.tournament_director:
                     tournamentOptions.txfDirector = mBinding.tournamentDirector.getText().toString();
                     tournamentOptions.txfDirectorFocusLost();
+                    break;
+                case R.id.mcmahon_bar:
+                    tournamentOptions.txfMMBar = mBinding.mcmahonBar.getText().toString();
+                    tournamentOptions.txfMMBarFocusLost();
+                    break;
+                case R.id.mcmahon_floor:
+                    tournamentOptions.txfMMFloor = mBinding.mcmahonFloor.getText().toString();
+                    tournamentOptions.txfMMFloorFocusLost();
+                    break;
+                case R.id.mcmahon_zero:
+                    tournamentOptions.txfMMZero = mBinding.mcmahonZero.getText().toString();
+                    tournamentOptions.txfMMZeroFocusLost();
                     break;
             }
         }

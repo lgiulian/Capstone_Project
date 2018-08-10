@@ -550,7 +550,7 @@ public class TournamentOptions {
         }
     }//GEN-LAST:event_txfLastRoundForSeedSystem1FocusLost
 
-    private void txfMMFloorFocusLost() {//GEN-FIRST:event_txfMMFloorFocusLost
+    public void txfMMFloorFocusLost() {//GEN-FIRST:event_txfMMFloorFocusLost
         TournamentParameterSet tps;
         GeneralParameterSet gps;
         tps = tournament.getTournamentParameterSet();
@@ -572,7 +572,7 @@ public class TournamentOptions {
         }
     }//GEN-LAST:event_txfMMFloorFocusLost
 
-    private void txfMMBarFocusLost() {//GEN-FIRST:event_txfMMBarFocusLost
+    public void txfMMBarFocusLost() {//GEN-FIRST:event_txfMMBarFocusLost
         TournamentParameterSet tps;
         GeneralParameterSet gps;
         tps = tournament.getTournamentParameterSet();
@@ -1041,7 +1041,7 @@ public class TournamentOptions {
 
     }//GEN-LAST:event_ckbCompensateFocusLost
 
-    private void txfMMZeroFocusLost() {//GEN-FIRST:event_txfMMZeroFocusLost
+    public void txfMMZeroFocusLost() {//GEN-FIRST:event_txfMMZeroFocusLost
         TournamentParameterSet tps;
         GeneralParameterSet gps;
         tps = tournament.getTournamentParameterSet();
