@@ -7,7 +7,9 @@ import android.content.ContentValues;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.DatePicker;
 
@@ -89,6 +91,18 @@ public class CreateTournamentActivity extends AppCompatAdActivity implements Dat
             Timber.d(e);
         }
         int noRounds = Integer.valueOf(mBinding.form.numberOfRoundsSpinner.getSelectedItem().toString());
+        if (beginDate == null) {
+            Snackbar.make(mBinding.coordinatorLayout, getString(R.string.all_invalid_begin_date), Snackbar.LENGTH_LONG).show();
+            return;
+        }
+        if (endDate == null) {
+            Snackbar.make(mBinding.coordinatorLayout, getString(R.string.all_invalid_end_date), Snackbar.LENGTH_LONG).show();
+            return;
+        }
+        if (TextUtils.isEmpty(mBinding.form.tournamentName.getText().toString())) {
+            Snackbar.make(mBinding.coordinatorLayout, getString(R.string.all_invalid_full_name), Snackbar.LENGTH_LONG).show();
+            return;
+        }
         gothaModel.startTournament(mBinding.form.tournamentName.getText().toString(),
                 mBinding.form.tournamentShortName.getText().toString(),
                 mBinding.form.tournamentLocation.getText().toString(),
