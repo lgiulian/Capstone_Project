@@ -208,9 +208,11 @@ public class GamesOptionsActivity extends AppCompatActivity implements GamesOpti
         int id = v.getId();
         switch (id) {
             case R.id.save_btn:
+                mBinding.saveBtn.requestFocusFromTouch();
                 saveAndUploadOnFirestore();
                 break;
             case R.id.export_btn:
+                mBinding.exportBtn.requestFocusFromTouch();
                 exportTournament();
                 break;
         }

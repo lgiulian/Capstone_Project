@@ -301,11 +301,13 @@ public class TournamentSettingsActivity extends AppCompatActivity {
                     break;
                 case R.id.save_btn:
                     if (getActivity() != null) {
+                        mBinding.saveBtn.requestFocusFromTouch();
                         ((TournamentSettingsActivity) getActivity()).saveAndUploadOnFirestore();
                     }
                     break;
                 case R.id.export_btn:
                     if (getActivity() != null) {
+                        mBinding.exportBtn.requestFocusFromTouch();
                         ((TournamentSettingsActivity) getActivity()).exportTournament();
                     }
                     break;
@@ -358,6 +360,7 @@ public class TournamentSettingsActivity extends AppCompatActivity {
 
         @Override
         public void onFocusChange(View v, boolean hasFocus) {
+            Timber.d("on focus changed");
             int id = v.getId();
             TournamentOptions tournamentOptions = mTournamentOptionViewModel.getTournamentOptions();
             switch (id) {
@@ -521,11 +524,13 @@ public class TournamentSettingsActivity extends AppCompatActivity {
             switch (id) {
                 case R.id.save_btn:
                     if (getActivity() != null) {
+                        mBinding.saveBtn.requestFocusFromTouch();
                         ((TournamentSettingsActivity) getActivity()).saveAndUploadOnFirestore();
                     }
                     break;
                 case R.id.export_btn:
                     if (getActivity() != null) {
+                        mBinding.exportBtn.requestFocusFromTouch();
                         ((TournamentSettingsActivity) getActivity()).exportTournament();
                     }
                     break;
@@ -688,11 +693,13 @@ public class TournamentSettingsActivity extends AppCompatActivity {
             switch (id) {
                 case R.id.save_btn:
                     if (getActivity() != null) {
+                        mBinding.saveBtn.requestFocusFromTouch();
                         ((TournamentSettingsActivity) getActivity()).saveAndUploadOnFirestore();
                     }
                     break;
                 case R.id.export_btn:
                     if (getActivity() != null) {
+                        mBinding.exportBtn.requestFocusFromTouch();
                         ((TournamentSettingsActivity) getActivity()).exportTournament();
                     }
                     break;
@@ -929,11 +936,13 @@ public class TournamentSettingsActivity extends AppCompatActivity {
             switch (id) {
                 case R.id.save_btn:
                     if (getActivity() != null) {
+                        mBinding.saveBtn.requestFocusFromTouch();
                         ((TournamentSettingsActivity) getActivity()).saveAndUploadOnFirestore();
                     }
                     break;
                 case R.id.export_btn:
                     if (getActivity() != null) {
+                        mBinding.exportBtn.requestFocusFromTouch();
                         ((TournamentSettingsActivity) getActivity()).exportTournament();
                     }
                     break;
