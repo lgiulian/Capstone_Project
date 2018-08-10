@@ -78,6 +78,7 @@
     <string name="notification_message">"%1$s update"</string>
 
     <string name="title_activity_myAccount">My Account</string>
+    <string name="myaccount_send_profile_photo_message" translatable="false">Hi,\n\nPlease upload my profile photo with the attached file. My EGF Pin is %1$s\n\nThank you.</string>
     <string name="ffg_lic_hint">FFG LIC</string>
     <string name="egf_pin_label">EGF PIN *</string>
     <string name="first_name_label">First Name</string>

@@ -245,10 +245,7 @@ public class MyAccount extends AppCompatActivity implements AdapterView.OnItemCl
         Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND_MULTIPLE);
         shareIntent.setType("text/plain");
         shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Upload profile photo");
-        shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Hi,\n\n" +
-                "Please upload my profile photo with the attached file.\n" +
-        "My EGF Pin is " + mBinding.egfPlayer.getText().toString() + "\n\n" +
-        "Thank you.");
+        shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, getString(R.string.myaccount_send_profile_photo_message, mBinding.egfPlayer.getText().toString()));
         shareIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {"aldo.podavini@europeangodatabase.eu"});
 
         ArrayList<Uri> uris = new ArrayList<>();
