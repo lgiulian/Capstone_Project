@@ -73,13 +73,14 @@ public class MainActivity extends AppCompatAdActivity
     private List<Tournament> mPublishedTournament = new ArrayList<>();
     private TournamentPublishedListAdapter mAdapter;
     private String mRefreshedToken;
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        mToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -91,7 +92,7 @@ public class MainActivity extends AppCompatAdActivity
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -509,6 +510,7 @@ public class MainActivity extends AppCompatAdActivity
         }
         TournamentInterface currentTournament = GothandroidApplication.getGothaModelInstance().getTournament();
         if (currentTournament != null) {
+            mToolbar.setTitle(currentTournament.getFullName());
             mTournamentName.setText(currentTournament.getFullName());
         }
     }
