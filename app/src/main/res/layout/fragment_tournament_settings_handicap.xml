@@ -50,7 +50,7 @@
                 app:layout_constraintStart_toEndOf="@+id/handicap_ceiling_tv"
                 app:layout_constraintTop_toBottomOf="@+id/no_handicap"
                 android:hint="@string/handicap_ceiling"
-                android:inputType="text" />
+                android:inputType="number" />
 
             <TextView
                 android:id="@+id/handicap_based_on_tv"

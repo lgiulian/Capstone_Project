@@ -368,19 +368,19 @@ public class TournamentOptions {
         }
 
         int oldPreferMMSDiffRatherThanSameCountry = paiPS.getPaiSePreferMMSDiffRatherThanSameCountry();
-        int newPreferMMSDiffRatherThanSameCountry = new Integer(this.txfSeCountry).intValue();
+        int newPreferMMSDiffRatherThanSameCountry = Integer.valueOf(this.txfSeCountry);
         if (newPreferMMSDiffRatherThanSameCountry != oldPreferMMSDiffRatherThanSameCountry){
             paiPS.setPaiSePreferMMSDiffRatherThanSameCountry(newPreferMMSDiffRatherThanSameCountry);
             bSomethingHasChanged = true;
         }
         int oldPreferMMSDiffRatherThanSameClubsGroup = paiPS.getPaiSePreferMMSDiffRatherThanSameClubsGroup();
-        int newPreferMMSDiffRatherThanSameClubsGroup = new Integer(this.txfSeClubsGroup).intValue();
+        int newPreferMMSDiffRatherThanSameClubsGroup = Integer.valueOf(this.txfSeClubsGroup);
         if (newPreferMMSDiffRatherThanSameClubsGroup != oldPreferMMSDiffRatherThanSameClubsGroup){
             paiPS.setPaiSePreferMMSDiffRatherThanSameClubsGroup(newPreferMMSDiffRatherThanSameClubsGroup);
             bSomethingHasChanged = true;
         }
         int oldPreferMMSDiffRatherThanSameClub = paiPS.getPaiSePreferMMSDiffRatherThanSameClub();
-        int newPreferMMSDiffRatherThanSameClub = new Integer(this.txfSeClub).intValue();
+        int newPreferMMSDiffRatherThanSameClub = Integer.valueOf(this.txfSeClub);
         if (newPreferMMSDiffRatherThanSameClub != oldPreferMMSDiffRatherThanSameClub){
             paiPS.setPaiSePreferMMSDiffRatherThanSameClub(newPreferMMSDiffRatherThanSameClub);
             bSomethingHasChanged = true;
@@ -538,7 +538,10 @@ public class TournamentOptions {
         gps = tps.getGeneralParameterSet();
         paiPS = tps.getPairingParameterSet();
         int oldLastRoundForSeedSystem1 = paiPS.getPaiMaLastRoundForSeedSystem1();
-        int newLastRoundForSeedSystem1 = new Integer(txfLastRoundForSeedSystem1).intValue() - 1;
+        int newLastRoundForSeedSystem1 = 0;
+        try {
+            newLastRoundForSeedSystem1 = Integer.valueOf(txfLastRoundForSeedSystem1) - 1;
+        } catch (Exception ex) {ex.printStackTrace();}
         if (newLastRoundForSeedSystem1 < 1 || newLastRoundForSeedSystem1 >= gps.getNumberOfRounds()){
             this.txfLastRoundForSeedSystem1 = "" + (oldLastRoundForSeedSystem1 + 1);
             return;

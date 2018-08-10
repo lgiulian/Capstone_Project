@@ -50,7 +50,7 @@
                 android:hint="@string/earlier_rounds_up_to_round"
                 app:layout_constraintStart_toEndOf="@+id/earlier_rounds_up_to_tv"
                 app:layout_constraintTop_toBottomOf="@+id/inside_group_tv"
-                android:inputType="text" />
+                android:inputType="number" />
 
             <TextView
                 android:id="@+id/earlier_rounds_tv"

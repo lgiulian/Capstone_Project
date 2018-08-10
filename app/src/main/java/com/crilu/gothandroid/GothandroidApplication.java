@@ -86,36 +86,36 @@ public class GothandroidApplication extends Application implements GothaModel.Go
     }
 
     public static PlayersManager getPlayersManagerInstance() {
-        if (sPlayersManager == null && sGothaModel.getTournament() != null) {
-            sPlayersManager = new PlayersManager(sGothaModel.getTournament());
+        if (sPlayersManager == null && getGothaModelInstance().getTournament() != null) {
+            sPlayersManager = new PlayersManager(getGothaModelInstance().getTournament());
         }
         return sPlayersManager;
     }
 
     public static GamesPair getGamesPairInstance() {
-        if (sGamesPair == null && sGothaModel.getTournament() != null) {
-            sGamesPair = new GamesPair(sGothaModel.getTournament());
+        if (sGamesPair == null && getGothaModelInstance().getTournament() != null) {
+            sGamesPair = new GamesPair(getGothaModelInstance().getTournament());
         }
         return sGamesPair;
     }
 
     public static GamesResults getGamesResultsInstance() {
-        if (sGamesResults == null && sGothaModel.getTournament() != null) {
-            sGamesResults = new GamesResults(sGothaModel.getTournament());
+        if (sGamesResults == null && getGothaModelInstance().getTournament() != null) {
+            sGamesResults = new GamesResults(getGothaModelInstance().getTournament());
         }
         return sGamesResults;
     }
 
     public static TournamentOptions getTournamentOptionsInstance() {
-        return new TournamentOptions(sGothaModel.getTournament());
+        return new TournamentOptions(getGothaModelInstance().getTournament());
     }
 
     public static GamesOptions getGamesOptionsInstance() {
-        return new GamesOptions(sGothaModel.getTournament());
+        return new GamesOptions(getGothaModelInstance().getTournament());
     }
 
     public static Publish getPublishInstance() {
-        return new Publish(sGothaModel.getTournament());
+        return new Publish(getGothaModelInstance().getTournament());
     }
 
     public static String getCurrentUser() {
