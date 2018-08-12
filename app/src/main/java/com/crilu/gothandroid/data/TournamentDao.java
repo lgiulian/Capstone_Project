@@ -133,7 +133,7 @@ public class TournamentDao {
             fromDate = new Date();
         }
         DatabaseReference db = GothandroidApplication.getFireDatabase();
-        Query tournamentsQuery = db.child(TOURNAMENT_DOC_REF_PATH).orderByChild("creationDate/time").startAt(fromDate.getTime());
+        Query tournamentsQuery = db.child(TOURNAMENT_DOC_REF_PATH).orderByChild("creationDate/time").startAt(fromDate.getTime() + 1);
         tournamentsQuery.addListenerForSingleValueEvent(valueEventListener);
     }
 
