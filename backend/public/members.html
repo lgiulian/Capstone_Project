@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Welcome to Firebase Hosting</title>
+
+    <script src="/__/firebase/5.1.0/firebase-app.js"></script>
+    <script src="/__/firebase/5.1.0/firebase-auth.js"></script>
+    <script src="/__/firebase/5.1.0/firebase-database.js"></script>
+    <script src="/__/firebase/5.1.0/firebase-storage.js"></script>
+    <script src="/__/firebase/5.1.0/firebase-messaging.js"></script>
+    <script src="/__/firebase/init.js"></script>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Learn how to use the Firebase platform on the Web">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gothandroid</title>
+
+    <!-- Disable tap highlight on IE -->
+    <meta name="msapplication-tap-highlight" content="no">
+
+    <!-- Web Application Manifest -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Gothandroid">
+    <meta name="theme-color" content="#303F9F">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Gothandroid">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#303F9F">
+
+    <!-- Tile icon for Win8 -->
+    <meta name="msapplication-TileColor" content="#3372DF">
+    <meta name="msapplication-navbutton-color" content="#303F9F">
+
+    <!-- Material Design Lite -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
+    <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+    <style media="screen">
+      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
+      #message { background: white; width: 80%; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
+      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
+      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
+      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
+      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
+      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
+      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
+      @media (max-width: 600px) {
+        body, #message { margin-top: 0; background: white; box-shadow: none; }
+        body { border-top: 16px solid #ffa100; }
+      }
+
+/* **************   STYLE FOR THE WEB FORM EXAMPLE   *************** */
+
+#player_div {
+width:730px;
+height:210px;
+margin:0 auto;
+padding:7px;
+border:2px solid black;
+background-color:#FFEEFF;
+}
+#photo {
+margin:5px;
+}
+#divHelp {
+display:none;
+position: absolute;
+margin:0 0 0 0;
+width: 300px;
+max-height:400px;
+overflow:auto;
+padding:20px;
+background-color:white;
+border:2px solid black;
+text-align:left;
+z-index:90;
+}
+#imgHelpExit {
+position:absolute;
+top:2px;
+right:2px;
+}
+
+#helpTable_last_name tr {
+cursor: pointer;
+}
+
+/* **************************************************************** */
+
+    </style>
+
+    <!-- App Styling -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link rel="stylesheet" href="styles/main.css">
+
+</head>
+<body>
+
+<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+    <!-- Header section containing logo -->
+    <header class="mdl-layout__header mdl-color-text--white mdl-color--light-blue-700">
+        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
+            <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
+                <h3><i class="material-icons">blur_linear</i> Gothandroid</h3>
+            </div>
+            <div id="user-container">
+                <div hidden id="user-pic"></div>
+                <div hidden id="user-name"></div>
+                <button hidden id="sign-out" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
+                    Sign-out
+                </button>
+                <button hidden id="sign-in" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
+                    <i class="material-icons">account_circle</i>Sign-in with Google
+                </button>
+            </div>
+        </div>
+    </header>
+
+
+    <main class="mdl-layout__content mdl-color--grey-100">
+        <div id="pins-card-container" class="mdl-cell mdl-cell--12-col mdl-grid">
+
+            <div id="player_div">
+                <form id="record-form" action="#">
+                    <div>
+                        <img id="photo" align="left" />
+                        <span> Last Name: <input id="last_name" type="text" onkeyup="getData();" placeholder="Type at least 3 characters here..."
+                                                 onblur="document.getElementById('divHelp').style.display = 'none';void();" size="30" /></span>
+                        <span> Name: <input id="name" type="text" size="30" /></span><br /><br />
+                        <span> Club: <input id="club" type="text" size="4" /></span>
+                        <span> Country: <input id="country" type="text" size="2" /></span><br /><br />
+                        <span> PIN: <input id="pin" type="text" size="8" /></span>
+                        <span> Strength: <input id="strength" type="text" size="3" /></span>
+                        <span> GoR: <input id="gor" type="text" size="10" /></span>
+                        &nbsp;&nbsp;&nbsp;<a id="linkToPage" href='#' target='_new'>EGD Page</a><br /><br />
+                        <span> Location: <input id="location" type="text" size="30" /></span>
+                        <span> Payment Date: <input id="paymentDate" type="text" size="20" /></span>
+                        <br /><br />                        </div>
+                    <button id="submit" disabled type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                        Send
+                    </button>
+                </form>
+            </div>
+            <div id='divHelp'>
+                <img id='imgHelpExit' src='images/calx.gif'
+                     onClick="document.getElementById('divHelp').style.display = 'none';" />
+                <form id='helpForm_last_name' name='helpForm_last_name'>
+                    <table id='helpTable_last_name' name='helpTable_last_name' class='aForm_helpTables' >
+                    </table>
+                </form>
+            </div>
+
+            <!-- pins container -->
+            <div id="pins-card" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--6-col-tablet mdl-cell--6-col-desktop">
+                <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+                    <div id="pins">
+                        <span id="pin-filler"></span>
+                    </div>
+
+                </div>
+            </div>
+
+            <div id="must-signin-snackbar" class="mdl-js-snackbar mdl-snackbar">
+                <div class="mdl-snackbar__text"></div>
+                <button class="mdl-snackbar__action" type="button"></button>
+            </div>
+
+        </div>
+
+        <p id="load">Firebase SDK Loading&hellip;</p>
+
+
+    </main>
+</div>
+
+
+<script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+        // // The Firebase SDK is initialized and available here!
+        //
+        // firebase.auth().onAuthStateChanged(user => { });
+        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
+        // firebase.messaging().requestPermission().then(() => { });
+        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
+        //
+        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+
+        try {
+          let app = firebase.app();
+          let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
+          //document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
+          document.getElementById('load').innerHTML = ``;
+        } catch (e) {
+          console.error(e);
+          document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
+        }
+      });
+
+
+function getData()
+{  if (document.getElementById('last_name').value.length < 2 || (document.getElementById('last_name').value.length < 3 && document.getElementById('last_name').value.substring(0,1) == '@'))
+   { return; }
+
+   // We set the coordinates of the combo-box so that it's close to the user field
+   var coords = getXYpos(document.getElementById('last_name'));
+   document.getElementById('divHelp').style.left = coords.x+200+'px';
+   document.getElementById('divHelp').style.top  = coords.y+20+'px';
+   document.getElementById('divHelp').style.position='absolute';
+
+   var last_name = document.getElementById('last_name').value;
+
+   // The function "AjaxGet" has 3 parameters: (url, GET data, callback function)
+   // http://www.europeangodatabase.eu/EGD/GetPlayerDataByData.php?lastname
+   AjaxGet("https://www.moovrika.com/testnou/anogo/geteuname.php?nume=EGD/GetPlayerDataByData.php?lastname="+last_name, {},
+              function (data)
+			  {  if (data.retcode != 'Ok')
+			     {  document.getElementById('divHelp').style.display = 'none';
+					return;
+			     }
+				 else
+				 {  if (data.players.length == 0)
+				    {  document.getElementById('divHelp').style.display = 'none';
+					   return;
+					}
+					document.getElementById('divHelp').style.display = 'block';
+					var value     = new Object;
+				    var recordset = data.players;
+					while (document.getElementById('helpTable_last_name').rows.length > 0)
+					{   document.getElementById('helpTable_last_name').deleteRow(0);
+					}
+
+
+          					// for every row of the returned recordset, we populate the combo-box
+	                                var ln = last_name.replace('@','');
+   				        for (var i=0; i<recordset.length; i++)
+					{  line = recordset[i];
+					   newRow = document.getElementById('helpTable_last_name').insertRow(i);
+					   newRow.id = 'helpTR_'+i;
+					   value[newRow.id]     = line;
+					   newRow.onmouseover = function() { this.style.backgroundColor = '#ffff00';};
+					   newRow.onmouseout  = function() { this.style.backgroundColor = '';};
+					   // when the combo's row is clicked, we populate the form's fields (including the photo)
+					   newRow.onclick  = function()
+					                     { document.getElementById('last_name').value = value[this.id].Last_Name;
+										   document.getElementById('name').value      = value[this.id].Name;
+										   document.getElementById('pin').value       = value[this.id].Pin_Player;
+										   document.getElementById('club').value      = value[this.id].Club;
+										   document.getElementById('country').value   = value[this.id].Country_Code;
+			                               document.getElementById('strength').value  = value[this.id].Grade;
+			                               document.getElementById('gor').value       = value[this.id].Gor;
+										   document.getElementById('photo').src = "http://www.europeangodatabase.eu/EGD/Actions.php?key=" +
+										                                          value[this.id].Pin_Player;
+                                                                                   document.getElementById('linkToPage').href = "http://europeangodatabase.eu/EGD/Player_Card.php?key=" +
+                                                                                                                          value[this.id].Pin_Player;
+
+										   document.getElementById('divHelp').style.display = 'none';
+										   toggleButton();
+										 };
+
+					   var newCell = newRow.insertCell(0);
+                       var x_field = line['Last_Name'].toUpperCase();
+					   var x_start = x_field.indexOf(ln.toUpperCase());
+					   var y_field = line['Last_Name'];
+					   if (x_start >= 0)
+					   {  y_field = y_field.substring(0,x_start)+'<b>'
+					               +y_field.substring(x_start,x_start + ln.length)+'</b>'
+								   +y_field.substring(x_start + ln.length);
+					   }
+					   newCell.innerHTML = y_field;
+
+					   var newCell = newRow.insertCell(1);
+                       newCell.innerHTML = line['Name'];
+
+					   var newCell = newRow.insertCell(2);
+                       newCell.innerHTML = line['Club'];
+
+					   var newCell = newRow.insertCell(3);
+                       newCell.innerHTML = line['Country_Code'];
+
+					   var newCell = newRow.insertCell(4);
+                       newCell.innerHTML = line['Grade'];
+
+					}
+				 }
+			  }
+		);
+
+}
+
+function AjaxGet(url, data, callback)
+{   var queryString = "";
+    var n=0;
+	for (i in data)
+	{  if (n++>0)
+	   {  queryString += "&";
+	   }
+	   else
+	   {  queryString += "?";
+	   }
+	   queryString += i+"="+data[i];
+	}
+    var AJAX = null;
+    if (window.XMLHttpRequest) AJAX = new XMLHttpRequest();
+    else AJAX = new ActiveXObject("Microsoft.XMLHTTP");
+    AJAX.onreadystatechange = function () {
+	     if (AJAX.readyState == 4 && AJAX.status == 200)
+		 {  var data = eval('(' + AJAX.responseText + ')');
+			callback(data);
+		 }
+   }
+   AJAX.open("GET", url+queryString, true);
+   AJAX.send(null);
+}
+
+// Just to get the coords of an element on screen...
+function getXYpos(elem) {
+   if (!elem) {
+      return {"x":0,"y":0};
+   }
+   if (getStyle(elem,'position') == 'relative')  var xy={"x":0,"y":0}
+   else                                          var xy={"x":elem.offsetLeft,"y":elem.offsetTop}
+   var par=getXYpos(elem.offsetParent);
+   {   for (var key in par) {
+           xy[key]+=par[key];
+	   }
+   }
+   return xy;
+}
+
+
+// get a style attribute
+function getStyle(el,styleProp)
+{   var x = el;
+	if (x.currentStyle)
+		var y = x.currentStyle[styleProp];
+	else if (window.getComputedStyle)
+		var y = document.defaultView.getComputedStyle(x,null).getPropertyValue(styleProp);
+	return y;
+}
+
+    </script>
+<script src="scripts/members.js"></script>
+</body>
+</html>
