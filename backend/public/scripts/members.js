@@ -65,7 +65,8 @@ function onRecordFormSubmit(e) {
   e.preventDefault();
   // Check that the user entered a player and is signed in.
   if (pinInputElement.value && checkSignedInWithMessage()) {
-    saveRecord(pinInputElement.value, lastNameInputElement.value, nameInputElement.value, locationInputElement.value, paymentDateInputElement.value).then(function() {
+    saveRecord(pinInputElement.value, lastNameInputElement.value, nameInputElement.value, locationInputElement.value, clubInputElement.value,
+        paymentDateInputElement.value, birthDateInputElement.value, amountInputElement.value, paymentDocTypeInputElement.value).then(function() {
       // Clear text fields and re-enable the SEND button.
       resetMaterialTextfield(pinInputElement);
       resetMaterialTextfield(locationInputElement);
@@ -76,19 +77,25 @@ function onRecordFormSubmit(e) {
       resetMaterialTextfield(strengthInputElement);
       resetMaterialTextfield(gorInputElement);
       resetMaterialTextfield(lastNameInputElement);
+      resetMaterialTextfield(birthDateInputElement);
+      resetMaterialTextfield(paymentDocTypeInputElement);
+      resetMaterialTextfield(amountInputElement);
       toggleButton();
     });
   }
 }
 
-function saveRecord(pin, lastName, name, location, paymentDate) {
-  return firebase.database().ref('/members/').push({
+function saveRecord(pin, lastName, name, location, club, paymentDate, birthDate, amount, paymentDocType) {
+  return firebase.database().ref('/members/' + pin).set({
     operator: getUserName(),
-    pin: pin,
-    lastName: lastName,
-    name: name,
-    location: location,
-    paymentDate: paymentDate
+    amount: amount,
+    birth_date: birthDate,
+    city: location,
+    club: club,
+    doc_type: paymentDocType,
+    name: lastName + ' ' + name,
+    payment_date: paymentDate,
+    pin: pin
   }).catch(function(error) {
     console.error('Error writing new member to Firebase Database', error);
   });
@@ -129,7 +136,7 @@ function toggleButton() {
 function loadMembers() {
   var callback = function(snap) {
     var data = snap.val();
-    displayMember(snap.key, data.lastName, data.name, data.location, data.paymentDate);
+    displayMember(snap.key, data.name, data.city, data.payment_date);
   };
 
   firebase.database().ref('/members/').on('child_added', callback);
@@ -146,7 +153,7 @@ var MEMBER_TEMPLATE =
 var LOADING_IMAGE_URL = 'https://www.google.com/images/spin-32.gif?a';
 
 
-function displayMember(key, lastName, name, location, paymentDate) {
+function displayMember(key, name, city, paymentDate) {
   var div = document.getElementById(key);
   if (!div) {
     var container = document.createElement('div');
@@ -156,7 +163,7 @@ function displayMember(key, lastName, name, location, paymentDate) {
     pinListElement.appendChild(div);
   }
   var memberElement = div.querySelector('.member');
-  memberElement.textContent = lastName + ' ' + name + ' from ' + location + ' paid on ' + paymentDate;
+  memberElement.textContent = '[' + key + '] ' + name + ' from ' + city + ' paid on ' + paymentDate;
   setTimeout(function() {div.classList.add('visible')}, 1);
   pinListElement.scrollTop = pinListElement.scrollHeight;
 }
@@ -178,13 +185,16 @@ var pinListElement = document.getElementById('pins');
 var recordFormElement = document.getElementById('record-form');
 var pinInputElement = document.getElementById('pin');
 var locationInputElement = document.getElementById('location');
-var paymentDateInputElement = document.getElementById('paymentDate');
+var paymentDateInputElement = document.getElementById('payment_date');
 var nameInputElement = document.getElementById('name');
 var clubInputElement = document.getElementById('club');
 var countryInputElement = document.getElementById('country');
 var strengthInputElement = document.getElementById('strength');
 var gorInputElement = document.getElementById('gor');
 var lastNameInputElement = document.getElementById('last_name');
+var birthDateInputElement = document.getElementById('birth_date');
+var amountInputElement = document.getElementById('amount');
+var paymentDocTypeInputElement = document.getElementById('payment_doc_type');
 var submitButtonElement = document.getElementById('submit');
 var imageButtonElement = document.getElementById('submitImage');
 var imageFormElement = document.getElementById('image-form');
