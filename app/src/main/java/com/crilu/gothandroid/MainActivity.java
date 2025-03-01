@@ -493,6 +493,12 @@ public class MainActivity extends AppCompatAdActivity
     }
 
     private void updateUI() {
+        updateUserInfo();
+        updateTournamentInfo();
+    }
+
+    private void updateUserInfo() {
+        mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (mCurrentUser != null) {
             GothandroidApplication.setCurrentUser(mCurrentUser.getUid());
             // Name, email address, and profile photo Url
@@ -509,6 +515,9 @@ public class MainActivity extends AppCompatAdActivity
             String uid = mCurrentUser.getUid();
             Timber.d("Name -%s , email -%s , address -%s , profile photo -%s, uid -%s", name, email, photoUrl, emailVerified, uid);
         }
+    }
+
+    private void updateTournamentInfo() {
         TournamentInterface currentTournament = GothandroidApplication.getGothaModelInstance().getTournament();
         if (currentTournament != null) {
             mToolbar.setTitle(currentTournament.getFullName());
